@@ -1,0 +1,11 @@
+update 6978018735
+NEW_NAME_FROM_SCRIPT2
+1
+4
+4
+4
+car
+3
+execute_script script3.txt
+insert 735
+

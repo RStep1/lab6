@@ -1,0 +1,16 @@
+execute_script script1.txt
+execute_script script2.txt
+execute_script script3.txt
+execute_script script4.txt
+help
+info
+show
+insert 68
+new_name_from_script3
+r
+-3498672378
+gji
++23846765
+0
+ljgoi;jer
+insert
