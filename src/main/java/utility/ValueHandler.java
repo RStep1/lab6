@@ -53,7 +53,7 @@ public class ValueHandler {
     private static final Correction NAME_CORRECTION = String::trim;
     private static final Correction NUMBER_VALUE_CORRECTION =
             value -> value.trim().replaceAll(",", ".").replaceAll("\\+", "");
-    private static final Correction TYPE_CORRECTION = value -> value.trim().toUpperCase();
+    public static final Correction TYPE_CORRECTION = value -> value.trim().toUpperCase();
     private static final Checker NAME_CHECKER = name -> {
         if (name == null || name.equals("")) {
             return new CheckingResult(false, "Name cannot be null");
@@ -143,7 +143,7 @@ public class ValueHandler {
             return new CheckingResult(false, "Fuel type cannot be null");
         }
         try {
-            FuelType.valueOf(newFuelType);
+            FuelType.valueOf(newFuelType.toUpperCase());
         } catch (IllegalArgumentException illegalArgumentException) {
             try {
                 int serialNumber = Integer.parseInt(newFuelType);

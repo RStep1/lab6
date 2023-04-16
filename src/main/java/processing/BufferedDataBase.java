@@ -9,7 +9,8 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.stream.Stream;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 import commands.*;
 import mods.AddMode;
@@ -134,11 +135,9 @@ public class BufferedDataBase {
            return true;
         }
         TreeMap<Long, Vehicle> treeMapData = new TreeMap<>(dataBase);
-        Set<Long> keys = treeMapData.keySet();
-        for (Long key : keys) {
-            FileHandler.writeToFile("key:                " + key +
-                    "\n" + treeMapData.get(key) + "", FileType.OUTPUT);
-        }
+        treeMapData.keySet().forEach(key ->
+                FileHandler.writeToFile("key:                " + key +
+                "\n" + treeMapData.get(key) + "", FileType.OUTPUT));
         return true;
     }
 
@@ -371,32 +370,15 @@ public class BufferedDataBase {
             return false;
         }
         long userDistanceTravelled = Long.parseLong(arguments[0]);
-
-//        dataBase.keySet()
-//                .stream()
-//                .filter(key -> (removeMode == RemoveMode.REMOVE_GREATER ?
-//                        dataBase.get(key).getDistanceTravelled() > userDistanceTravelled :
-//                        dataBase.get(key).getDistanceTravelled() < userDistanceTravelled))
-//                .forEach(dataBase::remove);
-
-        Enumeration<Long> keys = dataBase.keys();
+        Set<Long> filteredKeys = dataBase.keySet().stream()
+                .filter(key -> (removeMode == RemoveMode.REMOVE_GREATER ?
+                        dataBase.get(key).getDistanceTravelled() > userDistanceTravelled :
+                        dataBase.get(key).getDistanceTravelled() < userDistanceTravelled))
+                        .collect(Collectors.toSet());
         int countOfRemoved = 0;
-        while (keys.hasMoreElements()) {
-            long nextKey = keys.nextElement();
-            switch (removeMode) {
-                case REMOVE_GREATER -> {
-                    if (dataBase.get(nextKey).getDistanceTravelled() > userDistanceTravelled) {
-                        dataBase.remove(nextKey);
-                        countOfRemoved++;
-                    }
-                }
-                case REMOVE_LOWER -> {
-                    if (dataBase.get(nextKey).getDistanceTravelled() < userDistanceTravelled) {
-                        dataBase.remove(nextKey);
-                        countOfRemoved++;
-                    }
-                }
-            }
+        for (Long key : filteredKeys) {
+            dataBase.remove(key);
+            countOfRemoved++;
         }
         FileHandler.writeCurrentCommand(commandName, FileType.OUTPUT);
         if (countOfRemoved == 0)
@@ -421,22 +403,18 @@ public class BufferedDataBase {
         if (!checkCommandWithKey(arguments, RemoveGreaterKeyCommand.getName()))
             return false;
         long userKey = Long.parseLong(arguments[0]);
-        Enumeration<Long> keys = dataBase.keys();
         int countOfRemovedKeys = 0;
-        while (keys.hasMoreElements()) {
-            long nextKey = keys.nextElement();
-            if (nextKey > userKey) {
-                dataBase.remove(nextKey);
-                countOfRemovedKeys++;
-            }
+        Set<Long> filteredKeys = dataBase.keySet().stream().filter(key -> key > userKey).collect(Collectors.toSet());
+        for (Long key : filteredKeys) {
+            dataBase.remove(key);
+            countOfRemovedKeys++;
         }
         FileHandler.writeCurrentCommand(RemoveGreaterKeyCommand.getName(), FileType.OUTPUT);
-        String message = "";
         if (countOfRemovedKeys == 0)
-            message = "No matching keys to remove element";
+            FileHandler.writeToFile("No matching keys to remove element", FileType.OUTPUT);
         else
-            message = String.format("%s elements was successfully removed", countOfRemovedKeys);
-        FileHandler.writeToFile(message, FileType.OUTPUT);
+            FileHandler.writeToFile(
+                    String.format("%s elements was successfully removed", countOfRemovedKeys), FileType.OUTPUT);
         return true;
     }
 
@@ -459,13 +437,12 @@ public class BufferedDataBase {
         }
         int userEnginePower = Integer.parseInt(arguments[0]);
         int countOfRemoved = 0;
-        Enumeration<Long> keys = dataBase.keys();
-        while (keys.hasMoreElements()) {
-            Long key = keys.nextElement();
-            if (userEnginePower == dataBase.get(key).getEnginePower()) {
-                dataBase.remove(key);
-                countOfRemoved++;
-            }
+        Set<Long> filteredKeys = dataBase.keySet().stream()
+                .filter(key -> dataBase.get(key).getEnginePower() == userEnginePower)
+                .collect(Collectors.toSet());
+        for (Long key : filteredKeys) {
+            dataBase.remove(key);
+            countOfRemoved++;
         }
         FileHandler.writeCurrentCommand(RemoveAllByEnginePowerCommand.getName(), FileType.OUTPUT);
         if (countOfRemoved == 0)
@@ -495,14 +472,11 @@ public class BufferedDataBase {
             FileHandler.writeToFile(checkingResult.getMessage(), FileType.USER_ERRORS);
             return false;
         }
-        FuelType fuelType = ValueTransformer.SET_FUEL_TYPE.apply(arguments[0]);
-        int count = 0;
-        Enumeration<Long> keys = dataBase.keys();
-        while (keys.hasMoreElements()) {
-            Long key = keys.nextElement();
-            if (fuelType.equals(dataBase.get(key).getFuelType()))
-                count++;
-        }
+        FuelType fuelType = ValueTransformer.SET_FUEL_TYPE.apply(
+                ValueHandler.TYPE_CORRECTION.correct(arguments[0]));
+        long count = dataBase.keySet().stream()
+                .filter(key -> fuelType.equals(dataBase.get(key).getFuelType()))
+                .count();
         FileHandler.writeCurrentCommand(CountByFuelTypeCommand.getName(), FileType.OUTPUT);
         FileHandler.writeToFile(String.format(
                 "%s elements with fuel type = %s (%s)", count, fuelType.getSerialNumber(), fuelType), FileType.OUTPUT);
@@ -523,24 +497,26 @@ public class BufferedDataBase {
         if (!checkingResult.getStatus()) {
             FileHandler.writeCurrentCommand(FilterLessThanFuelTypeCommand.getName() + " " +
                     arguments[0], FileType.USER_ERRORS);
+            FileHandler.writeToFile(checkingResult.getMessage(), FileType.USER_ERRORS);
             return false;
         }
-        FuelType fuelType = ValueTransformer.SET_FUEL_TYPE.apply(arguments[0]);
-        boolean hasSuchElements = false;
+        FuelType fuelType = ValueTransformer.SET_FUEL_TYPE.apply(
+                ValueHandler.TYPE_CORRECTION.correct(arguments[0]));
+        AtomicBoolean hasSuchElements = new AtomicBoolean(false);
         FileHandler.writeCurrentCommand(FilterLessThanFuelTypeCommand.getName(), FileType.OUTPUT);
         TreeMap<Long, Vehicle> treeMapData = new TreeMap<>(dataBase);
-        Set<Long> keys = treeMapData.keySet();
-        for (Long key : keys) {
-            if (treeMapData.get(key).getFuelType().getSerialNumber() <= fuelType.getSerialNumber()) {
-                hasSuchElements = true;
-                FileHandler.writeToFile("key:                " + key +
+        treeMapData.keySet().stream()
+                .filter(key -> treeMapData.get(key).getFuelType().getSerialNumber() <= fuelType.getSerialNumber())
+                .forEach(key -> {
+                    FileHandler.writeToFile("key:                " + key +
                         "\n" + treeMapData.get(key) + "", FileType.OUTPUT);
-            }
-        }
-        if (!hasSuchElements)
+                    hasSuchElements.set(true);
+                });
+        if (!hasSuchElements.get()) {
             FileHandler.writeToFile(String.format(
                     "No elements found with fuel type value less than %s (%s)",
                     fuelType.getSerialNumber(), fuelType), FileType.OUTPUT);
+        }
         return true;
     }
 

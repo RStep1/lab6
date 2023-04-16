@@ -4,30 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="85453189-5be8-4fe3-ad24-1edc46d74a0c" name="Changes" comment="Copy lab5 project">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/utility/CommandArguments.java" afterDir="false" />
+    <list default="true" id="85453189-5be8-4fe3-ad24-1edc46d74a0c" name="Changes" comment="Combine command arguments into a separate class">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/ClearCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/ClearCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/Command.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/CountByFuelTypeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/CountByFuelTypeCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/ExecuteScriptCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/ExecuteScriptCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/ExitCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/ExitCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/FilterLessThanFuelTypeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/FilterLessThanFuelTypeCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/HelpCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/HelpCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/InfoCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/InfoCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/InsertCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/InsertCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/RemoveAllByEnginePowerCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/RemoveAllByEnginePowerCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/RemoveGreaterCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/RemoveGreaterCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/RemoveGreaterKeyCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/RemoveGreaterKeyCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/RemoveKeyCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/RemoveKeyCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/RemoveLowerCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/RemoveLowerCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/SaveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/SaveCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/ShowCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/ShowCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/UpdateCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/UpdateCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/processing/BufferedDataBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/processing/BufferedDataBase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/processing/CommandInvoker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/processing/CommandInvoker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/processing/CommandParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/processing/CommandParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utility/ValueHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utility/ValueHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +52,7 @@
       <updated>1681563845689</updated>
       <workItem from="1681563848169" duration="1666000" />
       <workItem from="1681639336300" duration="358000" />
-      <workItem from="1681640506866" duration="5781000" />
+      <workItem from="1681640506866" duration="12313000" />
     </task>
     <task id="LOCAL-00001" summary="Copy lab5 project">
       <created>1681564328860</created>
@@ -81,7 +61,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681564328860</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Combine command arguments into a separate class">
+      <created>1681647727430</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1681647727430</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -100,6 +87,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Copy lab5 project" />
-    <option name="LAST_COMMIT_MESSAGE" value="Copy lab5 project" />
+    <MESSAGE value="Combine command arguments into a separate class" />
+    <option name="LAST_COMMIT_MESSAGE" value="Combine command arguments into a separate class" />
   </component>
 </project>
