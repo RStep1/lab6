@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Stream;
 
 import commands.*;
 import mods.AddMode;
@@ -82,12 +83,12 @@ public class BufferedDataBase {
 
     /**
      * Displays information about all commands.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @param vehicleValues Arguments for commands that make changes to database elements.
+     * @param commandArguments contains the name of the command, its arguments on a single line,
+     *                        arguments that are characteristics of the collection class and execution mode.
      * @return Command exit status.
      */
-    public boolean help(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
-        if (!checkNumberOfArguments(arguments, 0, HelpCommand.getName()))
+    public boolean help(CommandArguments commandArguments) {
+        if (!checkNumberOfArguments(commandArguments.getArguments(), 0, HelpCommand.getName()))
             return false;
         FileHandler.writeCurrentCommand(HelpCommand.getName(), FileType.OUTPUT);
         FileHandler.writeToFile(FileHandler.readFile(FileType.REFERENCE), FileType.OUTPUT);
@@ -96,12 +97,12 @@ public class BufferedDataBase {
 
     /**
      * Displays information about collection.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @param vehicleValues Arguments for commands that make changes to database elements.
+     * @param commandArguments contains the name of the command, its arguments on a single line,
+     *                        arguments that are characteristics of the collection class and execution mode.
      * @return Command exit status.
      */
-    public boolean info(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
-        if (!checkNumberOfArguments(arguments, 0, InfoCommand.getName()))
+    public boolean info(CommandArguments commandArguments) {
+        if (!checkNumberOfArguments(commandArguments.getArguments(), 0, InfoCommand.getName()))
             return false;
         String stringLastInitTime = (lastInitTime == null ?
                 "there have been no initializations in this session yet" : lastInitTime.format(dateFormatter));
@@ -120,12 +121,12 @@ public class BufferedDataBase {
 
     /**
      * Displays all elements of the collection.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @param vehicleValues Arguments for commands that make changes to database elements.
+     * @param commandArguments contains the name of the command, its arguments on a single line,
+     *                        arguments that are characteristics of the collection class and execution mode.
      * @return Command exit status.
      */
-    public boolean show(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
-        if (!checkNumberOfArguments(arguments, 0, ShowCommand.getName()))
+    public boolean show(CommandArguments commandArguments) {
+        if (!checkNumberOfArguments(commandArguments.getArguments(), 0, ShowCommand.getName()))
             return false;
         FileHandler.writeCurrentCommand(ShowCommand.getName(), FileType.OUTPUT);
         if (dataBase.isEmpty()) {
@@ -143,22 +144,24 @@ public class BufferedDataBase {
 
     /**
      * Adds a new element to the collection by key.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @param vehicleValues Arguments for commands that make changes to database elements.
+     * @param commandArguments contains the name of the command, its arguments on a single line,
+     *                        arguments that are characteristics of the collection class and execution mode.
      * @return Command exit status.
      */
-    public boolean insert(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
-        return addElementBy(arguments, vehicleValues, executeMode, AddMode.INSERT_MODE, InsertCommand.getName());
+    public boolean insert(CommandArguments commandArguments) {
+        return addElementBy(commandArguments.getArguments(), commandArguments.getExtraArguments(),
+                commandArguments.getExecuteMode(), AddMode.INSERT_MODE, InsertCommand.getName());
     }
 
     /**
      * Updates the collection element by id.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @param vehicleValues Arguments for commands that make changes to database elements.
+     * @param commandArguments contains the name of the command, its arguments on a single line,
+     *                        arguments that are characteristics of the collection class and execution mode.
      * @return Command exit status.
      */
-    public boolean update(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
-        return addElementBy(arguments, vehicleValues, executeMode, AddMode.UPDATE_MODE, UpdateCommand.getName());
+    public boolean update(CommandArguments commandArguments) {
+        return addElementBy(commandArguments.getArguments(), commandArguments.getExtraArguments(),
+                commandArguments.getExecuteMode(), AddMode.UPDATE_MODE, UpdateCommand.getName());
     }
 
     /**
@@ -223,11 +226,12 @@ public class BufferedDataBase {
 
     /**
      * Removes element by key.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @param vehicleValues Arguments for commands that make changes to database elements.
+     * @param commandArguments contains the name of the command, its arguments on a single line,
+     *                        arguments that are characteristics of the collection class and execution mode.
      * @return Command exit status.
      */
-    public boolean removeKey(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
+    public boolean removeKey(CommandArguments commandArguments) {
+        String[] arguments = commandArguments.getArguments();
         if (!checkCommandWithKey(arguments, RemoveKeyCommand.getName()))
             return false;
         if (!identifierHandler.hasElementWithKey(arguments[0], false,
@@ -242,12 +246,12 @@ public class BufferedDataBase {
 
     /**
      * Clears the collection.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @param vehicleValues Arguments for commands that make changes to database elements.
+     * @param commandArguments contains the name of the command, its arguments on a single line,
+     *                        arguments that are characteristics of the collection class and execution mode.
      * @return Command exit status.
      */
-    public boolean clear(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
-        if (!checkNumberOfArguments(arguments, 0, ClearCommand.getName()))
+    public boolean clear(CommandArguments commandArguments) {
+        if (!checkNumberOfArguments(commandArguments.getArguments(), 0, ClearCommand.getName()))
             return false;
         FileHandler.writeCurrentCommand(ClearCommand.getName(), FileType.OUTPUT);
         if (dataBase.isEmpty()) {
@@ -261,12 +265,12 @@ public class BufferedDataBase {
 
     /**
      * Saves the collection to a Json file.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @param vehicleValues Arguments for commands that make changes to database elements.
+     * @param commandArguments contains the name of the command, its arguments on a single line,
+     *                        arguments that are characteristics of the collection class and execution mode.
      * @return Command exit status.
      */
-    public boolean save(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
-        if (!checkNumberOfArguments(arguments, 0, SaveCommand.getName()))
+    public boolean save(CommandArguments commandArguments) {
+        if (!checkNumberOfArguments(commandArguments.getArguments(), 0, SaveCommand.getName()))
             return false;
         FileHandler.saveDataBase(dataBase);
         FileHandler.writeCurrentCommand(SaveCommand.getName(), FileType.OUTPUT);
@@ -277,12 +281,13 @@ public class BufferedDataBase {
 
     /**
      * Executes user script.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @param vehicleValues Arguments for commands that make changes to database elements.
+     * @param commandArguments contains the name of the command, its arguments on a single line,
+     *                        arguments that are characteristics of the collection class and execution mode.
      * @return Command exit status.
      */
-    public boolean executeScript(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
-        if (executeMode == ExecuteMode.COMMAND_MODE)
+    public boolean executeScript(CommandArguments commandArguments) {
+        String[] arguments = commandArguments.getArguments();
+        if (commandArguments.getExecuteMode() == ExecuteMode.COMMAND_MODE)
             scriptCounter.clear();
         if (!checkNumberOfArguments(arguments, 1, ExecuteScriptCommand.getName()))
             return false;
@@ -313,39 +318,39 @@ public class BufferedDataBase {
 
     /**
      * Terminates a program or exits an executing script.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @param vehicleValues Arguments for commands that make changes to database elements.
+     * @param commandArguments contains the name of the command, its arguments on a single line,
+     *                        arguments that are characteristics of the collection class and execution mode.
      * @return Command exit status.
      */
-    public boolean exit(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
-        if (!checkNumberOfArguments(arguments, 0, ExitCommand.getName()))
+    public boolean exit(CommandArguments commandArguments) {
+        if (!checkNumberOfArguments(commandArguments.getArguments(), 0, ExitCommand.getName()))
             return false;
         FileHandler.writeCurrentCommand(ExitCommand.getName(), FileType.OUTPUT);
-        if (executeMode == ExecuteMode.COMMAND_MODE)
+        if (commandArguments.getExecuteMode() == ExecuteMode.COMMAND_MODE)
             FileHandler.writeToFile("Program successfully completed", FileType.OUTPUT);
         return true;
     }
 
     /**
      * Removes all elements of the collection whose distance travelled value exceeds the given value.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @param vehicleValues Arguments for commands that make changes to database elements.
+     * @param commandArguments contains the name of the command, its arguments on a single line,
+     *                        arguments that are characteristics of the collection class and execution mode.
      * @return Command exit status.
      */
-    public boolean removeGreater(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
-        return removeAllByDistanceTravelled(arguments, vehicleValues, executeMode,
-                RemoveGreaterCommand.getName(), RemoveMode.REMOVE_GREATER);
+    public boolean removeGreater(CommandArguments commandArguments) {
+        return removeAllByDistanceTravelled(commandArguments.getArguments(), commandArguments.getExtraArguments(),
+                commandArguments.getExecuteMode(), RemoveGreaterCommand.getName(), RemoveMode.REMOVE_GREATER);
     }
 
     /**
      * Removes all elements of the collection whose distance travelled value is less than the given value.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @param vehicleValues Arguments for commands that make changes to database elements.
+     * @param commandArguments contains the name of the command, its arguments on a single line,
+     *                        arguments that are characteristics of the collection class and execution mode.
      * @return Command exit status.
      */
-    public boolean removeLower(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
-        return removeAllByDistanceTravelled(arguments, vehicleValues, executeMode,
-                RemoveLowerCommand.getName(), RemoveMode.REMOVE_LOWER);
+    public boolean removeLower(CommandArguments commandArguments) {
+        return removeAllByDistanceTravelled(commandArguments.getArguments(), commandArguments.getExtraArguments(),
+                commandArguments.getExecuteMode(), RemoveLowerCommand.getName(), RemoveMode.REMOVE_LOWER);
     }
 
     /**
@@ -366,6 +371,14 @@ public class BufferedDataBase {
             return false;
         }
         long userDistanceTravelled = Long.parseLong(arguments[0]);
+
+//        dataBase.keySet()
+//                .stream()
+//                .filter(key -> (removeMode == RemoveMode.REMOVE_GREATER ?
+//                        dataBase.get(key).getDistanceTravelled() > userDistanceTravelled :
+//                        dataBase.get(key).getDistanceTravelled() < userDistanceTravelled))
+//                .forEach(dataBase::remove);
+
         Enumeration<Long> keys = dataBase.keys();
         int countOfRemoved = 0;
         while (keys.hasMoreElements()) {
@@ -399,11 +412,12 @@ public class BufferedDataBase {
 
     /**
      * Removes all elements of the collection whose key is greater than the given value.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @param vehicleValues Arguments for commands that make changes to database elements.
+     * @param commandArguments contains the name of the command, its arguments on a single line,
+     *                        arguments that are characteristics of the collection class and execution mode.
      * @return Command exit status.
      */
-    public boolean removeGreaterKey(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
+    public boolean removeGreaterKey(CommandArguments commandArguments) {
+        String[] arguments = commandArguments.getArguments();
         if (!checkCommandWithKey(arguments, RemoveGreaterKeyCommand.getName()))
             return false;
         long userKey = Long.parseLong(arguments[0]);
@@ -428,11 +442,12 @@ public class BufferedDataBase {
 
     /**
      * Removes all elements in the collection whose engine power is equal to the given value.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @param vehicleValues Arguments for commands that make changes to database elements.
+     * @param commandArguments contains the name of the command, its arguments on a single line,
+     *                        arguments that are characteristics of the collection class and execution mode.
      * @return Command exit status.
      */
-    public boolean removeAllByEnginePower(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
+    public boolean removeAllByEnginePower(CommandArguments commandArguments) {
+        String[] arguments = commandArguments.getArguments();
         if (!checkNumberOfArguments(arguments, 1, RemoveAllByEnginePowerCommand.getName()))
             return false;
         CheckingResult checkingResult = ValueHandler.ENGINE_POWER_CHECKER.check(arguments[0]);
@@ -465,11 +480,12 @@ public class BufferedDataBase {
 
     /**
      * Prints the number of elements in the collection whose fuel type is equal to the given value.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @param vehicleValues Arguments for commands that make changes to database elements.
+     * @param commandArguments contains the name of the command, its arguments on a single line,
+     *                        arguments that are characteristics of the collection class and execution mode.
      * @return Command exit status.
      */
-    public boolean countByFuelType(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
+    public boolean countByFuelType(CommandArguments commandArguments) {
+        String[] arguments = commandArguments.getArguments();
         if (!checkNumberOfArguments(arguments, 1, CountByFuelTypeCommand.getName()))
             return false;
         CheckingResult checkingResult = ValueHandler.FUEL_TYPE_CHECKER.check(arguments[0]);
@@ -495,11 +511,12 @@ public class BufferedDataBase {
 
     /**
      * Prints all elements of the collection whose fuel type is less than or equal to the given value.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @param vehicleValues Arguments for commands that make changes to database elements.
+     * @param commandArguments contains the name of the command, its arguments on a single line,
+     *                        arguments that are characteristics of the collection class and execution mode.
      * @return Command exit status.
      */
-    public boolean filterLessThanFuelType(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
+    public boolean filterLessThanFuelType(CommandArguments commandArguments) {
+        String[] arguments = commandArguments.getArguments();
         if (!checkNumberOfArguments(arguments, 1, FilterLessThanFuelTypeCommand.getName()))
             return false;
         CheckingResult checkingResult = ValueHandler.FUEL_TYPE_CHECKER.check(arguments[0]);

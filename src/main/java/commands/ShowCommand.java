@@ -2,6 +2,7 @@ package commands;
 
 import processing.BufferedDataBase;
 import mods.ExecuteMode;
+import utility.CommandArguments;
 
 /**
  * Acts as a wrapper for the 'show' command.
@@ -20,8 +21,8 @@ public class ShowCommand implements Command {
     }
 
     @Override
-    public boolean execute(String[] arguments, String[] vehicleValues,  ExecuteMode executeMode) {
-        return bufferedDataBase.show(arguments, vehicleValues, executeMode);
+    public boolean execute(CommandArguments commandArguments) {
+        return bufferedDataBase.show(commandArguments);
     }
 
     public static String getName() {

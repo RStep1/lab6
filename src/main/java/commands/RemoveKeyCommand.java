@@ -2,6 +2,7 @@ package commands;
 
 import processing.BufferedDataBase;
 import mods.ExecuteMode;
+import utility.CommandArguments;
 
 /**
  * Acts as a wrapper for the 'remove key' command.
@@ -19,8 +20,8 @@ public class RemoveKeyCommand implements Command {
     }
 
     @Override
-    public boolean execute(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
-        return bufferedDataBase.removeKey(arguments, vehicleValues, executeMode);
+    public boolean execute(CommandArguments commandArguments) {
+        return bufferedDataBase.removeKey(commandArguments);
     }
 
     public static String getName() {

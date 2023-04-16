@@ -2,6 +2,7 @@ package commands;
 
 import processing.BufferedDataBase;
 import mods.ExecuteMode;
+import utility.CommandArguments;
 
 /**
  * Acts as a wrapper for the 'remove lower' command.
@@ -21,8 +22,8 @@ public class RemoveLowerCommand implements Command {
     }
 
     @Override
-    public boolean execute(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
-        return bufferedDataBase.removeLower(arguments, vehicleValues, executeMode);
+    public boolean execute(CommandArguments commandArguments) {
+        return bufferedDataBase.removeLower(commandArguments);
     }
 
     public static String getName() {

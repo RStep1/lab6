@@ -2,6 +2,7 @@ package commands;
 
 import processing.BufferedDataBase;
 import mods.ExecuteMode;
+import utility.CommandArguments;
 
 /**
  * Acts as a wrapper for the 'clear' command.
@@ -19,8 +20,8 @@ public class ClearCommand implements Command {
     }
 
     @Override
-    public boolean execute(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
-        return bufferedDataBase.clear(arguments, vehicleValues, executeMode);
+    public boolean execute(CommandArguments commandArguments) {
+        return bufferedDataBase.clear(commandArguments);
     }
 
     public static String getName() {

@@ -1,6 +1,7 @@
 package commands;
 import processing.BufferedDataBase;
 import mods.ExecuteMode;
+import utility.CommandArguments;
 
 /**
  * Acts as a wrapper for the 'exit' command.
@@ -18,8 +19,8 @@ public class ExitCommand implements Command {
     }
 
     @Override
-    public boolean execute(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
-        return dataBase.exit(arguments, vehicleValues, executeMode);
+    public boolean execute(CommandArguments commandArguments) {
+        return dataBase.exit(commandArguments);
     }
 
     public static String getName() {

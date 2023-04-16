@@ -2,6 +2,7 @@ package commands;
 
 import processing.BufferedDataBase;
 import mods.ExecuteMode;
+import utility.CommandArguments;
 
 /**
  * Acts as a wrapper for the 'save' command.
@@ -19,8 +20,8 @@ public class SaveCommand implements Command {
     }
 
     @Override
-    public boolean execute(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
-        return bufferedDataBase.save(arguments, vehicleValues, executeMode);
+    public boolean execute(CommandArguments commandArguments) {
+        return bufferedDataBase.save(commandArguments);
     }
 
     public static String getName() {

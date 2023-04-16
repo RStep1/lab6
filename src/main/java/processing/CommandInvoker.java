@@ -2,6 +2,7 @@ package processing;
 
 import commands.*;
 import mods.ExecuteMode;
+import utility.CommandArguments;
 import utility.FileHandler;
 
 import java.util.ArrayList;
@@ -53,14 +54,14 @@ public class CommandInvoker {
 
     /**
      * Invokes the 'help' command from its wrapper class.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @param vehicleValues Arguments for commands that make changes to database elements.
+     * @param commandArguments contains the name of the command, its arguments on a single line,
+     *                        arguments that are characteristics of the collection class and execution mode.
      * @return Command exit status.
      */
-    public boolean help(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
+    public boolean help(CommandArguments commandArguments) {
         for (Command command : commandList) {
             if (command instanceof HelpCommand helpCommand) {
-                return helpCommand.execute(arguments, vehicleValues, executeMode);
+                return helpCommand.execute(commandArguments);
             }
         }
         return false;
@@ -68,14 +69,14 @@ public class CommandInvoker {
 
     /**
      * Invokes the 'info' command from its wrapper class.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @param vehicleValues Arguments for commands that make changes to database elements.
+     * @param commandArguments contains the name of the command, its arguments on a single line,
+     *                        arguments that are characteristics of the collection class and execution mode.
      * @return Command exit status.
      */
-    public boolean info(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
+    public boolean info(CommandArguments commandArguments) {
         for (Command command : commandList) {
             if (command instanceof InfoCommand infoCommand) {
-                return infoCommand.execute(arguments, vehicleValues, executeMode);
+                return infoCommand.execute(commandArguments);
             }
         }
         return false;
@@ -83,14 +84,14 @@ public class CommandInvoker {
 
     /**
      * Invokes the 'show' command from its wrapper class.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @param vehicleValues Arguments for commands that make changes to database elements.
+     * @param commandArguments contains the name of the command, its arguments on a single line,
+     *                        arguments that are characteristics of the collection class and execution mode.
      * @return Command exit status.
      */
-    public boolean show(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
+    public boolean show(CommandArguments commandArguments) {
         for (Command command : commandList) {
             if (command instanceof ShowCommand showCommand) {
-                return showCommand.execute(arguments, vehicleValues, executeMode);
+                return showCommand.execute(commandArguments);
             }
         }
         return false;
@@ -98,14 +99,14 @@ public class CommandInvoker {
 
     /**
      * Invokes the 'insert' command from its wrapper class.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @param vehicleValues Arguments for commands that make changes to database elements.
+     * @param commandArguments contains the name of the command, its arguments on a single line,
+     *                        arguments that are characteristics of the collection class and execution mode.
      * @return Command exit status.
      */
-    public boolean insert(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
+    public boolean insert(CommandArguments commandArguments) {
         for (Command command : commandList) {
             if (command instanceof InsertCommand insertCommand) {
-                return insertCommand.execute(arguments, vehicleValues, executeMode);
+                return insertCommand.execute(commandArguments);
             }
         }
         return false;
@@ -113,14 +114,14 @@ public class CommandInvoker {
 
     /**
      * Invokes the 'update' command from its wrapper class.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @param vehicleValues Arguments for commands that make changes to database elements.
+     * @param commandArguments contains the name of the command, its arguments on a single line,
+     *                        arguments that are characteristics of the collection class and execution mode.
      * @return Command exit status.
      */
-    public boolean update(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
+    public boolean update(CommandArguments commandArguments) {
         for (Command command : commandList) {
             if (command instanceof UpdateCommand updateCommand) {
-                return updateCommand.execute(arguments, vehicleValues, executeMode);
+                return updateCommand.execute(commandArguments);
             }
         }
         return false;
@@ -128,14 +129,14 @@ public class CommandInvoker {
 
     /**
      * Invokes the 'remove key' command from its wrapper class.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @param vehicleValues Arguments for commands that make changes to database elements.
+     * @param commandArguments contains the name of the command, its arguments on a single line,
+     *                        arguments that are characteristics of the collection class and execution mode.
      * @return Command exit status.
      */
-    public boolean removeKey(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
+    public boolean removeKey(CommandArguments commandArguments) {
         for (Command command : commandList) {
             if (command instanceof RemoveKeyCommand removeKeyCommand) {
-                return removeKeyCommand.execute(arguments, vehicleValues, executeMode);
+                return removeKeyCommand.execute(commandArguments);
             }
         }
         return false;
@@ -143,14 +144,14 @@ public class CommandInvoker {
 
     /**
      * Invokes the 'clear' command from its wrapper class.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @param vehicleValues Arguments for commands that make changes to database elements.
+     * @param commandArguments contains the name of the command, its arguments on a single line,
+     *                        arguments that are characteristics of the collection class and execution mode.
      * @return Command exit status.
      */
-    public boolean clear(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
+    public boolean clear(CommandArguments commandArguments) {
         for (Command command : commandList) {
             if (command instanceof ClearCommand clearCommand) {
-                return clearCommand.execute(arguments, vehicleValues, executeMode);
+                return clearCommand.execute(commandArguments);
             }
         }
         return false;
@@ -158,14 +159,14 @@ public class CommandInvoker {
 
     /**
      * Invokes the 'save' command from its wrapper class.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @param vehicleValues Arguments for commands that make changes to database elements.
+     * @param commandArguments contains the name of the command, its arguments on a single line,
+     *                        arguments that are characteristics of the collection class and execution mode.
      * @return Command exit status.
      */
-    public boolean save(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
+    public boolean save(CommandArguments commandArguments) {
         for (Command command : commandList) {
             if (command instanceof SaveCommand saveCommand) {
-                return saveCommand.execute(arguments, vehicleValues, executeMode);
+                return saveCommand.execute(commandArguments);
             }
         }
         return false;
@@ -173,14 +174,14 @@ public class CommandInvoker {
 
     /**
      * Invokes the 'execute script' command from its wrapper class.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @param vehicleValues Arguments for commands that make changes to database elements.
+     * @param commandArguments contains the name of the command, its arguments on a single line,
+     *                        arguments that are characteristics of the collection class and execution mode.
      * @return Command exit status.
      */
-    public boolean executeScript(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
+    public boolean executeScript(CommandArguments commandArguments) {
         for (Command command : commandList) {
             if (command instanceof ExecuteScriptCommand executeScriptCommand) {
-                return executeScriptCommand.execute(arguments, vehicleValues, executeMode);
+                return executeScriptCommand.execute(commandArguments);
             }
         }
         return false;
@@ -188,14 +189,14 @@ public class CommandInvoker {
 
     /**
      * Invokes the 'help' command from its wrapper class.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @param vehicleValues Arguments for commands that make changes to database elements.
+     * @param commandArguments contains the name of the command, its arguments on a single line,
+     *                        arguments that are characteristics of the collection class and execution mode.
      * @return Command exit status.
      */
-    public boolean exit(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
+    public boolean exit(CommandArguments commandArguments) {
         for (Command command : commandList) {
             if (command instanceof ExitCommand exitCommand) {
-                return exitCommand.execute(arguments, vehicleValues, executeMode);
+                return exitCommand.execute(commandArguments);
             }
         }
         return false;
@@ -203,14 +204,14 @@ public class CommandInvoker {
 
     /**
      * Invokes the 'remove greater' command from its wrapper class.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @param vehicleValues Arguments for commands that make changes to database elements.
+     * @param commandArguments contains the name of the command, its arguments on a single line,
+     *                        arguments that are characteristics of the collection class and execution mode.
      * @return Command exit status.
      */
-    public boolean removeGreater(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
+    public boolean removeGreater(CommandArguments commandArguments) {
         for (Command command : commandList) {
             if (command instanceof RemoveGreaterCommand removeGreaterCommand) {
-                return removeGreaterCommand.execute(arguments, vehicleValues, executeMode);
+                return removeGreaterCommand.execute(commandArguments);
             }
         }
         return false;
@@ -218,14 +219,14 @@ public class CommandInvoker {
 
     /**
      * Invokes the 'remove lower' command from its wrapper class.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @param vehicleValues Arguments for commands that make changes to database elements.
+     * @param commandArguments contains the name of the command, its arguments on a single line,
+     *                        arguments that are characteristics of the collection class and execution mode.
      * @return Command exit status.
      */
-    public boolean removeLower(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
+    public boolean removeLower(CommandArguments commandArguments) {
         for (Command command : commandList) {
             if (command instanceof RemoveLowerCommand removeLowerCommand) {
-                return removeLowerCommand.execute(arguments, vehicleValues, executeMode);
+                return removeLowerCommand.execute(commandArguments);
             }
         }
         return false;
@@ -233,14 +234,14 @@ public class CommandInvoker {
 
     /**
      * Invokes the 'remove greater key' command from its wrapper class.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @param vehicleValues Arguments for commands that make changes to database elements.
+     * @param commandArguments contains the name of the command, its arguments on a single line,
+     *                        arguments that are characteristics of the collection class and execution mode.
      * @return Command exit status.
      */
-    public boolean removeGreaterKey(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
+    public boolean removeGreaterKey(CommandArguments commandArguments) {
         for (Command command : commandList) {
             if (command instanceof RemoveGreaterKeyCommand removeGreaterKeyCommand) {
-                return removeGreaterKeyCommand.execute(arguments, vehicleValues, executeMode);
+                return removeGreaterKeyCommand.execute(commandArguments);
             }
         }
         return false;
@@ -248,14 +249,14 @@ public class CommandInvoker {
 
     /**
      * Invokes the 'remove all by engine power' command from its wrapper class.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @param vehicleValues Arguments for commands that make changes to database elements.
+     * @param commandArguments contains the name of the command, its arguments on a single line,
+     *                        arguments that are characteristics of the collection class and execution mode.
      * @return Command exit status.
      */
-    public boolean removeAllByEnginePower(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
+    public boolean removeAllByEnginePower(CommandArguments commandArguments) {
         for (Command command : commandList) {
             if (command instanceof RemoveAllByEnginePowerCommand removeAllByEnginePowerCommand) {
-                return removeAllByEnginePowerCommand.execute(arguments, vehicleValues, executeMode);
+                return removeAllByEnginePowerCommand.execute(commandArguments);
             }
         }
         return false;
@@ -263,14 +264,14 @@ public class CommandInvoker {
 
     /**
      * Invokes the 'count by fuel type' command from its wrapper class.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @param vehicleValues Arguments for commands that make changes to database elements.
+     * @param commandArguments contains the name of the command, its arguments on a single line,
+     *                        arguments that are characteristics of the collection class and execution mode.
      * @return Command exit status.
      */
-    public boolean countByFuelType(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
+    public boolean countByFuelType(CommandArguments commandArguments) {
         for (Command command : commandList) {
             if (command instanceof CountByFuelTypeCommand countByFuelTypeCommand) {
-                return countByFuelTypeCommand.execute(arguments, vehicleValues, executeMode);
+                return countByFuelTypeCommand.execute(commandArguments);
             }
         }
         return false;
@@ -278,14 +279,14 @@ public class CommandInvoker {
 
     /**
      * Invokes the 'filter less than fuel type' command from its wrapper class.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @param vehicleValues Arguments for commands that make changes to database elements.
+     * @param commandArguments contains the name of the command, its arguments on a single line,
+     *                        arguments that are characteristics of the collection class and execution mode.
      * @return Command exit status.
      */
-    public boolean filterLessThanFuelType(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
+    public boolean filterLessThanFuelType(CommandArguments commandArguments) {
         for (Command command : commandList) {
             if (command instanceof FilterLessThanFuelTypeCommand filterLessThanFuelTypeCommand) {
-                return filterLessThanFuelTypeCommand.execute(arguments, vehicleValues, executeMode);
+                return filterLessThanFuelTypeCommand.execute(commandArguments);
             }
         }
         return false;

@@ -3,6 +3,7 @@ package commands;
 import data.Vehicle;
 import processing.BufferedDataBase;
 import mods.ExecuteMode;
+import utility.CommandArguments;
 
 /**
  * Acts as a wrapper for the 'insert' command.
@@ -19,8 +20,8 @@ public class InsertCommand implements Command {
     }
 
     @Override
-    public boolean execute(String[] arguments, String[] vehicleValues, ExecuteMode executeMode) {
-        return bufferedDataBase.insert(arguments, vehicleValues, executeMode);
+    public boolean execute(CommandArguments commandArguments) {
+        return bufferedDataBase.insert(commandArguments);
     }
 
     public static String getName() {
