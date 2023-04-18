@@ -6,6 +6,7 @@ import data.FuelType;
 import data.Vehicle;
 import data.VehicleType;
 import mods.FileType;
+import mods.MessageType;
 import mods.ValueType;
 
 import java.math.BigDecimal;
@@ -292,8 +293,8 @@ public class ValueHandler {
             CheckingResult valueCheck = processes.get(i).getChecker().check(newValues[i]);
             if (!valueCheck.getStatus()) {
                 if (exitStatus)
-                    FileHandler.writeCurrentCommand(commandName, FileType.USER_ERRORS);
-                FileHandler.writeToFile(valueCheck.getMessage(), FileType.USER_ERRORS);
+                    MessageHolder.putCurrentCommand(commandName, MessageType.USER_ERROR);
+                MessageHolder.putMessage(valueCheck.getMessage(), MessageType.USER_ERROR);
                 exitStatus = false;
             }
         }

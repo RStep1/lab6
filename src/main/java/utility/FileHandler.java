@@ -3,6 +3,7 @@ package utility;
 
 import data.Vehicle;
 import mods.FileType;
+import mods.MessageType;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -14,17 +15,8 @@ import java.util.Hashtable;
  */
 public class FileHandler {
     private static final String ENV_VARIABLE = "SAVE_PATH";
-    private static final String OUTPUT_FILE_PATH = "files/output.txt";
-    private static final String USER_ERRORS_FILE_PATH = "files/user_errors.txt";
-    private static final String SYSTEM_ERRORS_FILE_PATH = "files/system_errors.txt";
     private static final String JSON_FILE_PATH = "files/data_base.json";
     private static final String REFERENCE_FILE_PATH = "files/reference.txt";
-    private static final String OUTPUT_FILE_ABSOLUTE_PATH =
-            new File(OUTPUT_FILE_PATH).getAbsolutePath();
-    private static final String USER_ERRORS_FILE_ABSOLUTE_PATH =
-            new File(USER_ERRORS_FILE_PATH).getAbsolutePath();
-    private static final String SYSTEM_ERRORS_FILE_ABSOLUTE_PATH =
-            new File(SYSTEM_ERRORS_FILE_PATH).getAbsolutePath();
     private static final String JSON_FILE_ABSOLUTE_PATH =
             new File(JSON_FILE_PATH).getAbsolutePath();
     private static final String REFERENCE_FILE_ABSOLUTE_PATH =
@@ -37,17 +29,17 @@ public class FileHandler {
      */
     public static boolean checkEnvVariable() {
         if (System.getenv().get(ENV_VARIABLE) == null) {
-            FileHandler.writeToFile(String.format("System variable with file to load and save is not set\n" +
-                    "Please set the '%s' environment variable", ENV_VARIABLE), FileType.USER_ERRORS);
+            MessageHolder.putMessage(String.format("System variable with file to load and save is not set\n" +
+                    "Please set the '%s' environment variable", ENV_VARIABLE), MessageType.USER_ERROR);
             return false;
         }
         try {
             FileReader fileReader = new FileReader(System.getenv().get(ENV_VARIABLE));
             fileReader.close();
         } catch (IOException e) {
-            FileHandler.writeToFile(String.format(
+            MessageHolder.putMessage(String.format(
                     "Invalid path to environment variable '%s': %s", ENV_VARIABLE, System.getenv().get(ENV_VARIABLE)),
-                    FileType.USER_ERRORS);
+                    MessageType.USER_ERROR);
             return false;
         }
         return true;
@@ -61,12 +53,9 @@ public class FileHandler {
     private static String filePathSelection(FileType fileType) {
         String filePath = "";
         switch (fileType) {
-            case OUTPUT -> filePath = OUTPUT_FILE_ABSOLUTE_PATH;
-            case USER_ERRORS -> filePath = USER_ERRORS_FILE_ABSOLUTE_PATH;
             case REFERENCE -> filePath = REFERENCE_FILE_ABSOLUTE_PATH;
-            case SYSTEM_ERRORS -> filePath = SYSTEM_ERRORS_FILE_ABSOLUTE_PATH;
             case JSON -> filePath = System.getenv().get(ENV_VARIABLE);
-//            default ->
+            default -> System.err.printf("%s: this file type has not been processed%n", fileType);
         }
         return filePath;
     }
@@ -135,16 +124,6 @@ public class FileHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Writes the name of the executable program command to the desired file.
-     * @param commandName
-     * @param fileType
-     */
-    public static void writeCurrentCommand(String commandName, FileType fileType) {
-        String message = String.format("Command '%s':", commandName);
-        writeToFile(message, fileType);
     }
 
     /**

@@ -1,12 +1,11 @@
 package run;
 
-import mods.FileType;
+import mods.MessageType;
 import processing.*;
 import commands.*;
 import utility.FileHandler;
+import utility.MessageHolder;
 
-import java.util.ArrayList;
-import java.util.Optional;
 
 /**
  * The entry point to the program, declares and initializes all the necessary classes.
@@ -15,8 +14,9 @@ import java.util.Optional;
 public class Main {
     public static void main(String[] args) {
         if (!FileHandler.checkEnvVariable()) {
-            Console.printUserErrorsFile();
-            FileHandler.clearFile(FileType.USER_ERRORS);
+            Console.printUserErrors();
+//            FileHandler.clearFile(FileType.USER_ERRORS);
+            MessageHolder.clearMessages(MessageType.USER_ERROR);
             return;
         }
         BufferedDataBase bufferedDataBase = new BufferedDataBase();

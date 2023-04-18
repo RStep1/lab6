@@ -2,6 +2,7 @@ package processing;
 
 import data.Vehicle;
 import mods.FileType;
+import mods.MessageType;
 import utility.*;
 import utility.Process;
 
@@ -28,11 +29,11 @@ public class Console {
      * Reads user lines one by one and starts processing.
      */
     public void interactiveMode() {
-        FileHandler.writeToFile("Available commands:", FileType.OUTPUT);
-        FileHandler.writeToFile(FileHandler.readFile(FileType.REFERENCE), FileType.OUTPUT);
-        printOutputFile();
-        FileHandler.clearFile(FileType.OUTPUT);
-        FileHandler.clearFile(FileType.USER_ERRORS);
+        MessageHolder.putMessage("Available commands:", MessageType.OUTPUT_INFO);
+        MessageHolder.putMessage(FileHandler.readFile(FileType.REFERENCE), MessageType.OUTPUT_INFO);
+        printOutputInfo();
+        MessageHolder.clearMessages(MessageType.OUTPUT_INFO);
+        MessageHolder.clearMessages(MessageType.USER_ERROR);
         CommandParser parser = new CommandParser(invoker);
         Scanner in = new Scanner(System.in);
         while (true) {
@@ -66,8 +67,8 @@ public class Console {
         ArrayList<Process> processes = ValueHandler.getValueProcesses();
         for (Process process : processes) {
             do {
-                Console.printUserErrorsFile();
-                FileHandler.clearFile(FileType.USER_ERRORS);
+                Console.printUserErrors();
+                MessageHolder.clearMessages(MessageType.USER_ERROR);
                 printStream.print(process.getMessage());
                 try {
                     newValue = in.nextLine().trim();
@@ -77,7 +78,7 @@ public class Console {
                 newValue = process.getCorrection().correct(newValue);
                 CheckingResult checkingResult = process.getChecker().check(newValue);
                 if (!checkingResult.getStatus())
-                    FileHandler.writeToFile(checkingResult.getMessage(), FileType.USER_ERRORS);
+                    MessageHolder.putMessage(checkingResult.getMessage(), MessageType.USER_ERROR);
             } while (!process.getChecker().check(newValue).getStatus());
             newValues.add(newValue);
         }
@@ -101,11 +102,11 @@ public class Console {
         printStream.print(message);
     }
 
-    public static void printOutputFile() {
-        print(ANSI_GREEN + FileHandler.readFile(FileType.OUTPUT) + ANSI_RESET);
+    public static void printOutputInfo() {
+        print(ANSI_GREEN + MessageHolder.getMessages(MessageType.OUTPUT_INFO) + ANSI_RESET);
     }
 
-    public static void printUserErrorsFile() {
-        print(ANSI_RED + FileHandler.readFile(FileType.USER_ERRORS) + ANSI_RESET);
+    public static void printUserErrors() {
+        print(ANSI_RED + MessageHolder.getMessages(MessageType.USER_ERROR) + ANSI_RESET);
     }
 }

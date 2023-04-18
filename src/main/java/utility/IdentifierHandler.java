@@ -3,6 +3,7 @@ package utility;
 import data.Vehicle;
 import exceptions.NoSuchIdException;
 import mods.FileType;
+import mods.MessageType;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -26,8 +27,8 @@ public class IdentifierHandler {
         if (nonDigitValuePattern.matcher(value).matches()) {
             return false;
         }
-        FileHandler.writeCurrentCommand(commandName, FileType.USER_ERRORS);
-        FileHandler.writeToFile(String.format("%s must be a number", valueName), FileType.USER_ERRORS);
+        MessageHolder.putMessage(commandName, MessageType.USER_ERROR);
+        MessageHolder.putMessage(String.format("%s must be a number", valueName), MessageType.USER_ERROR);
         return true;
     }
 
@@ -35,8 +36,8 @@ public class IdentifierHandler {
         String nonPositiveValue = "-\\d+";
         Pattern nonPositiveValuePattern = Pattern.compile(nonPositiveValue);
         if (nonPositiveValuePattern.matcher(value).matches()) {
-            FileHandler.writeCurrentCommand(commandName, FileType.USER_ERRORS);
-            FileHandler.writeToFile(String.format("%s cannot be negative", valueName), FileType.USER_ERRORS);
+            MessageHolder.putCurrentCommand(commandName, MessageType.USER_ERROR);
+            MessageHolder.putMessage(String.format("%s cannot be negative", valueName), MessageType.USER_ERROR);
             return true;
         }
         return false;
@@ -46,8 +47,8 @@ public class IdentifierHandler {
         String leadingZeros = "^0+\\d+";
         Pattern leadingZerosPattern = Pattern.compile(leadingZeros);
         if (leadingZerosPattern.matcher(value).matches()) {
-            FileHandler.writeCurrentCommand(commandName, FileType.USER_ERRORS);
-            FileHandler.writeToFile(String.format("%s cannot have leading zeros", valueName), FileType.USER_ERRORS);
+            MessageHolder.putCurrentCommand(commandName, MessageType.USER_ERROR);
+            MessageHolder.putMessage(String.format("%s cannot have leading zeros", valueName), MessageType.USER_ERROR);
             return true;
         }
         return false;
@@ -61,9 +62,9 @@ public class IdentifierHandler {
         if (hasLeadingZeros(key, "key", commandName))
             return false;
         if (key.length() > MAX_KEY_LENGTH) {
-            FileHandler.writeCurrentCommand(commandName, FileType.USER_ERRORS);
-            FileHandler.writeToFile(String.format(
-                    "Key is too long, max length - %s", MAX_KEY_LENGTH), FileType.USER_ERRORS);
+            MessageHolder.putCurrentCommand(commandName, MessageType.USER_ERROR);
+            MessageHolder.putMessage(String.format(
+                    "Key is too long, max length - %s", MAX_KEY_LENGTH), MessageType.USER_ERROR);
             return false;
         }
         return true;
@@ -77,14 +78,14 @@ public class IdentifierHandler {
         if (hasLeadingZeros(id, "Id", commandName))
             return false;
         if (id.length() != ID_LENGTH) {
-            FileHandler.writeCurrentCommand(commandName, FileType.USER_ERRORS);
-            FileHandler.writeToFile(String.format("Invalid id length: %s, expected %s",
-                    id.length(), ID_LENGTH), FileType.USER_ERRORS);
+            MessageHolder.putCurrentCommand(commandName, MessageType.USER_ERROR);
+            MessageHolder.putMessage(String.format(
+                    "Invalid id length: %s, expected %s", id.length(), ID_LENGTH), MessageType.USER_ERROR);
             return false;
         }
         if (!hasElementWithId(Long.parseLong(id))) {
-            FileHandler.writeCurrentCommand(commandName, FileType.USER_ERRORS);
-            FileHandler.writeToFile("No such element with this id", FileType.USER_ERRORS);
+            MessageHolder.putCurrentCommand(commandName, MessageType.USER_ERROR);
+            MessageHolder.putMessage("No such element with this id", MessageType.USER_ERROR);
             return false;
         }
         return true;
@@ -110,14 +111,14 @@ public class IdentifierHandler {
     public boolean hasElementWithKey(String key, boolean expectedResult, String commandName) {
         if (dataBase.containsKey(Long.parseLong(key))) {
             if (expectedResult) {
-                FileHandler.writeCurrentCommand(commandName, FileType.USER_ERRORS);
-                FileHandler.writeToFile("Element with such key already exists", FileType.USER_ERRORS);
+                MessageHolder.putCurrentCommand(commandName, MessageType.USER_ERROR);
+                MessageHolder.putMessage("Element with such key already exists", MessageType.USER_ERROR);
             }
             return true;
         }
         if (!expectedResult) {
-            FileHandler.writeCurrentCommand(commandName, FileType.USER_ERRORS);
-            FileHandler.writeToFile("Element with such key not found", FileType.USER_ERRORS);
+            MessageHolder.putCurrentCommand(commandName, MessageType.USER_ERROR);
+            MessageHolder.putMessage("Element with such key not found", MessageType.USER_ERROR);
         }
         return false;
     }
@@ -153,7 +154,7 @@ public class IdentifierHandler {
         }
         if (key == -1) {
             RuntimeException e = new NoSuchIdException(id);
-            FileHandler.writeToFile(e.getMessage(), FileType.SYSTEM_ERRORS);
+            System.err.println(e.getMessage());
             throw e;
         }
         return key;
