@@ -46,7 +46,7 @@ public class CommandParser {
     private boolean commandSelection(String nextLine, String nextCommand, String[] arguments,
                                      String[] vehicleValues, ExecuteMode executeMode) {
         boolean exitStatus;
-        CommandArguments commandArguments = new CommandArguments(arguments, vehicleValues, executeMode);
+        CommandArguments commandArguments = new CommandArguments(nextCommand, arguments, vehicleValues, executeMode);
         switch (nextCommand) {
             case "help" -> exitStatus = invoker.help(commandArguments);
             case "info" -> exitStatus = invoker.info(commandArguments);

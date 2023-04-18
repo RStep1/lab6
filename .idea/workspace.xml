@@ -4,20 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="85453189-5be8-4fe3-ad24-1edc46d74a0c" name="Changes" comment="Add handling of collection objects using Stream API">
-      <change afterPath="$PROJECT_DIR$/src/main/java/mods/MessageType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/utility/MessageHolder.java" afterDir="false" />
+    <list default="true" id="85453189-5be8-4fe3-ad24-1edc46d74a0c" name="Changes" comment="Add class to store messages for the user">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/output.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/user_errors.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mods/FileType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mods/FileType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/processing/BufferedDataBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/processing/BufferedDataBase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/processing/CommandInvoker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/processing/CommandInvoker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/processing/CommandParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/processing/CommandParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/processing/Console.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/processing/Console.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/run/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/run/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utility/FileHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utility/FileHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utility/IdentifierHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utility/IdentifierHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utility/ValueHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utility/ValueHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utility/CommandArguments.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utility/CommandArguments.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +58,7 @@
       <workItem from="1681639336300" duration="358000" />
       <workItem from="1681640506866" duration="12935000" />
       <workItem from="1681742771147" duration="876000" />
-      <workItem from="1681828133396" duration="7419000" />
+      <workItem from="1681828133396" duration="9295000" />
     </task>
     <task id="LOCAL-00001" summary="Copy lab5 project">
       <created>1681564328860</created>
@@ -89,7 +81,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681657448208</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Add class to store messages for the user">
+      <created>1681839576692</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1681839576692</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -110,6 +109,7 @@
     <MESSAGE value="Copy lab5 project" />
     <MESSAGE value="Combine command arguments into a separate class" />
     <MESSAGE value="Add handling of collection objects using Stream API" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add handling of collection objects using Stream API" />
+    <MESSAGE value="Add class to store messages for the user" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add class to store messages for the user" />
   </component>
 </project>

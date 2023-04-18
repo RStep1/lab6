@@ -1,17 +1,18 @@
 package processing;
 
 import commands.*;
-import mods.ExecuteMode;
 import utility.CommandArguments;
 import utility.FileHandler;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Calls each wrapper command.
  */
 public class CommandInvoker {
-    private ArrayList<Command> commandList = new ArrayList<>();
+    private final Map<String, Command> commandMap = new HashMap<>();
 
     /**
      * Initializes each command and set reference file.
@@ -22,22 +23,22 @@ public class CommandInvoker {
                           Command exitCommand, Command removeGreaterCommand, Command removeLowerCommand,
                           Command removeGreaterKeyCommand, Command removeAllByEnginePowerCommand,
                           Command countByFuelTypeCommand, Command filterLessThanFuelTypeCommand) {
-        commandList.add(helpCommand);
-        commandList.add(infoCommand);
-        commandList.add(showCommand);
-        commandList.add(insertCommand);
-        commandList.add(updateCommand);
-        commandList.add(removeKeyCommand);
-        commandList.add(clearCommand);
-        commandList.add(saveCommand);
-        commandList.add(executeScriptCommand);
-        commandList.add(exitCommand);
-        commandList.add(removeGreaterCommand);
-        commandList.add(removeLowerCommand);
-        commandList.add(removeGreaterKeyCommand);
-        commandList.add(removeAllByEnginePowerCommand);
-        commandList.add(countByFuelTypeCommand);
-        commandList.add(filterLessThanFuelTypeCommand);
+        commandMap.put(HelpCommand.getName(), helpCommand);
+        commandMap.put(InfoCommand.getName(), infoCommand);
+        commandMap.put(ShowCommand.getName(), showCommand);
+        commandMap.put(InsertCommand.getName(), insertCommand);
+        commandMap.put(UpdateCommand.getName(), updateCommand);
+        commandMap.put(RemoveKeyCommand.getName(), removeKeyCommand);
+        commandMap.put(ClearCommand.getName(), clearCommand);
+        commandMap.put(SaveCommand.getName(), saveCommand);
+        commandMap.put(ExecuteScriptCommand.getName(), executeScriptCommand);
+        commandMap.put(ExitCommand.getName(), exitCommand);
+        commandMap.put(RemoveGreaterCommand.getName(), removeGreaterCommand);
+        commandMap.put(RemoveLowerCommand.getName(), removeLowerCommand);
+        commandMap.put(RemoveGreaterKeyCommand.getName(), removeGreaterKeyCommand);
+        commandMap.put(RemoveAllByEnginePowerCommand.getName(), removeAllByEnginePowerCommand);
+        commandMap.put(CountByFuelTypeCommand.getName(), countByFuelTypeCommand);
+        commandMap.put(FilterLessThanFuelTypeCommand.getName(), filterLessThanFuelTypeCommand);
 
         setReferenceFile();
     }
@@ -47,8 +48,7 @@ public class CommandInvoker {
      */
     private void setReferenceFile() {
         StringBuilder reference = new StringBuilder();
-        for (Command command : commandList)
-            reference.append(command).append("\n");
+        commandMap.forEach((commandName, command) -> reference.append(command).append("\n"));
         FileHandler.writeReferenceFile(reference.toString());
     }
 
@@ -59,12 +59,7 @@ public class CommandInvoker {
      * @return Command exit status.
      */
     public boolean help(CommandArguments commandArguments) {
-        for (Command command : commandList) {
-            if (command instanceof HelpCommand helpCommand) {
-                return helpCommand.execute(commandArguments);
-            }
-        }
-        return false;
+        return commandMap.get(commandArguments.commandName()).execute(commandArguments);
     }
 
     /**
@@ -74,12 +69,7 @@ public class CommandInvoker {
      * @return Command exit status.
      */
     public boolean info(CommandArguments commandArguments) {
-        for (Command command : commandList) {
-            if (command instanceof InfoCommand infoCommand) {
-                return infoCommand.execute(commandArguments);
-            }
-        }
-        return false;
+        return commandMap.get(commandArguments.commandName()).execute(commandArguments);
     }
 
     /**
@@ -89,12 +79,7 @@ public class CommandInvoker {
      * @return Command exit status.
      */
     public boolean show(CommandArguments commandArguments) {
-        for (Command command : commandList) {
-            if (command instanceof ShowCommand showCommand) {
-                return showCommand.execute(commandArguments);
-            }
-        }
-        return false;
+        return commandMap.get(commandArguments.commandName()).execute(commandArguments);
     }
 
     /**
@@ -104,12 +89,7 @@ public class CommandInvoker {
      * @return Command exit status.
      */
     public boolean insert(CommandArguments commandArguments) {
-        for (Command command : commandList) {
-            if (command instanceof InsertCommand insertCommand) {
-                return insertCommand.execute(commandArguments);
-            }
-        }
-        return false;
+        return commandMap.get(commandArguments.commandName()).execute(commandArguments);
     }
 
     /**
@@ -119,12 +99,7 @@ public class CommandInvoker {
      * @return Command exit status.
      */
     public boolean update(CommandArguments commandArguments) {
-        for (Command command : commandList) {
-            if (command instanceof UpdateCommand updateCommand) {
-                return updateCommand.execute(commandArguments);
-            }
-        }
-        return false;
+        return commandMap.get(commandArguments.commandName()).execute(commandArguments);
     }
 
     /**
@@ -134,12 +109,7 @@ public class CommandInvoker {
      * @return Command exit status.
      */
     public boolean removeKey(CommandArguments commandArguments) {
-        for (Command command : commandList) {
-            if (command instanceof RemoveKeyCommand removeKeyCommand) {
-                return removeKeyCommand.execute(commandArguments);
-            }
-        }
-        return false;
+        return commandMap.get(commandArguments.commandName()).execute(commandArguments);
     }
 
     /**
@@ -149,12 +119,7 @@ public class CommandInvoker {
      * @return Command exit status.
      */
     public boolean clear(CommandArguments commandArguments) {
-        for (Command command : commandList) {
-            if (command instanceof ClearCommand clearCommand) {
-                return clearCommand.execute(commandArguments);
-            }
-        }
-        return false;
+        return commandMap.get(commandArguments.commandName()).execute(commandArguments);
     }
 
     /**
@@ -164,12 +129,7 @@ public class CommandInvoker {
      * @return Command exit status.
      */
     public boolean save(CommandArguments commandArguments) {
-        for (Command command : commandList) {
-            if (command instanceof SaveCommand saveCommand) {
-                return saveCommand.execute(commandArguments);
-            }
-        }
-        return false;
+        return commandMap.get(commandArguments.commandName()).execute(commandArguments);
     }
 
     /**
@@ -179,12 +139,7 @@ public class CommandInvoker {
      * @return Command exit status.
      */
     public boolean executeScript(CommandArguments commandArguments) {
-        for (Command command : commandList) {
-            if (command instanceof ExecuteScriptCommand executeScriptCommand) {
-                return executeScriptCommand.execute(commandArguments);
-            }
-        }
-        return false;
+        return commandMap.get(commandArguments.commandName()).execute(commandArguments);
     }
 
     /**
@@ -194,12 +149,7 @@ public class CommandInvoker {
      * @return Command exit status.
      */
     public boolean exit(CommandArguments commandArguments) {
-        for (Command command : commandList) {
-            if (command instanceof ExitCommand exitCommand) {
-                return exitCommand.execute(commandArguments);
-            }
-        }
-        return false;
+        return commandMap.get(commandArguments.commandName()).execute(commandArguments);
     }
 
     /**
@@ -209,12 +159,7 @@ public class CommandInvoker {
      * @return Command exit status.
      */
     public boolean removeGreater(CommandArguments commandArguments) {
-        for (Command command : commandList) {
-            if (command instanceof RemoveGreaterCommand removeGreaterCommand) {
-                return removeGreaterCommand.execute(commandArguments);
-            }
-        }
-        return false;
+        return commandMap.get(commandArguments.commandName()).execute(commandArguments);
     }
 
     /**
@@ -224,12 +169,7 @@ public class CommandInvoker {
      * @return Command exit status.
      */
     public boolean removeLower(CommandArguments commandArguments) {
-        for (Command command : commandList) {
-            if (command instanceof RemoveLowerCommand removeLowerCommand) {
-                return removeLowerCommand.execute(commandArguments);
-            }
-        }
-        return false;
+        return commandMap.get(commandArguments.commandName()).execute(commandArguments);
     }
 
     /**
@@ -239,12 +179,7 @@ public class CommandInvoker {
      * @return Command exit status.
      */
     public boolean removeGreaterKey(CommandArguments commandArguments) {
-        for (Command command : commandList) {
-            if (command instanceof RemoveGreaterKeyCommand removeGreaterKeyCommand) {
-                return removeGreaterKeyCommand.execute(commandArguments);
-            }
-        }
-        return false;
+        return commandMap.get(commandArguments.commandName()).execute(commandArguments);
     }
 
     /**
@@ -254,12 +189,7 @@ public class CommandInvoker {
      * @return Command exit status.
      */
     public boolean removeAllByEnginePower(CommandArguments commandArguments) {
-        for (Command command : commandList) {
-            if (command instanceof RemoveAllByEnginePowerCommand removeAllByEnginePowerCommand) {
-                return removeAllByEnginePowerCommand.execute(commandArguments);
-            }
-        }
-        return false;
+        return commandMap.get(commandArguments.commandName()).execute(commandArguments);
     }
 
     /**
@@ -269,12 +199,7 @@ public class CommandInvoker {
      * @return Command exit status.
      */
     public boolean countByFuelType(CommandArguments commandArguments) {
-        for (Command command : commandList) {
-            if (command instanceof CountByFuelTypeCommand countByFuelTypeCommand) {
-                return countByFuelTypeCommand.execute(commandArguments);
-            }
-        }
-        return false;
+        return commandMap.get(commandArguments.commandName()).execute(commandArguments);
     }
 
     /**
@@ -284,11 +209,6 @@ public class CommandInvoker {
      * @return Command exit status.
      */
     public boolean filterLessThanFuelType(CommandArguments commandArguments) {
-        for (Command command : commandList) {
-            if (command instanceof FilterLessThanFuelTypeCommand filterLessThanFuelTypeCommand) {
-                return filterLessThanFuelTypeCommand.execute(commandArguments);
-            }
-        }
-        return false;
+        return commandMap.get(commandArguments.commandName()).execute(commandArguments);
     }
 }
