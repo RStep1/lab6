@@ -1,11 +1,13 @@
 package utility;
 
 import mods.ExecuteMode;
+import org.apache.commons.lang3.SerializationUtils;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 public record CommandArguments(String commandName, String[] arguments, String[] extraArguments,
-                               ExecuteMode executeMode) {
+                               ExecuteMode executeMode) implements Serializable {
 
     @Override
     public String toString() {

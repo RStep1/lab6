@@ -4,66 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="85453189-5be8-4fe3-ad24-1edc46d74a0c" name="Changes" comment="Change collection for storing commands">
-      <change afterPath="$PROJECT_DIR$/client/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/run/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/src/main/java/mods/AnswerType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/src/main/java/run/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/src/main/java/utility/ServerAnswer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/run/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="85453189-5be8-4fe3-ad24-1edc46d74a0c" name="Changes" comment="Split the project into two modules">
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/processing/Serializator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/system_errors.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/ClearCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/ClearCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/Command.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/CountByFuelTypeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/CountByFuelTypeCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/ExecuteScriptCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/ExecuteScriptCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/ExitCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/ExitCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/FilterLessThanFuelTypeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/FilterLessThanFuelTypeCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/HelpCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/HelpCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/InfoCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/InfoCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/InsertCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/InsertCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/RemoveAllByEnginePowerCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/RemoveAllByEnginePowerCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/RemoveGreaterCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/RemoveGreaterCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/RemoveGreaterKeyCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/RemoveGreaterKeyCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/RemoveKeyCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/RemoveKeyCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/RemoveLowerCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/RemoveLowerCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/SaveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/SaveCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/ShowCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/ShowCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/UpdateCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/UpdateCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/data/Coordinates.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/data/Coordinates.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/data/FuelType.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/data/FuelType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/data/Vehicle.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/data/Vehicle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/data/VehicleType.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/data/VehicleType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/exceptions/NoSuchIdException.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/exceptions/NoSuchIdException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/exceptions/WrongAmountOfArgumentsException.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/exceptions/WrongAmountOfArgumentsException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mods/AddMode.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/mods/AddMode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mods/ExecuteMode.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/mods/ExecuteMode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mods/FileType.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/mods/FileType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mods/MessageType.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/mods/MessageType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mods/RemoveMode.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/mods/RemoveMode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mods/ValueType.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/mods/ValueType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/processing/BufferedDataBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/processing/BufferedDataBase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/processing/CommandInvoker.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/processing/CommandInvoker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/processing/CommandParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/processing/CommandParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/processing/Console.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/processing/Console.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/run/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utility/Checker.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/utility/Checker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utility/CheckingResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/utility/CheckingResult.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utility/CommandArguments.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/utility/CommandArguments.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utility/Correction.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/utility/Correction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utility/FileHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/utility/FileHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utility/IdentifierHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/utility/IdentifierHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utility/JsonReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/utility/JsonReader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utility/JsonWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/utility/JsonWriter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utility/MessageHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/utility/MessageHolder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utility/Process.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/utility/Process.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utility/ValueHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/utility/ValueHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utility/ValueTransformer.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/utility/ValueTransformer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/core/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/utility/CommandArguments.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/utility/CommandArguments.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,8 +18,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -170,6 +115,7 @@
       <workItem from="1682175923490" duration="930000" />
       <workItem from="1682176863847" duration="2350000" />
       <workItem from="1682233156480" duration="12399000" />
+      <workItem from="1682259007569" duration="856000" />
     </task>
     <task id="LOCAL-00001" summary="Copy lab5 project">
       <created>1681564328860</created>
@@ -206,7 +152,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681843411778</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Split the project into two modules">
+      <created>1682259259028</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1682259259028</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -229,7 +182,8 @@
     <MESSAGE value="Add handling of collection objects using Stream API" />
     <MESSAGE value="Add class to store messages for the user" />
     <MESSAGE value="Change collection for storing commands" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change collection for storing commands" />
+    <MESSAGE value="Split the project into two modules" />
+    <option name="LAST_COMMIT_MESSAGE" value="Split the project into two modules" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
