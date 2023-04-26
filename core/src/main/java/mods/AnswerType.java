@@ -1,6 +1,6 @@
 package mods;
 
 public enum AnswerType {
-    EXECUTION_RESULT,
+    EXECUTION_RESPONSE,
     DATA_REQUEST;
 }

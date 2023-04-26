@@ -9,6 +9,7 @@ import mods.MessageType;
 import utility.CommandArguments;
 import utility.MessageHolder;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
 /**
@@ -45,7 +46,9 @@ public class CommandParser {
                                      String[] vehicleValues, ExecuteMode executeMode) {
         boolean exitStatus;
         CommandArguments commandArguments = new CommandArguments(nextCommand, arguments, vehicleValues, executeMode);
-        //serialization...
+
+        ByteBuffer buffer = Serializator.serialize(commandArguments);
+
         switch (nextCommand) {
             case "help" -> exitStatus = invoker.help(commandArguments);
             case "info" -> exitStatus = invoker.info(commandArguments);
