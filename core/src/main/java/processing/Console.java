@@ -53,6 +53,7 @@ public class Console {
         in.close();
     }
 
+
     /**
      * Reads the parameters of the collection element.
      * @param id Automatically generated parameter.
@@ -101,6 +102,11 @@ public class Console {
     public static void print(String message) {
         PrintStream printStream = new PrintStream(System.out);
         printStream.print(message);
+    }
+
+    public static void println(String massage) {
+        PrintStream printStream = new PrintStream(System.out);
+        printStream.println(massage);
     }
 
     public static void printOutputInfo() {

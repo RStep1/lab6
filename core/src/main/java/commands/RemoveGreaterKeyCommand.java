@@ -13,6 +13,7 @@ public class RemoveGreaterKeyCommand implements Command {
     private static final String ARGUMENTS = " <key>";
     private static final String DESCRIPTION =
             "removes from the collection all elements whose key is greater than the specified";
+    private static final int COUNT_OF_ARGUMENTS = 1;
     private static final int COUNT_OF_EXTRA_ARGUMENTS = 0;
 
     public RemoveGreaterKeyCommand(BufferedDataBase bufferedDataBase) {
@@ -30,6 +31,10 @@ public class RemoveGreaterKeyCommand implements Command {
 
     public static String getDescription() {
         return DESCRIPTION;
+    }
+
+    public static int getCountOfArguments() {
+        return COUNT_OF_ARGUMENTS;
     }
 
     public static int getCountOfExtraArguments() {

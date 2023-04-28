@@ -13,6 +13,7 @@ public class ShowCommand implements Command {
     private static final String ARGUMENTS = "";
     private static final String DESCRIPTION =
             "prints to standard output all elements of the collection in string representation";
+    private static final int COUNT_OF_ARGUMENTS = 0;
     private static final int COUNT_OF_EXTRA_ARGUMENTS = 0;
 
     public ShowCommand(BufferedDataBase bufferedDataBase) {
@@ -30,6 +31,10 @@ public class ShowCommand implements Command {
 
     public static String getDescription() {
         return DESCRIPTION;
+    }
+
+    public static int getCountOfArguments() {
+        return COUNT_OF_ARGUMENTS;
     }
 
     public static int getCountOfExtraArguments() {

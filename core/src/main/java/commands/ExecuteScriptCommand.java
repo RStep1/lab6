@@ -15,6 +15,7 @@ public class ExecuteScriptCommand implements Command {
     private static final String DESCRIPTION =
             "reads and executes a script from the specified file. The script contains commands" +
                     " in the same form in which they are entered by the user in interactive mode.";
+    private static final int COUNT_OF_ARGUMENTS = 1;
     private static final int COUNT_OF_EXTRA_ARGUMENTS = 0;
     public ExecuteScriptCommand(BufferedDataBase bufferedDataBase) {
         this.bufferedDataBase = bufferedDataBase;
@@ -31,6 +32,10 @@ public class ExecuteScriptCommand implements Command {
 
     public static String getDescription() {
         return DESCRIPTION;
+    }
+
+    public static int getCountOfArguments() {
+        return COUNT_OF_ARGUMENTS;
     }
 
     public static int getCountOfExtraArguments() {

@@ -47,8 +47,6 @@ public class CommandParser {
         boolean exitStatus;
         CommandArguments commandArguments = new CommandArguments(nextCommand, arguments, vehicleValues, executeMode);
 
-        ByteBuffer buffer = Serializator.serialize(commandArguments);
-
         switch (nextCommand) {
             case "help" -> exitStatus = invoker.help(commandArguments);
             case "info" -> exitStatus = invoker.info(commandArguments);

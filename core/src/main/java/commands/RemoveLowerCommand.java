@@ -14,6 +14,7 @@ public class RemoveLowerCommand implements Command {
     private static final String DESCRIPTION =
             "removes from the collection all elements whose " +
                     "distanceTraveled field value is less than the specified value";
+    private static final int COUNT_OF_ARGUMENTS = 1;
     private static final int COUNT_OF_EXTRA_ARGUMENTS = 0;
 
     public RemoveLowerCommand(BufferedDataBase bufferedDataBase) {
@@ -31,6 +32,10 @@ public class RemoveLowerCommand implements Command {
 
     public static String getDescription() {
         return DESCRIPTION;
+    }
+
+    public static int getCountOfArguments() {
+        return COUNT_OF_ARGUMENTS;
     }
 
     public static int getCountOfExtraArguments() {

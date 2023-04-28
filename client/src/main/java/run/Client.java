@@ -1,6 +1,6 @@
 package run;
 
-import processing.Serializator;
+import org.apache.commons.lang3.SerializationUtils;
 import utility.CommandArguments;
 import utility.ServerAnswer;
 
@@ -13,48 +13,45 @@ import java.nio.channels.SocketChannel;
 public class Client {
     private static SocketChannel client;
     private static ByteBuffer buffer;
-    private static Client instance;
 
-    private Client(String host, int port) {
-        try {
-            client = SocketChannel.open(new InetSocketAddress(host, port));
-            buffer = ByteBuffer.allocate(256);
-        } catch (ConnectException e) {
-            System.out.println("SERVER NOT ANSWER");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    public Client(String host, int port) throws IOException {
 
-    public static Client start(String host, int port) {
-        if (instance == null) {
-            instance = new Client(host, port);
-        }
-        if (client == null) {
-            return null;
-        }
-        return instance;
+        client = SocketChannel.open(new InetSocketAddress(host, port));
+        System.out.println("Local port is: "+client.getLocalAddress());
+        buffer = ByteBuffer.allocate(256);
+//        System.out.println("client =" + client);
     }
 
     public static void stop() {
         try {
-            client.close();
+            //client.close();
+            client.finishConnect();
         } catch (IOException e) {
+            System.out.println("Client is open: "+client.isConnected());
             e.printStackTrace();
         }
+        System.out.println("Client is open: "+client.isConnected());
         buffer = null;
     }
 
+    public SocketChannel getSocketChannel() {
+        return client;
+    }
+
     public ServerAnswer sendRequest(CommandArguments request) {
-        ServerAnswer serverAnswer = null;
+        ServerAnswer serverAnswer;
         try {
-            buffer = Serializator.serialize(request);
+            byte[] objectBytes = SerializationUtils.serialize(request);
+            buffer = ByteBuffer.wrap(objectBytes);
             client.write(buffer);
             buffer.clear();
             client.read(buffer);
-            serverAnswer = Serializator.deserialize(buffer);
+            serverAnswer = SerializationUtils.deserialize(buffer.array());
+            buffer.clear();
+        } catch (ClassCastException e) {
+            return null;
         } catch (IOException e) {
-            e.printStackTrace();
+            return null;
         }
         return serverAnswer;
     }

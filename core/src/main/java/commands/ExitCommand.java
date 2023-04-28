@@ -12,6 +12,7 @@ public class ExitCommand implements Command {
     private static final String ARGUMENTS = "";
     private static final String DESCRIPTION =
             "terminates the program without saving to a file";
+    private static final int COUNT_OF_ARGUMENTS = 0;
     private static final int COUNT_OF_EXTRA_ARGUMENTS = 0;
     public ExitCommand(BufferedDataBase dataBase) {
         this.dataBase = dataBase;
@@ -28,6 +29,10 @@ public class ExitCommand implements Command {
 
     public static String getDescription() {
         return DESCRIPTION;
+    }
+
+    public static int getCountOfArguments() {
+        return COUNT_OF_ARGUMENTS;
     }
 
     public static int getCountOfExtraArguments() {

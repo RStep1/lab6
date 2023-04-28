@@ -13,6 +13,7 @@ public class RemoveAllByEnginePowerCommand implements Command {
     private static final String ARGUMENTS = " <enginePower>";
     private static final String DESCRIPTION =
             "removes from the collection all elements whose enginePower field value is equivalent to the given one";
+    private static final int COUNT_OF_ARGUMENTS = 1;
     private static final int COUNT_OF_EXTRA_ARGUMENTS = 0;
     public RemoveAllByEnginePowerCommand(BufferedDataBase bufferedDataBase) {
         this.bufferedDataBase = bufferedDataBase;
@@ -29,6 +30,10 @@ public class RemoveAllByEnginePowerCommand implements Command {
 
     public static String getDescription() {
         return DESCRIPTION;
+    }
+
+    public static int getCountOfArguments() {
+        return COUNT_OF_ARGUMENTS;
     }
 
     public static int getCountOfExtraArguments() {

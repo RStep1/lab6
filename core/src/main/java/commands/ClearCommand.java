@@ -12,6 +12,7 @@ public class ClearCommand implements Command {
     private static final String NAME = "clear";
     private static final String ARGUMENTS = "";
     private static final String DESCRIPTION = "clears the collection";
+    private static final int COUNT_OF_ARGUMENTS = 0;
     private static final int COUNT_OF_EXTRA_ARGUMENTS = 0;
 
     public ClearCommand(BufferedDataBase bufferedDataBase) {
@@ -29,6 +30,10 @@ public class ClearCommand implements Command {
 
     public static String getDescription() {
         return DESCRIPTION;
+    }
+
+    public static int getCountOfArguments() {
+        return COUNT_OF_ARGUMENTS;
     }
 
     public static int getCountOfExtraArguments() {

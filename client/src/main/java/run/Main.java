@@ -1,9 +1,5 @@
 package run;
 
-import mods.MessageType;
-import utility.FileHandler;
-import utility.MessageHolder;
-
 import java.util.Scanner;
 
 public class Main {
@@ -13,9 +9,14 @@ public class Main {
         //args = (host, port) - get and check
         boolean processingStatus = false;
         while (!processingStatus) { // processingStatus = true, if client input 'exit', else connection failed
-            clientManager.setConnection("localhost", 5621);
-            processingStatus = clientManager.interactiveMode();
+            if (!clientManager.setConnection("localhost", 15454))
+                continue;
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            processingStatus = clientManager.processRequestToServer();
         }
     }
-
 }

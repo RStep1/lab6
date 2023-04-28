@@ -13,6 +13,7 @@ public class FilterLessThanFuelTypeCommand implements Command {
     private static final String NAME = "filter_less_than_fuel_type";
     private static final String ARGUMENTS = " <fuelType>";
     private static final String DESCRIPTION = "displays elements whose fuelType field value is less than the given one";
+    private static final int COUNT_OF_ARGUMENTS = 1;
     private static final int COUNT_OF_EXTRA_ARGUMENTS = 0;
 
     public FilterLessThanFuelTypeCommand(BufferedDataBase bufferedDataBase) {
@@ -30,6 +31,10 @@ public class FilterLessThanFuelTypeCommand implements Command {
 
     public static String getDescription() {
         return DESCRIPTION;
+    }
+
+    public static int getCountOfArguments() {
+        return COUNT_OF_ARGUMENTS;
     }
 
     public static int getCountOfExtraArguments() {

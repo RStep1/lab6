@@ -12,6 +12,7 @@ public class RemoveKeyCommand implements Command {
     private static final String NAME = "remove_key";
     private static final String ARGUMENTS = " <key>";
     private static final String DESCRIPTION = "removes an element from the collection by its key";
+    private static final int COUNT_OF_ARGUMENTS = 1;
     private static final int COUNT_OF_EXTRA_ARGUMENTS = 0;
 
     public RemoveKeyCommand(BufferedDataBase bufferedDataBase) {
@@ -29,6 +30,10 @@ public class RemoveKeyCommand implements Command {
 
     public static String getDescription() {
         return DESCRIPTION;
+    }
+
+    public static int getCountOfArguments() {
+        return COUNT_OF_ARGUMENTS;
     }
 
     public static int getCountOfExtraArguments() {

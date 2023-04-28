@@ -32,8 +32,10 @@ public class Main {
                 new RemoveAllByEnginePowerCommand(bufferedDataBase),
                 new CountByFuelTypeCommand(bufferedDataBase),
                 new FilterLessThanFuelTypeCommand(bufferedDataBase));
-        Console console = new Console(invoker);
+//        Console console = new Console(invoker);
+        Server server = new Server(new RequestHandler(invoker));
         bufferedDataBase.setCommandInvoker(invoker);
-        console.interactiveMode();
+        server.run();
+//        console.interactiveMode();
     }
 }
