@@ -1,5 +1,6 @@
 package run;
 
+import mods.ExecuteMode;
 import org.apache.commons.lang3.SerializationUtils;
 import utility.CommandArguments;
 import utility.ServerAnswer;
@@ -24,8 +25,8 @@ public class Client {
 
     public static void stop() {
         try {
-            //client.close();
-            client.finishConnect();
+            client.close();
+//            client.finishConnect();
         } catch (IOException e) {
             System.out.println("Client is open: "+client.isConnected());
             e.printStackTrace();
@@ -54,5 +55,20 @@ public class Client {
             return null;
         }
         return serverAnswer;
+    }
+
+    public boolean isServerAlive() {
+        try {
+            buffer = ByteBuffer.wrap(SerializationUtils.serialize(
+                    new CommandArguments("ACK", null, null, ExecuteMode.COMMAND_MODE)));
+            client.write(buffer);
+            buffer.clear();
+            client.read(buffer);
+            buffer.clear();
+        } catch (IOException e) {
+            System.out.println("server not answer...");
+            return false;
+        }
+        return true;
     }
 }

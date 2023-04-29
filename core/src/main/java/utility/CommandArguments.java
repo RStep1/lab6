@@ -18,7 +18,7 @@ public record CommandArguments(String commandName, String[] arguments, String[] 
                         Vehicle arguments: %s
                         Execute mode: %s
                         """,
-                arguments[0], Arrays.toString(arguments),
+                commandName, Arrays.toString(arguments),
                 Arrays.toString(extraArguments), executeMode);
     }
 }

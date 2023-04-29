@@ -5,6 +5,7 @@ import mods.AnswerType;
 import mods.ExecuteMode;
 import mods.FileType;
 import mods.MessageType;
+import processing.CommandArgumentsBuilder;
 import processing.CommandParser;
 import processing.CommandValidator;
 import processing.Console;
@@ -42,20 +43,27 @@ public class ClientManager {
         Console.println(FileHandler.readFile(FileType.REFERENCE));
         do {
             try {
-                Console.print("Type command and press Enter: ");
-                String nextLine = "";
-                try {
-                    nextLine = scanner.nextLine();
-                } catch (NoSuchElementException e) {
-                    teardown();
-                    System.exit(0);
-                }
-                CommandParser commandParser = new CommandParser();
-                commandArguments = commandParser.commandProcessing(nextLine);
+                CommandArgumentsBuilder commandArgumentsBuilder = new CommandArgumentsBuilder(scanner);
+                commandArguments = commandArgumentsBuilder.userEnter();
+                //need connection check
+//                if (!client.isServerAlive()) {
+//                    //тестовый обмен данными
+//                    System.out.println("connection lost");
+//                    break;
+//                }
+                if (commandArguments == null) //if user just press Enter bottom
+                    continue;
+                System.out.println(commandArguments + "");
                 CommandValidator commandValidator = new CommandValidator(AnswerType.EXECUTION_RESPONSE);
-                //command processing
-                //validate command and arguments, build commandArguments
-                commandArguments = new CommandArguments(nextLine, null, null, ExecuteMode.COMMAND_MODE);//example
+                if (!commandValidator.validate(commandArguments)) // if arguments or command was wrong, request data again
+                    continue;
+
+                // (1) command processing
+                // (2) build commandArguments object
+                // (3) validate command and arguments
+                // (4) serialization
+                // (5) send obj to server
+//                commandArguments = new CommandArguments("nextLine", null, null, ExecuteMode.COMMAND_MODE);//example
                 if (commandArguments.commandName().equals(ExitCommand.getName())) {
                     System.out.println("client exit");
                     break;
@@ -85,7 +93,7 @@ public class ClientManager {
                 teardown();
                 return false;
             }
-        } while (!commandArguments.commandName().equals(ExitCommand.getName()));
+        } while (commandArguments == null || !commandArguments.commandName().equals(ExitCommand.getName()));
         teardown();
         return true;
     }
@@ -94,4 +102,5 @@ public class ClientManager {
         Client.stop();
         scanner.close();
     }
+
 }

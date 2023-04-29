@@ -11,7 +11,7 @@ import java.util.Map;
  * Calls each wrapper command.
  */
 public class CommandInvoker {
-    private final Map<String, Command> commandMap = new HashMap<>();
+    private static final Map<String, Command> commandMap = new HashMap<>();
 
     /**
      * Initializes each command and set reference file.
@@ -42,6 +42,9 @@ public class CommandInvoker {
         setReferenceFile();
     }
 
+    public static Map<String, Command> getCommandMap() {
+        return commandMap;
+    }
     /**
      * Fills the reference file.
      */

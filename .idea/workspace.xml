@@ -4,33 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="85453189-5be8-4fe3-ad24-1edc46d74a0c" name="Changes" comment="Add Client and ClientManager classes">
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/processing/CommandValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/run/RequestHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/run/Server.java" afterDir="false" />
+    <list default="true" id="85453189-5be8-4fe3-ad24-1edc46d74a0c" name="Changes" comment="Add variable of count of arguments in each command.">
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/processing/CommandArgumentsBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/processing/CommandValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/processing/CommandValidator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/run/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/run/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/run/ClientManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/run/ClientManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/run/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/run/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/commands/ClearCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/ClearCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/commands/CountByFuelTypeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/CountByFuelTypeCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/commands/ExecuteScriptCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/ExecuteScriptCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/commands/ExitCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/ExitCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/commands/FilterLessThanFuelTypeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/FilterLessThanFuelTypeCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/commands/HelpCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/HelpCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/commands/InfoCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/InfoCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/commands/InsertCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/InsertCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/commands/RemoveAllByEnginePowerCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/RemoveAllByEnginePowerCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/commands/RemoveGreaterCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/RemoveGreaterCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/commands/RemoveGreaterKeyCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/RemoveGreaterKeyCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/commands/RemoveKeyCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/RemoveKeyCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/commands/RemoveLowerCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/RemoveLowerCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/commands/SaveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/SaveCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/commands/ShowCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/ShowCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/commands/UpdateCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/UpdateCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/processing/CommandParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/processing/CommandParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/processing/Console.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/processing/Console.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/run/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/run/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/utility/CommandArguments.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/utility/CommandArguments.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/run/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/run/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +52,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "jdk.selected.JAVA_MODULE": "corretto-17",
-    "last_opened_file_path": "C:/Users/Степан/Desktop/prog/SocketTesting",
+    "last_opened_file_path": "C:/Users/Степан/Desktop/prog/lab6",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "reference.settings.ide.settings.uml"
   }
@@ -82,7 +63,7 @@
       <recent name="C:\Users\Степан\Desktop\prog\lab6\server" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main (1)">
+  <component name="RunManager" selected="Application.Main (2)">
     <configuration name="Main (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="run.Main" />
       <module name="server" />
@@ -156,7 +137,8 @@
       <workItem from="1682495514616" duration="16122000" />
       <workItem from="1682578833929" duration="24272000" />
       <workItem from="1682665814570" duration="6953000" />
-      <workItem from="1682692822468" duration="6444000" />
+      <workItem from="1682692822468" duration="6661000" />
+      <workItem from="1682749664019" duration="8573000" />
     </task>
     <task id="LOCAL-00001" summary="Copy lab5 project">
       <created>1681564328860</created>
@@ -214,7 +196,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682524501603</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Add variable of count of arguments in each command.">
+      <created>1682708166864</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1682708166864</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -240,35 +229,46 @@
     <MESSAGE value="Split the project into two modules" />
     <MESSAGE value="Add class for serialization" />
     <MESSAGE value="Add Client and ClientManager classes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Client and ClientManager classes" />
+    <MESSAGE value="Add variable of count of arguments in each command." />
+    <option name="LAST_COMMIT_MESSAGE" value="Add variable of count of arguments in each command." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/server/src/main/java/run/Server.java</url>
-          <line>56</line>
-          <option name="timeStamp" value="28" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/main/java/run/Server.java</url>
-          <line>113</line>
+          <line>117</line>
           <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/run/ClientManager.java</url>
-          <line>55</line>
+          <line>60</line>
           <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/run/ClientManager.java</url>
-          <line>56</line>
+          <line>62</line>
           <option name="timeStamp" value="33" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/run/ClientManager.java</url>
-          <line>72</line>
+          <line>80</line>
           <option name="timeStamp" value="34" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/client/src/main/java/run/ClientManager.java</url>
+          <line>61</line>
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/client/src/main/java/run/ClientManager.java</url>
+          <line>63</line>
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/client/src/main/java/run/ClientManager.java</url>
+          <line>64</line>
+          <option name="timeStamp" value="38" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

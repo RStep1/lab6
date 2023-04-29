@@ -1,10 +1,7 @@
 package run;
 
-import com.google.gson.stream.JsonToken;
-import commands.ExitCommand;
 import mods.AnswerType;
 import mods.MessageType;
-import org.apache.commons.lang3.SerializationException;
 import org.apache.commons.lang3.SerializationUtils;
 import processing.Serializator;
 import utility.CommandArguments;
@@ -18,13 +15,12 @@ import java.net.StandardSocketOptions;
 import java.nio.ByteBuffer;
 import java.nio.channels.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Set;
 
 public class Server {
-    private static final String host = "localhost";
-    private static final int port = 15454;
+    private static final String HOST = "localhost";
+    private static final int PORT = 15454;
     private final ArrayList<SocketChannel> socketChannels = new ArrayList<>();
     private Selector selector;
     private ServerSocketChannel serverSocket;
@@ -39,8 +35,8 @@ public class Server {
         try {
             selector = Selector.open();
             serverSocket = ServerSocketChannel.open();
-            serverSocket.setOption(StandardSocketOptions.SO_REUSEADDR, true);
-            serverSocket.bind(new InetSocketAddress(host, port));
+//            serverSocket.setOption(StandardSocketOptions.SO_REUSEADDR, true);
+            serverSocket.bind(new InetSocketAddress(HOST, PORT));
             serverSocket.configureBlocking(false);
             serverSocket.register(selector, SelectionKey.OP_ACCEPT);
             buffer = ByteBuffer.allocate(2048);
@@ -51,6 +47,19 @@ public class Server {
 
     public void run() {
         setup();
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            try {
+                Thread.sleep(200);
+                System.out.println("Shutting down ...");
+                try {
+                    selector.close();
+                } catch (IOException e) {
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+//                e.printStackTrace();
+            }
+        }));
         while (true) {
             try {
                 selector.select();
@@ -77,12 +86,7 @@ public class Server {
 
     private void register(Selector selector, ServerSocketChannel serverSocket) {
         try {
-            for (SocketChannel socketChannel : socketChannels) {
-                if (!socketChannel.isConnected())
-                    socketChannel.finishConnect();
-            }
             SocketChannel client = serverSocket.accept();
-            socketChannels.add(client);
             client.configureBlocking(false);
             client.register(selector, SelectionKey.OP_READ);
         } catch (IOException e) {
