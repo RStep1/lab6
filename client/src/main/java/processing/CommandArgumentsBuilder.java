@@ -30,7 +30,7 @@ public class CommandArgumentsBuilder {
     }
 
     private CommandArguments commandProcessing(String nextLine) {
-        if (nextLine.equals(""))
+        if (nextLine.trim().equals(""))
             return null;
         UserLineSeparator userLineSeparator = new UserLineSeparator(nextLine);
         String nextCommand = userLineSeparator.getCommand();

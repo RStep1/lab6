@@ -11,6 +11,7 @@ import processing.CommandValidator;
 import processing.Console;
 import utility.CommandArguments;
 import utility.FileHandler;
+import utility.MessageHolder;
 import utility.ServerAnswer;
 
 
@@ -55,8 +56,11 @@ public class ClientManager {
                     continue;
                 System.out.println(commandArguments + "");
                 CommandValidator commandValidator = new CommandValidator(AnswerType.EXECUTION_RESPONSE);
-                if (!commandValidator.validate(commandArguments)) // if arguments or command was wrong, request data again
+                if (!commandValidator.validate(commandArguments)) {// if arguments or command was wrong, request data again
+                    Console.printUserErrors();
+                    MessageHolder.clearMessages(MessageType.USER_ERROR);
                     continue;
+                }
 
                 // (1) command processing
                 // (2) build commandArguments object

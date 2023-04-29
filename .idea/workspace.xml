@@ -4,14 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="85453189-5be8-4fe3-ad24-1edc46d74a0c" name="Changes" comment="Add variable of count of arguments in each command.">
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/processing/CommandArgumentsBuilder.java" afterDir="false" />
+    <list default="true" id="85453189-5be8-4fe3-ad24-1edc46d74a0c" name="Changes" comment="Add command object building">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/processing/CommandArgumentsBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/processing/CommandArgumentsBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/processing/CommandValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/processing/CommandValidator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/run/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/run/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/run/ClientManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/run/ClientManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/utility/CommandArguments.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/utility/CommandArguments.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/run/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/run/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -138,7 +135,7 @@
       <workItem from="1682578833929" duration="24272000" />
       <workItem from="1682665814570" duration="6953000" />
       <workItem from="1682692822468" duration="6661000" />
-      <workItem from="1682749664019" duration="8573000" />
+      <workItem from="1682749664019" duration="12111000" />
     </task>
     <task id="LOCAL-00001" summary="Copy lab5 project">
       <created>1681564328860</created>
@@ -203,7 +200,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682708166864</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Add command object building">
+      <created>1682770418943</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1682770418943</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -230,7 +234,8 @@
     <MESSAGE value="Add class for serialization" />
     <MESSAGE value="Add Client and ClientManager classes" />
     <MESSAGE value="Add variable of count of arguments in each command." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add variable of count of arguments in each command." />
+    <MESSAGE value="Add command object building" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add command object building" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -242,32 +247,32 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/run/ClientManager.java</url>
-          <line>60</line>
+          <line>64</line>
           <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/run/ClientManager.java</url>
-          <line>62</line>
+          <line>66</line>
           <option name="timeStamp" value="33" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/run/ClientManager.java</url>
-          <line>80</line>
+          <line>84</line>
           <option name="timeStamp" value="34" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/run/ClientManager.java</url>
-          <line>61</line>
+          <line>65</line>
           <option name="timeStamp" value="35" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/run/ClientManager.java</url>
-          <line>63</line>
+          <line>67</line>
           <option name="timeStamp" value="37" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/run/ClientManager.java</url>
-          <line>64</line>
+          <line>68</line>
           <option name="timeStamp" value="38" />
         </line-breakpoint>
       </breakpoints>
