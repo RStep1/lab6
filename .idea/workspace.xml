@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="85453189-5be8-4fe3-ad24-1edc46d74a0c" name="Changes" comment="Add check for the number of command arguments">
+    <list default="true" id="85453189-5be8-4fe3-ad24-1edc46d74a0c" name="Changes" comment="Fix bug with exit command validation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/processing/CommandValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/processing/CommandValidator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/run/ClientManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/run/ClientManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/run/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/run/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/java/processing/BufferedDataBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/processing/BufferedDataBase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/processing/CommandInvoker.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/processing/CommandInvoker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/utility/IdentifierHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/utility/IdentifierHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,8 +101,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main (2)" />
         <item itemvalue="Application.Main (1)" />
+        <item itemvalue="Application.Main (2)" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
@@ -145,7 +142,7 @@
       <workItem from="1682926202433" duration="37000" />
       <workItem from="1682926393660" duration="658000" />
       <workItem from="1682927061257" duration="604000" />
-      <workItem from="1682928706482" duration="1560000" />
+      <workItem from="1682928706482" duration="1842000" />
     </task>
     <task id="LOCAL-00001" summary="Copy lab5 project">
       <created>1681564328860</created>
@@ -224,7 +221,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682774025050</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Fix bug with exit command validation">
+      <created>1682930373113</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1682930373113</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -253,7 +257,8 @@
     <MESSAGE value="Add variable of count of arguments in each command." />
     <MESSAGE value="Add command object building" />
     <MESSAGE value="Add check for the number of command arguments" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add check for the number of command arguments" />
+    <MESSAGE value="Fix bug with exit command validation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix bug with exit command validation" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

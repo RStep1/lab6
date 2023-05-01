@@ -194,6 +194,8 @@ public class BufferedDataBase {
                 if (!identifierHandler.checkId(arguments[0], UpdateCommand.getName() + " " + arguments[0]))
                     return false;
                 id = Long.parseLong(arguments[0]);
+                if (!identifierHandler.hasElementWithId(id))
+                    return false;
                 key = identifierHandler.getKeyById(id);
             }
             default -> System.err.printf("Command %s: No suitable add mode file%n", commandName);

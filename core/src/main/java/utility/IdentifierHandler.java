@@ -82,18 +82,18 @@ public class IdentifierHandler {
                     "Invalid id length: %s, expected %s", id.length(), ID_LENGTH), MessageType.USER_ERROR);
             return false;
         }
-        if (!hasElementWithId(Long.parseLong(id))) {
-            MessageHolder.putCurrentCommand(commandName, MessageType.USER_ERROR);
-            MessageHolder.putMessage("No such element with this id", MessageType.USER_ERROR);
-            return false;
-        }
+//        if (!hasElementWithId(Long.parseLong(id))) {
+//            MessageHolder.putCurrentCommand(commandName, MessageType.USER_ERROR);
+//            MessageHolder.putMessage("No such element with this id", MessageType.USER_ERROR);
+//            return false;
+//        }
         return true;
     }
 
     /**
      * Checks if the collection contains an element with the given id.
      */
-    private boolean hasElementWithId(long id) {
+    public boolean hasElementWithId(long id) {
         Enumeration<Long> keys = dataBase.keys();
         while (keys.hasMoreElements()) {
             Long key = keys.nextElement();
