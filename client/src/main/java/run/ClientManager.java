@@ -42,6 +42,7 @@ public class ClientManager {
         Scanner scanner = new Scanner(System.in);
         Console.println("Available commands:");
         Console.println(FileHandler.readFile(FileType.REFERENCE));
+        boolean validationStatus = true;
         do {
             try {
                 CommandArgumentsBuilder commandArgumentsBuilder = new CommandArgumentsBuilder(scanner);
@@ -52,13 +53,14 @@ public class ClientManager {
 //                    System.out.println("connection lost");
 //                    break;
 //                }
-                if (commandArguments == null) //if user just press Enter bottom
-                    continue;
+//                if (commandArguments == null) //if user just press Enter bottom
+//                    continue;
                 System.out.println(commandArguments + "");
                 CommandValidator commandValidator = new CommandValidator(AnswerType.EXECUTION_RESPONSE);
-                if (!commandValidator.validate(commandArguments)) {// if arguments or command was wrong, request data again
+                if (commandArguments == null || !commandValidator.validate(commandArguments)) {// if arguments or command was wrong, request data again
                     Console.printUserErrors();
                     MessageHolder.clearMessages(MessageType.USER_ERROR);
+                    commandArguments = null;
                     continue;
                 }
 

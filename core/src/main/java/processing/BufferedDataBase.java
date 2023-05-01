@@ -501,6 +501,7 @@ public class BufferedDataBase {
         }
         FuelType fuelType = ValueTransformer.SET_FUEL_TYPE.apply(
                 ValueHandler.TYPE_CORRECTION.correct(arguments[0]));
+
         AtomicBoolean hasSuchElements = new AtomicBoolean(false);
         MessageHolder.putCurrentCommand(FilterLessThanFuelTypeCommand.getName(), MessageType.OUTPUT_INFO);
         TreeMap<Long, Vehicle> treeMapData = new TreeMap<>(dataBase);

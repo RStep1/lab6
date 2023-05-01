@@ -54,6 +54,10 @@ public class CommandInvoker {
         FileHandler.writeReferenceFile(reference.toString());
     }
 
+    public boolean execute(CommandArguments commandArguments) {
+        return commandMap.get(commandArguments.commandName()).execute(commandArguments);
+    }
+
     /**
      * Invokes the 'help' command from its wrapper class.
      * @param commandArguments contains the name of the command, its arguments on a single line,
