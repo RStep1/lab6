@@ -46,6 +46,8 @@ public class ClientManager {
                     CommandArgumentsBuilder commandArgumentsBuilder = new CommandArgumentsBuilder(scanner);
                     commandArgumentsQueue.addAll(commandArgumentsBuilder.userEnter());
                 }
+                if (commandArgumentsQueue.isEmpty())
+                    continue;
                 commandArguments = commandArgumentsQueue.remove();
                 CommandValidator commandValidator = new CommandValidator(AnswerType.EXECUTION_RESPONSE);
                 if (!commandValidator.validate(commandArguments)) {// if arguments or command was wrong, request data again

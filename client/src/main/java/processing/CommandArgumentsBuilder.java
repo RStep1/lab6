@@ -30,17 +30,18 @@ public class CommandArgumentsBuilder {
             scanner.close();
             System.exit(0);
         }
-        return commandProcessing(nextLine);
+        return commandProcessing(nextLine, ExecuteMode.COMMAND_MODE);
     }
 
-    private ArrayList<CommandArguments> commandProcessing(String nextLine) {
+    private ArrayList<CommandArguments> commandProcessing(String nextLine, ExecuteMode executeMode) {
         if (nextLine.trim().equals(""))
-            return null;
+            return new ArrayList<>();
         UserLineSeparator userLineSeparator = new UserLineSeparator(nextLine);
         String nextCommand = userLineSeparator.getCommand();
         String[] arguments = userLineSeparator.getArguments();
         String[] extraArguments = null;
-        CommandArguments newCommandArguments = new CommandArguments(nextCommand, arguments, extraArguments, ClientRequestType.COMMAND_EXECUTION, ExecuteMode.COMMAND_MODE);
+        CommandArguments newCommandArguments = new CommandArguments(nextCommand, arguments, extraArguments,
+                ClientRequestType.COMMAND_EXECUTION, executeMode);
         if (nextCommand.equals(ExecuteScriptCommand.getName()))
             return scriptProcessing(newCommandArguments);
         ArrayList<CommandArguments> commandArgumentsArrayList = new ArrayList<>();
@@ -74,7 +75,8 @@ public class CommandArgumentsBuilder {
         File scriptFile = FileHandler.findFile(new File("scripts"), commandArguments.getArguments()[0]);
         ArrayList<String> scriptLines = FileHandler.readScriptFile(scriptFile);
         ArrayList<CommandArguments> scriptCommands = new ArrayList<>();
-        scriptLines.forEach(scriptLine -> scriptCommands.addAll(commandProcessing(scriptLine)));
+        scriptLines.forEach(scriptLine ->
+                scriptCommands.addAll(commandProcessing(scriptLine, ExecuteMode.SCRIPT_MODE)));
         return scriptCommands;
     }
 }
