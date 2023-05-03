@@ -45,10 +45,12 @@ public class ClientManager {
                 if (commandArgumentsQueue.isEmpty()) { //if all commands have been processed, then we enter new ones
                     CommandArgumentsBuilder commandArgumentsBuilder = new CommandArgumentsBuilder(scanner, AnswerType.EXECUTION_RESPONSE);
                     commandArgumentsQueue.addAll(commandArgumentsBuilder.userEnter());
-                }
-                if (commandArgumentsQueue.isEmpty()) {// if input is empty or it has mistakes
                     Console.printUserErrors();
                     MessageHolder.clearMessages(MessageType.USER_ERROR);
+                }
+                if (commandArgumentsQueue.isEmpty()) {// if input is empty or it has mistakes
+//                    Console.printUserErrors();
+//                    MessageHolder.clearMessages(MessageType.USER_ERROR);
                     commandArguments = null;
                     continue;
                 }
@@ -64,6 +66,7 @@ public class ClientManager {
 //                System.out.println(commandArguments + "");
                 if (commandArguments.getCommandName().equals(ExitCommand.getName())) {
                     if (commandArguments.getExecuteMode() == ExecuteMode.SCRIPT_MODE) {
+                        System.out.println("Command exit:");
                         System.out.println(String.format("Script '%s' successfully completed",
                                 commandArguments.getScriptFile().getName()));
                         commandArguments = null;

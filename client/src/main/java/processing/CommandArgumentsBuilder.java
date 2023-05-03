@@ -52,10 +52,10 @@ public class CommandArgumentsBuilder {
             return scriptProcessing(newCommandArguments);
         ArrayList<CommandArguments> commandArgumentsArrayList = new ArrayList<>();
         CommandValidator commandValidator = new CommandValidator(answerType);
-        MessageHolder.clearMessages(MessageType.USER_ERROR);
+//        MessageHolder.clearMessages(MessageType.USER_ERROR);
         if (commandValidator.validate(newCommandArguments)) // add command only if it's correct
             commandArgumentsArrayList.add(newCommandArguments);
-        Console.printUserErrors();
+//        Console.printUserErrors();
         return commandArgumentsArrayList;
     }
 
