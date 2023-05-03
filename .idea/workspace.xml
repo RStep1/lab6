@@ -4,26 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="85453189-5be8-4fe3-ad24-1edc46d74a0c" name="Changes" comment="Remove element existence check by id">
-      <change afterPath="$PROJECT_DIR$/core/src/main/java/mods/ClientRequestType.java" afterDir="false" />
+    <list default="true" id="85453189-5be8-4fe3-ad24-1edc46d74a0c" name="Changes" comment="Add validation for execute_script command">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/processing/CommandArgumentsBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/processing/CommandArgumentsBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/processing/CommandValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/processing/CommandValidator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/run/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/run/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/run/ClientManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/run/ClientManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/run/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/run/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/commands/ClearCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/ClearCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/commands/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/commands/Command.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/processing/BufferedDataBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/processing/BufferedDataBase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/processing/CommandInvoker.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/processing/CommandInvoker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/processing/CommandParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/processing/CommandParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/processing/Console.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/processing/Console.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/utility/CommandArguments.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/utility/CommandArguments.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/utility/MessageHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/utility/MessageHolder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/utility/ServerAnswer.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/utility/ServerAnswer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/run/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/run/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/run/RequestHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/run/RequestHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/run/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/run/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,7 +146,7 @@
       <workItem from="1682962812221" duration="4265000" />
       <workItem from="1682970023495" duration="31000" />
       <workItem from="1683031556496" duration="9260000" />
-      <workItem from="1683099067649" duration="3733000" />
+      <workItem from="1683099067649" duration="4734000" />
     </task>
     <task id="LOCAL-00001" summary="Copy lab5 project">
       <created>1681564328860</created>
@@ -255,7 +239,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682930694627</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Add validation for execute_script command">
+      <created>1683102843458</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1683102843458</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -286,14 +277,15 @@
     <MESSAGE value="Add check for the number of command arguments" />
     <MESSAGE value="Fix bug with exit command validation" />
     <MESSAGE value="Remove element existence check by id" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove element existence check by id" />
+    <MESSAGE value="Add validation for execute_script command" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add validation for execute_script command" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/run/ClientManager.java</url>
-          <line>79</line>
+          <line>78</line>
           <option name="timeStamp" value="34" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">

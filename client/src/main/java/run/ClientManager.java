@@ -13,15 +13,13 @@ import utility.MessageHolder;
 import utility.ServerAnswer;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
+import java.util.*;
 
 public class ClientManager {
     private Client client;
     private final Scanner scanner;
     private CommandArguments commandArguments;
-
+    private final Queue<CommandArguments> commandArgumentsQueue = new LinkedList<>();
 
     public ClientManager(Scanner scanner) {
         this.scanner = scanner;
@@ -44,10 +42,12 @@ public class ClientManager {
         ServerAnswer serverAnswer = null;
         do {
             try {
-                CommandArgumentsBuilder commandArgumentsBuilder = new CommandArgumentsBuilder(scanner);
-                commandArguments = commandArgumentsBuilder.userEnter();
-                ArrayList<CommandArguments> commandArgumentsArrayList = commandArgumentsBuilder.userEnter();
-                CommandValidator commandValidator = new CommandValidator(serverAnswer.answerType());
+                if (commandArgumentsQueue.isEmpty()) { // если обработали все команды, то вводим новые
+                    CommandArgumentsBuilder commandArgumentsBuilder = new CommandArgumentsBuilder(scanner);
+                    commandArgumentsQueue.addAll(commandArgumentsBuilder.userEnter());
+                }
+                commandArguments = commandArgumentsQueue.remove();
+                CommandValidator commandValidator = new CommandValidator(AnswerType.EXECUTION_RESPONSE);
                 if (!commandValidator.validate(commandArguments)) {// if arguments or command was wrong, request data again
                     Console.printUserErrors();
                     MessageHolder.clearMessages(MessageType.USER_ERROR);
@@ -67,7 +67,7 @@ public class ClientManager {
                     System.out.println("client exit");
                     break;
                 }
-                ServerAnswer serverAnswer = client.dataExchange(commandArguments);
+                serverAnswer = client.dataExchange(commandArguments);
                 if (serverAnswer == null) {
                     teardown();
                     System.out.println("соединение с сервером потеряно");
@@ -80,7 +80,7 @@ public class ClientManager {
                     //insert mode (new fields for Vehicle), change commandArguments
                     if (commandArguments.getExecuteMode() == ExecuteMode.COMMAND_MODE) {
                         Vehicle vehicle = Console.insertMode(0, null);
-                    } else ,
+                    }
 
                     System.out.println("_____INSERT_MODE______");
                     serverAnswer = client.dataExchange(commandArguments);

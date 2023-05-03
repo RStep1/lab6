@@ -41,7 +41,9 @@ public class CommandArgumentsBuilder {
         CommandArguments newCommandArguments = new CommandArguments(nextCommand, arguments, extraArguments, ClientRequestType.COMMAND_EXECUTION, ExecuteMode.COMMAND_MODE);
         if (nextCommand.equals(ExecuteScriptCommand.getName()))
             return scriptProcessing(newCommandArguments);
-        return (ArrayList<CommandArguments>) List.of(newCommandArguments);
+        ArrayList<CommandArguments> commandArgumentsArrayList = new ArrayList<>();
+        commandArgumentsArrayList.add(newCommandArguments);
+        return commandArgumentsArrayList;
     }
 
     /**
