@@ -63,6 +63,12 @@ public class ClientManager {
 //                    continue;
 //                System.out.println(commandArguments + "");
                 if (commandArguments.getCommandName().equals(ExitCommand.getName())) {
+                    if (commandArguments.getExecuteMode() == ExecuteMode.SCRIPT_MODE) {
+                        System.out.println(String.format("Script '%s' successfully completed",
+                                commandArguments.getScriptFile().getName()));
+                        commandArguments = null;
+                        continue;
+                    }
                     System.out.println("client exit");
                     break;
                 }

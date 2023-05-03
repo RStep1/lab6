@@ -17,7 +17,7 @@ import java.util.*;
 public class CommandArgumentsBuilder {
     public final Scanner scanner;
     private final AnswerType answerType;
-    private String currentScriptFile;
+    private File currentScriptFile;
 
     public CommandArgumentsBuilder(Scanner scanner, AnswerType answerType) {
         this.scanner = scanner;
@@ -46,6 +46,8 @@ public class CommandArgumentsBuilder {
         String[] extraArguments = null;
         CommandArguments newCommandArguments = new CommandArguments(nextCommand, arguments, extraArguments,
                 ClientRequestType.COMMAND_EXECUTION, executeMode);
+        if (executeMode == ExecuteMode.SCRIPT_MODE)
+            newCommandArguments.setScriptFile(currentScriptFile);
         if (nextCommand.equals(ExecuteScriptCommand.getName())) // if it's a execute_script command
             return scriptProcessing(newCommandArguments);
         ArrayList<CommandArguments> commandArgumentsArrayList = new ArrayList<>();
@@ -84,13 +86,22 @@ public class CommandArgumentsBuilder {
         if (!commandValidator.validate(commandArguments))
             return new ArrayList<>();
         ArrayList<String> scriptLines = FileHandler.readScriptFile(commandArguments.getScriptFile());
-        currentScriptFile = commandArguments.getScriptFile().getName();
+        currentScriptFile = commandArguments.getScriptFile();
         ArrayList<CommandArguments> scriptCommands = new ArrayList<>();
 //        scriptLines.forEach(scriptLine -> scriptCommands
 //                        .addAll(commandProcessing(scriptLine, ExecuteMode.SCRIPT_MODE)
 //                        .stream().filter(commandValidator::validate).toList()));
-        scriptLines.forEach(scriptLine -> scriptCommands
-                .addAll(commandProcessing(scriptLine, ExecuteMode.SCRIPT_MODE)));
+//        scriptLines.forEach(scriptLine -> scriptCommands
+//                .addAll(commandProcessing(scriptLine, ExecuteMode.SCRIPT_MODE)));
+        for (String scriptLine : scriptLines) {
+            if (scriptLine.trim().equals(""))
+                continue;
+            scriptCommands.addAll(commandProcessing(scriptLine, ExecuteMode.SCRIPT_MODE));
+            if (!scriptCommands.isEmpty() &&
+                    scriptCommands.get(scriptCommands.size() - 1)
+                            .getCommandName().equals(ExitCommand.getName())) // exit from script
+                break;
+        }
         return scriptCommands;
     }
 }
