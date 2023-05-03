@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="85453189-5be8-4fe3-ad24-1edc46d74a0c" name="Changes" comment="Fix script exit issue">
-      <change afterPath="$PROJECT_DIR$/scripts/script5" afterDir="false" />
+    <list default="true" id="85453189-5be8-4fe3-ad24-1edc46d74a0c" name="Changes" comment="Fix issue with outputting user errors">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/processing/CommandArgumentsBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/processing/CommandArgumentsBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/run/ClientManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/run/ClientManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/script4" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/script4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/script5" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/script5" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -150,7 +150,7 @@
       <workItem from="1683031556496" duration="9260000" />
       <workItem from="1683099067649" duration="6175000" />
       <workItem from="1683114555600" duration="13493000" />
-      <workItem from="1683132654074" duration="330000" />
+      <workItem from="1683132654074" duration="6221000" />
     </task>
     <task id="LOCAL-00001" summary="Copy lab5 project">
       <created>1681564328860</created>
@@ -292,7 +292,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683130819549</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Fix issue with outputting user errors">
+      <created>1683133088177</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1683133088177</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -330,7 +337,8 @@
     <MESSAGE value="Move command validation to CommandArgumentsBuilder" />
     <MESSAGE value="Add field for script file to command object" />
     <MESSAGE value="Fix script exit issue" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix script exit issue" />
+    <MESSAGE value="Fix issue with outputting user errors" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix issue with outputting user errors" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

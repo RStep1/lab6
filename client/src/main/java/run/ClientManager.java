@@ -45,12 +45,12 @@ public class ClientManager {
                 if (commandArgumentsQueue.isEmpty()) { //if all commands have been processed, then we enter new ones
                     CommandArgumentsBuilder commandArgumentsBuilder = new CommandArgumentsBuilder(scanner, AnswerType.EXECUTION_RESPONSE);
                     commandArgumentsQueue.addAll(commandArgumentsBuilder.userEnter());
+                    commandArgumentsQueue.forEach(x -> System.out.println(x.getCommandName() + " " + List.of(x.getArguments()) +
+                            " " + (x.getScriptFile() != null ? x.getScriptFile().getName() : "wtf")));
                     Console.printUserErrors();
                     MessageHolder.clearMessages(MessageType.USER_ERROR);
                 }
                 if (commandArgumentsQueue.isEmpty()) {// if input is empty or it has mistakes
-//                    Console.printUserErrors();
-//                    MessageHolder.clearMessages(MessageType.USER_ERROR);
                     commandArguments = null;
                     continue;
                 }

@@ -1,6 +1,5 @@
-info
-insert r
-execute_script script5
+help
 execute_script script4
+execute_script script5
 exit
-show
+asdf;alsdflj

@@ -5,11 +5,9 @@ import commands.ExitCommand;
 import mods.AnswerType;
 import mods.ClientRequestType;
 import mods.ExecuteMode;
-import mods.MessageType;
 import run.Client;
 import utility.CommandArguments;
 import utility.FileHandler;
-import utility.MessageHolder;
 
 import java.io.File;
 import java.util.*;
@@ -17,7 +15,6 @@ import java.util.*;
 public class CommandArgumentsBuilder {
     public final Scanner scanner;
     private final AnswerType answerType;
-    private File currentScriptFile;
 
     public CommandArgumentsBuilder(Scanner scanner, AnswerType answerType) {
         this.scanner = scanner;
@@ -34,28 +31,26 @@ public class CommandArgumentsBuilder {
             scanner.close();
             System.exit(0);
         }
-        return commandProcessing(nextLine, ExecuteMode.COMMAND_MODE);
+        return commandProcessing(nextLine, ExecuteMode.COMMAND_MODE, null);
     }
 
-    private ArrayList<CommandArguments> commandProcessing(String nextLine, ExecuteMode executeMode) {
+    private ArrayList<CommandArguments> commandProcessing(String nextLine, ExecuteMode executeMode, File currentScriptFile) {
         if (nextLine.trim().equals(""))
             return new ArrayList<>();
         UserLineSeparator userLineSeparator = new UserLineSeparator(nextLine);
         String nextCommand = userLineSeparator.getCommand();
         String[] arguments = userLineSeparator.getArguments();
         String[] extraArguments = null;
+        System.out.println(nextLine);
         CommandArguments newCommandArguments = new CommandArguments(nextCommand, arguments, extraArguments,
                 ClientRequestType.COMMAND_EXECUTION, executeMode);
-        if (executeMode == ExecuteMode.SCRIPT_MODE)
-            newCommandArguments.setScriptFile(currentScriptFile);
-        if (nextCommand.equals(ExecuteScriptCommand.getName())) // if it's a execute_script command
+        newCommandArguments.setScriptFile(currentScriptFile);
+        if (nextCommand.equals(ExecuteScriptCommand.getName())) // if it's execute_script command, start script processing
             return scriptProcessing(newCommandArguments);
         ArrayList<CommandArguments> commandArgumentsArrayList = new ArrayList<>();
         CommandValidator commandValidator = new CommandValidator(answerType);
-//        MessageHolder.clearMessages(MessageType.USER_ERROR);
         if (commandValidator.validate(newCommandArguments)) // add command only if it's correct
             commandArgumentsArrayList.add(newCommandArguments);
-//        Console.printUserErrors();
         return commandArgumentsArrayList;
     }
 
@@ -85,22 +80,18 @@ public class CommandArgumentsBuilder {
         CommandValidator commandValidator = new CommandValidator(answerType);
         if (!commandValidator.validate(commandArguments))
             return new ArrayList<>();
+        File currentScriptFile = commandArguments.getScriptFile();
         ArrayList<String> scriptLines = FileHandler.readScriptFile(commandArguments.getScriptFile());
-        currentScriptFile = commandArguments.getScriptFile();
         ArrayList<CommandArguments> scriptCommands = new ArrayList<>();
-//        scriptLines.forEach(scriptLine -> scriptCommands
-//                        .addAll(commandProcessing(scriptLine, ExecuteMode.SCRIPT_MODE)
-//                        .stream().filter(commandValidator::validate).toList()));
-//        scriptLines.forEach(scriptLine -> scriptCommands
-//                .addAll(commandProcessing(scriptLine, ExecuteMode.SCRIPT_MODE)));
         for (String scriptLine : scriptLines) {
             if (scriptLine.trim().equals(""))
                 continue;
-            scriptCommands.addAll(commandProcessing(scriptLine, ExecuteMode.SCRIPT_MODE));
+            scriptCommands.addAll(commandProcessing(scriptLine, ExecuteMode.SCRIPT_MODE, currentScriptFile));
             if (!scriptCommands.isEmpty() &&
-                    scriptCommands.get(scriptCommands.size() - 1)
-                            .getCommandName().equals(ExitCommand.getName())) // exit from script
+                    scriptCommands.get(scriptCommands.size() - 1).getCommandName().equals(ExitCommand.getName()) &&
+                    scriptCommands.get(scriptCommands.size() - 1).getScriptFile().getName().equals(currentScriptFile.getName())) {// exit from script, stop adding commands
                 break;
+            }
         }
         return scriptCommands;
     }
