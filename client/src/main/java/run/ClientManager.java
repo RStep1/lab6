@@ -52,7 +52,6 @@ public class ClientManager {
                     commandArguments = null;
                     continue;
                 }
-                System.out.println("asdofiqpoweiur");
                 commandArguments = commandArgumentsQueue.remove();
                 //need connection check
 //                if (!client.isServerAlive()) {
@@ -91,11 +90,13 @@ public class ClientManager {
                     }
                 }
                 //print command result
-                if (serverAnswer.commandExitStatus()) {
-                    serverAnswer.outputInfo().forEach(System.out::println);
-                } else {
-                    serverAnswer.userErrors().forEach(System.out::println);
-                }
+//                if (serverAnswer.commandExitStatus()) {
+//                    serverAnswer.outputInfo().forEach(System.out::println);
+//                } else {
+//                    serverAnswer.userErrors().forEach(System.out::println);
+//                }
+                serverAnswer.outputInfo().forEach(System.out::println);
+                serverAnswer.userErrors().forEach(System.out::println);
 
             } catch (NoSuchElementException e) {
                 teardown();

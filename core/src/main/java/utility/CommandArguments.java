@@ -3,6 +3,7 @@ package utility;
 import mods.ClientRequestType;
 import mods.ExecuteMode;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.Arrays;
 
@@ -12,6 +13,7 @@ public class CommandArguments implements Serializable {
     private String[] extraArguments;
     private ClientRequestType clientRequestType;
     private final ExecuteMode executeMode;
+    private File scriptFile;
 
     public CommandArguments(String commandName, String[] arguments, String[] extraArguments,
                             ClientRequestType clientRequestType, ExecuteMode executeMode) {
@@ -42,8 +44,16 @@ public class CommandArguments implements Serializable {
         return executeMode;
     }
 
+    public File getScriptFile() {
+        return scriptFile;
+    }
+
     public void setClientRequestType(ClientRequestType clientRequestType) {
         this.clientRequestType = clientRequestType;
+    }
+
+    public void setScriptFile(File scriptFile) {
+        this.scriptFile = scriptFile;
     }
 
     public void setExtraArguments(String[] extraArguments) {

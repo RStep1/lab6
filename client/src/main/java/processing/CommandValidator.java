@@ -14,7 +14,7 @@ import java.util.Set;
 
 public class CommandValidator {
     private final AnswerType answerType;
-    private final Set<String> scriptCounter = new HashSet<>();
+    private static final Set<String> scriptCounter = new HashSet<>();
 
     public CommandValidator(AnswerType answerType) {
         this.answerType = answerType;
@@ -123,7 +123,7 @@ public class CommandValidator {
                     "Script '%s' not found in 'scripts' directory", arguments[0]), MessageType.USER_ERROR);
             return false;
         }
-        System.out.println(scriptFile.getName() + " EXECUTE_SCRIPT_COMMAND_VALIDATION");
+        commandArguments.setScriptFile(scriptFile);
         if (scriptCounter.contains(scriptFile.getAbsolutePath())) {
             MessageHolder.putMessage(String.format("Command '%s %s':",
                     ExecuteScriptCommand.getName(), scriptFile.getName()), MessageType.USER_ERROR);

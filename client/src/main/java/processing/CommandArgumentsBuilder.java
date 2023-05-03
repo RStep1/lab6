@@ -16,7 +16,8 @@ import java.util.*;
 
 public class CommandArgumentsBuilder {
     public final Scanner scanner;
-    public final AnswerType answerType;
+    private final AnswerType answerType;
+    private String currentScriptFile;
 
     public CommandArgumentsBuilder(Scanner scanner, AnswerType answerType) {
         this.scanner = scanner;
@@ -49,8 +50,10 @@ public class CommandArgumentsBuilder {
             return scriptProcessing(newCommandArguments);
         ArrayList<CommandArguments> commandArgumentsArrayList = new ArrayList<>();
         CommandValidator commandValidator = new CommandValidator(answerType);
+        MessageHolder.clearMessages(MessageType.USER_ERROR);
         if (commandValidator.validate(newCommandArguments)) // add command only if it's correct
             commandArgumentsArrayList.add(newCommandArguments);
+        Console.printUserErrors();
         return commandArgumentsArrayList;
     }
 
@@ -80,12 +83,14 @@ public class CommandArgumentsBuilder {
         CommandValidator commandValidator = new CommandValidator(answerType);
         if (!commandValidator.validate(commandArguments))
             return new ArrayList<>();
-        File scriptFile = FileHandler.findFile(new File("scripts"), commandArguments.getArguments()[0]);
-        ArrayList<String> scriptLines = FileHandler.readScriptFile(scriptFile);
+        ArrayList<String> scriptLines = FileHandler.readScriptFile(commandArguments.getScriptFile());
+        currentScriptFile = commandArguments.getScriptFile().getName();
         ArrayList<CommandArguments> scriptCommands = new ArrayList<>();
-        scriptLines.forEach(scriptLine -> scriptCommands.addAll(commandProcessing(scriptLine, ExecuteMode.SCRIPT_MODE).stream().filter(commandValidator::validate).toList()));
-//        scriptLines.forEach(scriptLine -> scriptCommands.addAll(commandProcessing(scriptLine, ExecuteMode.SCRIPT_MODE)));
-
+//        scriptLines.forEach(scriptLine -> scriptCommands
+//                        .addAll(commandProcessing(scriptLine, ExecuteMode.SCRIPT_MODE)
+//                        .stream().filter(commandValidator::validate).toList()));
+        scriptLines.forEach(scriptLine -> scriptCommands
+                .addAll(commandProcessing(scriptLine, ExecuteMode.SCRIPT_MODE)));
         return scriptCommands;
     }
 }
