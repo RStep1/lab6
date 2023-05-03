@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="85453189-5be8-4fe3-ad24-1edc46d74a0c" name="Changes" comment="Add script processing">
+    <list default="true" id="85453189-5be8-4fe3-ad24-1edc46d74a0c" name="Changes" comment="Fix bug with NullPointerException on empty input">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/processing/CommandArgumentsBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/processing/CommandArgumentsBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/processing/CommandValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/processing/CommandValidator.java" afterDir="false" />
@@ -42,18 +42,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-17&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Степан/Desktop/prog/lab6&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.uml&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "jdk.selected.JAVA_MODULE": "corretto-17",
+    "last_opened_file_path": "C:/Users/Степан/Desktop/prog/lab6",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.keymap"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Степан\Desktop\prog\lab6" />
@@ -148,7 +148,7 @@
       <workItem from="1682970023495" duration="31000" />
       <workItem from="1683031556496" duration="9260000" />
       <workItem from="1683099067649" duration="6175000" />
-      <workItem from="1683114555600" duration="2198000" />
+      <workItem from="1683114555600" duration="4785000" />
     </task>
     <task id="LOCAL-00001" summary="Copy lab5 project">
       <created>1681564328860</created>
@@ -262,7 +262,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683104537822</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Fix bug with NullPointerException on empty input">
+      <created>1683117168927</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1683117168927</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -296,14 +303,15 @@
     <MESSAGE value="Add validation for execute_script command" />
     <MESSAGE value="Add queue for commands" />
     <MESSAGE value="Add script processing" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add script processing" />
+    <MESSAGE value="Fix bug with NullPointerException on empty input" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix bug with NullPointerException on empty input" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/run/ClientManager.java</url>
-          <line>81</line>
+          <line>79</line>
           <option name="timeStamp" value="34" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">

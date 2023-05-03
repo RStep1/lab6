@@ -118,12 +118,12 @@ public class CommandValidator {
         if (!checkNumberOfArguments(commandArguments, 1))
             return false;
         File scriptFile = FileHandler.findFile(new File("scripts"), arguments[0]);
-        System.out.println(scriptFile.getName() + " EXECUTE_SCRIPT_COMMAND_VALIDATION");
         if (scriptFile == null) {
             MessageHolder.putMessage(String.format(
                     "Script '%s' not found in 'scripts' directory", arguments[0]), MessageType.USER_ERROR);
             return false;
         }
+        System.out.println(scriptFile.getName() + " EXECUTE_SCRIPT_COMMAND_VALIDATION");
         if (scriptCounter.contains(scriptFile.getAbsolutePath())) {
             MessageHolder.putMessage(String.format("Command '%s %s':",
                     ExecuteScriptCommand.getName(), scriptFile.getName()), MessageType.USER_ERROR);

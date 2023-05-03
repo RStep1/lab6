@@ -2,6 +2,7 @@ package processing;
 
 import commands.ExecuteScriptCommand;
 import commands.ExitCommand;
+import mods.AnswerType;
 import mods.ClientRequestType;
 import mods.ExecuteMode;
 import mods.MessageType;
@@ -15,9 +16,11 @@ import java.util.*;
 
 public class CommandArgumentsBuilder {
     public final Scanner scanner;
+    public final AnswerType answerType;
 
-    public CommandArgumentsBuilder(Scanner scanner) {
+    public CommandArgumentsBuilder(Scanner scanner, AnswerType answerType) {
         this.scanner = scanner;
+        this.answerType = answerType;
     }
 
     public ArrayList<CommandArguments> userEnter() {
@@ -42,10 +45,12 @@ public class CommandArgumentsBuilder {
         String[] extraArguments = null;
         CommandArguments newCommandArguments = new CommandArguments(nextCommand, arguments, extraArguments,
                 ClientRequestType.COMMAND_EXECUTION, executeMode);
-        if (nextCommand.equals(ExecuteScriptCommand.getName()))
+        if (nextCommand.equals(ExecuteScriptCommand.getName())) // if it's a execute_script command
             return scriptProcessing(newCommandArguments);
         ArrayList<CommandArguments> commandArgumentsArrayList = new ArrayList<>();
-        commandArgumentsArrayList.add(newCommandArguments);
+        CommandValidator commandValidator = new CommandValidator(answerType);
+        if (commandValidator.validate(newCommandArguments)) // add command only if it's correct
+            commandArgumentsArrayList.add(newCommandArguments);
         return commandArgumentsArrayList;
     }
 
@@ -72,11 +77,15 @@ public class CommandArgumentsBuilder {
     }
 
     private ArrayList<CommandArguments> scriptProcessing(CommandArguments commandArguments) {
+        CommandValidator commandValidator = new CommandValidator(answerType);
+        if (!commandValidator.validate(commandArguments))
+            return new ArrayList<>();
         File scriptFile = FileHandler.findFile(new File("scripts"), commandArguments.getArguments()[0]);
         ArrayList<String> scriptLines = FileHandler.readScriptFile(scriptFile);
         ArrayList<CommandArguments> scriptCommands = new ArrayList<>();
-        scriptLines.forEach(scriptLine ->
-                scriptCommands.addAll(commandProcessing(scriptLine, ExecuteMode.SCRIPT_MODE)));
+        scriptLines.forEach(scriptLine -> scriptCommands.addAll(commandProcessing(scriptLine, ExecuteMode.SCRIPT_MODE).stream().filter(commandValidator::validate).toList()));
+//        scriptLines.forEach(scriptLine -> scriptCommands.addAll(commandProcessing(scriptLine, ExecuteMode.SCRIPT_MODE)));
+
         return scriptCommands;
     }
 }

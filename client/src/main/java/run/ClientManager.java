@@ -42,20 +42,18 @@ public class ClientManager {
         ServerAnswer serverAnswer = null;
         do {
             try {
-                if (commandArgumentsQueue.isEmpty()) { // если обработали все команды, то вводим новые
-                    CommandArgumentsBuilder commandArgumentsBuilder = new CommandArgumentsBuilder(scanner);
+                if (commandArgumentsQueue.isEmpty()) { //if all commands have been processed, then we enter new ones
+                    CommandArgumentsBuilder commandArgumentsBuilder = new CommandArgumentsBuilder(scanner, AnswerType.EXECUTION_RESPONSE);
                     commandArgumentsQueue.addAll(commandArgumentsBuilder.userEnter());
                 }
-                if (commandArgumentsQueue.isEmpty())
-                    continue;
-                commandArguments = commandArgumentsQueue.remove();
-                CommandValidator commandValidator = new CommandValidator(AnswerType.EXECUTION_RESPONSE);
-                if (!commandValidator.validate(commandArguments)) {// if arguments or command was wrong, request data again
+                if (commandArgumentsQueue.isEmpty()) {// if input is empty or it has mistakes
                     Console.printUserErrors();
                     MessageHolder.clearMessages(MessageType.USER_ERROR);
                     commandArguments = null;
                     continue;
                 }
+                System.out.println("asdofiqpoweiur");
+                commandArguments = commandArgumentsQueue.remove();
                 //need connection check
 //                if (!client.isServerAlive()) {
 //                    //тестовый обмен данными
