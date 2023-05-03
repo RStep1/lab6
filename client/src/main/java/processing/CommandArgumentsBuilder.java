@@ -1,14 +1,15 @@
 package processing;
 
+import commands.ExecuteScriptCommand;
 import commands.ExitCommand;
+import mods.ClientRequestType;
 import mods.ExecuteMode;
 import mods.MessageType;
 import run.Client;
 import utility.CommandArguments;
 import utility.MessageHolder;
 
-import java.util.NoSuchElementException;
-import java.util.Scanner;
+import java.util.*;
 
 public class CommandArgumentsBuilder {
     public final Scanner scanner;
@@ -16,7 +17,8 @@ public class CommandArgumentsBuilder {
     public CommandArgumentsBuilder(Scanner scanner) {
         this.scanner = scanner;
     }
-    public CommandArguments userEnter() {
+
+    public ArrayList<CommandArguments> userEnter() {
         Console.print("Type command and press Enter: ");
         String nextLine = "";
         try {
@@ -29,14 +31,17 @@ public class CommandArgumentsBuilder {
         return commandProcessing(nextLine);
     }
 
-    private CommandArguments commandProcessing(String nextLine) {
+    private ArrayList<CommandArguments> commandProcessing(String nextLine) {
         if (nextLine.trim().equals(""))
             return null;
         UserLineSeparator userLineSeparator = new UserLineSeparator(nextLine);
         String nextCommand = userLineSeparator.getCommand();
         String[] arguments = userLineSeparator.getArguments();
-        String[] extraArguments = new String[0];
-        return new CommandArguments(nextCommand, arguments, extraArguments, ExecuteMode.COMMAND_MODE);
+        String[] extraArguments = null;
+        CommandArguments newCommandArguments = new CommandArguments(nextCommand, arguments, extraArguments, ClientRequestType.COMMAND_EXECUTION, ExecuteMode.COMMAND_MODE);
+        if (nextCommand.equals(ExecuteScriptCommand.getName()))
+            return scriptProcessing(newCommandArguments);
+        return (ArrayList<CommandArguments>) List.of(newCommandArguments);
     }
 
     /**
@@ -59,5 +64,10 @@ public class CommandArgumentsBuilder {
         public String[] getArguments() {
             return arguments;
         }
+    }
+
+    private ArrayList<CommandArguments> scriptProcessing(CommandArguments commandArguments) {
+
+        return null;
     }
 }

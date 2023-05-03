@@ -3,6 +3,7 @@ package run;
 import mods.AnswerType;
 import mods.MessageType;
 import org.apache.commons.lang3.SerializationUtils;
+import processing.CommandInvoker;
 import processing.Serializator;
 import utility.CommandArguments;
 import utility.MessageHolder;
@@ -11,7 +12,6 @@ import utility.ServerAnswer;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketException;
-import java.net.StandardSocketOptions;
 import java.nio.ByteBuffer;
 import java.nio.channels.*;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class Server {
     private Selector selector;
     private ServerSocketChannel serverSocket;
     private ByteBuffer buffer;
-    private RequestHandler requestHandler;
+    private final RequestHandler requestHandler;
 
     public Server(RequestHandler requestHandler) {
         this.requestHandler = requestHandler;
@@ -39,7 +39,7 @@ public class Server {
             serverSocket.bind(new InetSocketAddress(HOST, PORT));
             serverSocket.configureBlocking(false);
             serverSocket.register(selector, SelectionKey.OP_ACCEPT);
-            buffer = ByteBuffer.allocate(2048);
+            buffer = ByteBuffer.allocate(4048);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -113,15 +113,12 @@ public class Server {
                 client.close();
                 return;
             }
+            System.out.println("buffer: " + buffer);
             CommandArguments commandArguments = SerializationUtils.deserialize(buffer.array());
             buffer.clear();
-            //processing
-            MessageHolder.putMessage(commandArguments.commandName(), MessageType.OUTPUT_INFO);//
-            MessageHolder.putMessage(commandArguments.commandName(), MessageType.USER_ERROR);//
-            ServerAnswer serverAnswer = new ServerAnswer(null,null, true, AnswerType.EXECUTION_RESPONSE);//example
-            MessageHolder.clearMessages(MessageType.OUTPUT_INFO);
-            MessageHolder.clearMessages(MessageType.USER_ERROR);
+            ServerAnswer serverAnswer = requestHandler.processRequest(commandArguments);
             buffer = Serializator.serialize(serverAnswer);
+            System.out.println("SENDING BUFFER: " + buffer);
             client.write(buffer);
             buffer.clear();
         } catch (IOException e) {

@@ -16,7 +16,7 @@ import java.util.Scanner;
  * Designed for input-output information.
  */
 public class Console {
-    private CommandInvoker invoker;
+    private final CommandInvoker invoker;
     private static final String helpMessage = "Type 'help' and press Enter to see a list of commands";
     private static final String ANSI_RED = "\u001B[31m";
     private static final String ANSI_GREEN = "\u001B[32m";

@@ -1,12 +1,10 @@
 package run;
 
+import commands.ExecuteScriptCommand;
 import commands.ExitCommand;
-import mods.AnswerType;
-import mods.ExecuteMode;
-import mods.FileType;
-import mods.MessageType;
+import data.Vehicle;
+import mods.*;
 import processing.CommandArgumentsBuilder;
-import processing.CommandParser;
 import processing.CommandValidator;
 import processing.Console;
 import utility.CommandArguments;
@@ -14,8 +12,8 @@ import utility.FileHandler;
 import utility.MessageHolder;
 import utility.ServerAnswer;
 
-
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -23,6 +21,7 @@ public class ClientManager {
     private Client client;
     private final Scanner scanner;
     private CommandArguments commandArguments;
+
 
     public ClientManager(Scanner scanner) {
         this.scanner = scanner;
@@ -42,11 +41,19 @@ public class ClientManager {
         Scanner scanner = new Scanner(System.in);
         Console.println("Available commands:");
         Console.println(FileHandler.readFile(FileType.REFERENCE));
-        boolean validationStatus = true;
+        ServerAnswer serverAnswer = null;
         do {
             try {
                 CommandArgumentsBuilder commandArgumentsBuilder = new CommandArgumentsBuilder(scanner);
                 commandArguments = commandArgumentsBuilder.userEnter();
+                ArrayList<CommandArguments> commandArgumentsArrayList = commandArgumentsBuilder.userEnter();
+                CommandValidator commandValidator = new CommandValidator(serverAnswer.answerType());
+                if (!commandValidator.validate(commandArguments)) {// if arguments or command was wrong, request data again
+                    Console.printUserErrors();
+                    MessageHolder.clearMessages(MessageType.USER_ERROR);
+                    commandArguments = null;
+                    continue;
+                }
                 //need connection check
 //                if (!client.isServerAlive()) {
 //                    //тестовый обмен данными
@@ -55,26 +62,12 @@ public class ClientManager {
 //                }
 //                if (commandArguments == null) //if user just press Enter bottom
 //                    continue;
-                System.out.println(commandArguments + "");
-                CommandValidator commandValidator = new CommandValidator(AnswerType.EXECUTION_RESPONSE);
-                if (commandArguments == null || !commandValidator.validate(commandArguments)) {// if arguments or command was wrong, request data again
-                    Console.printUserErrors();
-                    MessageHolder.clearMessages(MessageType.USER_ERROR);
-                    commandArguments = null;
-                    continue;
-                }
-
-                // (1) command processing
-                // (2) build commandArguments object
-                // (3) validate command and arguments
-                // (4) serialization
-                // (5) send obj to server
-//                commandArguments = new CommandArguments("nextLine", null, null, ExecuteMode.COMMAND_MODE);//example
-                if (commandArguments.commandName().equals(ExitCommand.getName())) {
+//                System.out.println(commandArguments + "");
+                if (commandArguments.getCommandName().equals(ExitCommand.getName())) {
                     System.out.println("client exit");
                     break;
                 }
-                ServerAnswer serverAnswer = client.sendRequest(commandArguments);
+                ServerAnswer serverAnswer = client.dataExchange(commandArguments);
                 if (serverAnswer == null) {
                     teardown();
                     System.out.println("соединение с сервером потеряно");
@@ -82,10 +75,15 @@ public class ClientManager {
                     return false;
                 }
 
-                System.out.println(serverAnswer);
-                if (serverAnswer.getAnswerType() == AnswerType.DATA_REQUEST) {
+//                System.out.println(serverAnswer + "");
+                if (serverAnswer.answerType() == AnswerType.DATA_REQUEST) {
                     //insert mode (new fields for Vehicle), change commandArguments
-                    serverAnswer = client.sendRequest(commandArguments);
+                    if (commandArguments.getExecuteMode() == ExecuteMode.COMMAND_MODE) {
+                        Vehicle vehicle = Console.insertMode(0, null);
+                    } else ,
+
+                    System.out.println("_____INSERT_MODE______");
+                    serverAnswer = client.dataExchange(commandArguments);
                     if (serverAnswer == null) {
                         teardown();
                         System.out.println("соединение прервано, команда не была выполнена");
@@ -93,13 +91,17 @@ public class ClientManager {
                     }
                 }
                 //print command result
-                System.out.println(serverAnswer.getOutputInfo() + "   answer");//
+                if (serverAnswer.commandExitStatus()) {
+                    serverAnswer.outputInfo().forEach(System.out::println);
+                } else {
+                    serverAnswer.userErrors().forEach(System.out::println);
+                }
 
             } catch (NoSuchElementException e) {
                 teardown();
                 return false;
             }
-        } while (commandArguments == null || !commandArguments.commandName().equals(ExitCommand.getName()));
+        } while (commandArguments == null || !commandArguments.getCommandName().equals(ExitCommand.getName()));
         teardown();
         return true;
     }

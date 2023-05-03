@@ -4,6 +4,7 @@ import commands.ExitCommand;
 import commands.InsertCommand;
 import commands.UpdateCommand;
 import data.Vehicle;
+import mods.ClientRequestType;
 import mods.ExecuteMode;
 import mods.MessageType;
 import utility.CommandArguments;
@@ -45,25 +46,25 @@ public class CommandParser {
     private boolean commandSelection(String nextLine, String nextCommand, String[] arguments,
                                      String[] vehicleValues, ExecuteMode executeMode) {
         boolean exitStatus;
-        CommandArguments commandArguments = new CommandArguments(nextCommand, arguments, vehicleValues, executeMode);
+        CommandArguments commandArguments = new CommandArguments(nextCommand, arguments, vehicleValues, ClientRequestType.COMMAND_EXECUTION, executeMode);
 
         switch (nextCommand) {
-            case "help" -> exitStatus = invoker.help(commandArguments);
-            case "info" -> exitStatus = invoker.info(commandArguments);
-            case "show" -> exitStatus = invoker.show(commandArguments);
-            case "insert" -> exitStatus = invoker.insert(commandArguments);
-            case "update" -> exitStatus = invoker.update(commandArguments);
-            case "remove_key" -> exitStatus = invoker.removeKey(commandArguments);
-            case "clear" -> exitStatus = invoker.clear(commandArguments);
-            case "save" -> exitStatus = invoker.save(commandArguments);
-            case "execute_script" -> exitStatus = invoker.executeScript(commandArguments);
-            case "exit" -> exitStatus = invoker.exit(commandArguments);
-            case "remove_greater" -> exitStatus = invoker.removeGreater(commandArguments);
-            case "remove_lower" -> exitStatus = invoker.removeLower(commandArguments);
-            case "remove_greater_key" -> exitStatus = invoker.removeGreaterKey(commandArguments);
-            case "remove_all_by_engine_power" -> exitStatus = invoker.removeAllByEnginePower(commandArguments);
-            case "count_by_fuel_type" -> exitStatus = invoker.countByFuelType(commandArguments);
-            case "filter_less_than_fuel_type" -> exitStatus = invoker.filterLessThanFuelType(commandArguments);
+//            case "help" -> exitStatus = invoker.help(commandArguments);
+//            case "info" -> exitStatus = invoker.info(commandArguments);
+//            case "show" -> exitStatus = invoker.show(commandArguments);
+//            case "insert" -> exitStatus = invoker.insert(commandArguments);
+//            case "update" -> exitStatus = invoker.update(commandArguments);
+//            case "remove_key" -> exitStatus = invoker.removeKey(commandArguments);
+//            case "clear" -> exitStatus = invoker.clear(commandArguments);
+//            case "save" -> exitStatus = invoker.save(commandArguments);
+//            case "execute_script" -> exitStatus = invoker.executeScript(commandArguments);
+//            case "exit" -> exitStatus = invoker.exit(commandArguments);
+//            case "remove_greater" -> exitStatus = invoker.removeGreater(commandArguments);
+//            case "remove_lower" -> exitStatus = invoker.removeLower(commandArguments);
+//            case "remove_greater_key" -> exitStatus = invoker.removeGreaterKey(commandArguments);
+//            case "remove_all_by_engine_power" -> exitStatus = invoker.removeAllByEnginePower(commandArguments);
+//            case "count_by_fuel_type" -> exitStatus = invoker.countByFuelType(commandArguments);
+//            case "filter_less_than_fuel_type" -> exitStatus = invoker.filterLessThanFuelType(commandArguments);
             default -> {
                 MessageHolder.putMessage(String.format(
                         "'%s': No such command", nextLine.trim()), MessageType.USER_ERROR);

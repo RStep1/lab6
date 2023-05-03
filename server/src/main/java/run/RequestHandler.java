@@ -1,13 +1,37 @@
 package run;
 
+import commands.InsertCommand;
+import commands.UpdateCommand;
+import mods.AnswerType;
+import mods.MessageType;
 import processing.CommandInvoker;
+import utility.CommandArguments;
+import utility.MessageHolder;
+import utility.ServerAnswer;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class RequestHandler {
-    private CommandInvoker commandInvoker;
+    private CommandInvoker invoker;
+    private static final Queue<CommandArguments> commandArgumentsQueue = new LinkedList<>();
 
-    public RequestHandler(CommandInvoker commandInvoker) {
-        this.commandInvoker = commandInvoker;
+    public RequestHandler(CommandInvoker invoker) {
+        this.invoker = invoker;
     }
 
-
+    public ServerAnswer processRequest(CommandArguments commandArguments) {
+        MessageHolder.clearMessages(MessageType.OUTPUT_INFO);
+        MessageHolder.clearMessages(MessageType.USER_ERROR);
+        boolean exitStatus = invoker.execute(commandArguments);
+        System.out.println(MessageHolder.getMessages(MessageType.OUTPUT_INFO));
+        ArrayList<String> outputInfo = MessageHolder.getOutputInfo();
+        ArrayList<String> userErrors = MessageHolder.getUserErrors();
+        return new ServerAnswer(outputInfo, userErrors, exitStatus,
+                ((commandArguments.getCommandName().equals(UpdateCommand.getName()) ||
+                        commandArguments.getCommandName().equals(InsertCommand.getName())) &&
+                        commandArguments.getExtraArguments() == null ?
+                        AnswerType.DATA_REQUEST : AnswerType.EXECUTION_RESPONSE));
+    }
 }

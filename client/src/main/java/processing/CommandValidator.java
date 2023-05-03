@@ -3,13 +3,18 @@ package processing;
 import commands.*;
 import exceptions.WrongAmountOfArgumentsException;
 import mods.AnswerType;
+import mods.ExecuteMode;
 import mods.MessageType;
 import utility.*;
 
+import java.io.File;
+import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.Set;
 
 public class CommandValidator {
-    private AnswerType answerType;
+    private final AnswerType answerType;
+    private final Set<String> scriptCounter = new HashSet<>();
 
     public CommandValidator(AnswerType answerType) {
         this.answerType = answerType;
@@ -17,10 +22,10 @@ public class CommandValidator {
 
     private boolean checkNumberOfArguments(CommandArguments commandArguments, int expectedNumberOfArguments) {
         try {
-            if (commandArguments.arguments().length != expectedNumberOfArguments) {
-                MessageHolder.putCurrentCommand(commandArguments.commandName(), MessageType.USER_ERROR);
+            if (commandArguments.getArguments().length != expectedNumberOfArguments) {
+                MessageHolder.putCurrentCommand(commandArguments.getCommandName(), MessageType.USER_ERROR);
                 throw new WrongAmountOfArgumentsException("Wrong amount of arguments: ",
-                        commandArguments.arguments().length, expectedNumberOfArguments);
+                        commandArguments.getArguments().length, expectedNumberOfArguments);
             }
             return true;
         } catch (WrongAmountOfArgumentsException e) {
@@ -30,8 +35,8 @@ public class CommandValidator {
     }
 
     private boolean validateDistanceTravelled(CommandArguments commandArguments) {
-        String commandName = commandArguments.commandName();
-        String[] arguments = commandArguments.arguments();
+        String commandName = commandArguments.getCommandName();
+        String[] arguments = commandArguments.getArguments();
         if (!checkNumberOfArguments(commandArguments, 1))
             return false;
         CheckingResult checkingResult = ValueHandler.DISTANCE_TRAVELLED_CHECKER.check(arguments[0]);
@@ -44,7 +49,7 @@ public class CommandValidator {
     }
 
     private boolean validateEnginePower(CommandArguments commandArguments) {
-        String[] arguments = commandArguments.arguments();
+        String[] arguments = commandArguments.getArguments();
         if (!checkNumberOfArguments(commandArguments, 1))
             return false;
         CheckingResult checkingResult = ValueHandler.ENGINE_POWER_CHECKER.check(arguments[0]);
@@ -62,8 +67,8 @@ public class CommandValidator {
      * @return Check status.
      */
     private boolean validateKey(CommandArguments commandArguments) {
-        String[] arguments = commandArguments.arguments();
-        String commandName = commandArguments.commandName();
+        String[] arguments = commandArguments.getArguments();
+        String commandName = commandArguments.getCommandName();
         if (arguments.length == 0) {
             MessageHolder.putCurrentCommand(commandName, MessageType.USER_ERROR);
             MessageHolder.putMessage("Key value cannot be null", MessageType.USER_ERROR);
@@ -78,7 +83,7 @@ public class CommandValidator {
     }
 
     private boolean validateFuelType(CommandArguments commandArguments) {
-        String[] arguments = commandArguments.arguments();
+        String[] arguments = commandArguments.getArguments();
         if (!checkNumberOfArguments(commandArguments, 1))
             return false;
         CheckingResult checkingResult = ValueHandler.FUEL_TYPE_CHECKER.check(arguments[0]);
@@ -92,9 +97,9 @@ public class CommandValidator {
     }
 
     private boolean validateId(CommandArguments commandArguments) {
-        String[] arguments = commandArguments.arguments();
+        String[] arguments = commandArguments.getArguments();
         if (arguments.length == 0) {
-            MessageHolder.putCurrentCommand(commandArguments.commandName(), MessageType.USER_ERROR);
+            MessageHolder.putCurrentCommand(commandArguments.getCommandName(), MessageType.USER_ERROR);
             MessageHolder.putMessage("id value cannot be null", MessageType.USER_ERROR);
             return false;
         }
@@ -106,30 +111,58 @@ public class CommandValidator {
         return true;
     }
 
+    private boolean validateExecuteScriptCommand(CommandArguments commandArguments) {
+        String[] arguments = commandArguments.getArguments();
+        if (commandArguments.getExecuteMode() == ExecuteMode.COMMAND_MODE)
+            scriptCounter.clear();
+        if (!checkNumberOfArguments(commandArguments, 1))
+            return false;
+        File scriptFile = FileHandler.findFile(new File("scripts"), arguments[0]);
+        if (scriptFile == null) {
+            MessageHolder.putMessage(String.format(
+                    "Script '%s' not found in 'scripts' directory", arguments[0]), MessageType.USER_ERROR);
+            return false;
+        }
+        if (scriptCounter.contains(scriptFile.getAbsolutePath())) {
+            MessageHolder.putMessage(String.format("Command '%s %s':",
+                    ExecuteScriptCommand.getName(), scriptFile.getName()), MessageType.USER_ERROR);
+            MessageHolder.putMessage(String.format(
+                    "Recursion on '%s' script noticed", scriptFile.getName()), MessageType.USER_ERROR);
+            return false;
+        }
+        scriptCounter.add(scriptFile.getAbsolutePath());
+        return true;
+    }
+
     public boolean validate(CommandArguments commandArguments) {
+        if (commandArguments == null)
+            return false;
+        if (answerType == AnswerType.EXECUTION_RESPONSE)
+            return validateArguments(commandArguments);
+        return validateExtraArguments(commandArguments);
+    }
+
+    private boolean validateArguments(CommandArguments commandArguments) {
         boolean isCorrect;
-        switch (commandArguments.commandName()) {
+        switch (commandArguments.getCommandName()) {
             case "help", "info", "show", "clear", "exit" -> isCorrect = checkNumberOfArguments(commandArguments, 0);
             case "insert", "remove_key", "remove_greater_key" -> isCorrect = validateKey(commandArguments);
             case "update" -> isCorrect = validateId(commandArguments);
-            case "execute_script" -> isCorrect = checkNumberOfArguments(commandArguments, 1);
+            case "execute_script" -> isCorrect = validateExecuteScriptCommand(commandArguments);
             case "remove_greater", "remove_lower" -> isCorrect = validateDistanceTravelled(commandArguments);
             case "remove_all_by_engine_power" -> isCorrect = validateEnginePower(commandArguments);
             case "count_by_fuel_type", "filter_less_than_fuel_type" -> isCorrect = validateFuelType(commandArguments);
             default -> {
                 MessageHolder.putMessage(String.format(
-                        "'%s': No such command", commandArguments.commandName()), MessageType.USER_ERROR);
+                        "'%s': No such command", commandArguments.getCommandName()), MessageType.USER_ERROR);
                 isCorrect = false;
             }
         }
         return isCorrect;
     }
 
-    private boolean validateArguments(CommandArguments commandArguments) {
-        return true;
-    }
-
     private boolean validateExtraArguments(CommandArguments commandArguments) {
+
         return true;
     }
 
