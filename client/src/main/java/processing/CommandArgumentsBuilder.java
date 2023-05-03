@@ -7,8 +7,10 @@ import mods.ExecuteMode;
 import mods.MessageType;
 import run.Client;
 import utility.CommandArguments;
+import utility.FileHandler;
 import utility.MessageHolder;
 
+import java.io.File;
 import java.util.*;
 
 public class CommandArgumentsBuilder {
@@ -69,7 +71,10 @@ public class CommandArgumentsBuilder {
     }
 
     private ArrayList<CommandArguments> scriptProcessing(CommandArguments commandArguments) {
-
-        return null;
+        File scriptFile = FileHandler.findFile(new File("scripts"), commandArguments.getArguments()[0]);
+        ArrayList<String> scriptLines = FileHandler.readScriptFile(scriptFile);
+        ArrayList<CommandArguments> scriptCommands = new ArrayList<>();
+        scriptLines.forEach(scriptLine -> scriptCommands.addAll(commandProcessing(scriptLine)));
+        return scriptCommands;
     }
 }

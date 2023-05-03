@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="85453189-5be8-4fe3-ad24-1edc46d74a0c" name="Changes" comment="Add validation for execute_script command">
+    <list default="true" id="85453189-5be8-4fe3-ad24-1edc46d74a0c" name="Changes" comment="Add queue for commands">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/processing/CommandArgumentsBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/processing/CommandArgumentsBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/run/ClientManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/run/ClientManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,7 +145,7 @@
       <workItem from="1682962812221" duration="4265000" />
       <workItem from="1682970023495" duration="31000" />
       <workItem from="1683031556496" duration="9260000" />
-      <workItem from="1683099067649" duration="4734000" />
+      <workItem from="1683099067649" duration="5431000" />
     </task>
     <task id="LOCAL-00001" summary="Copy lab5 project">
       <created>1681564328860</created>
@@ -246,7 +245,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683102843458</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Add queue for commands">
+      <created>1683104031481</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1683104031481</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -278,14 +284,15 @@
     <MESSAGE value="Fix bug with exit command validation" />
     <MESSAGE value="Remove element existence check by id" />
     <MESSAGE value="Add validation for execute_script command" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add validation for execute_script command" />
+    <MESSAGE value="Add queue for commands" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add queue for commands" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/run/ClientManager.java</url>
-          <line>78</line>
+          <line>79</line>
           <option name="timeStamp" value="34" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
