@@ -84,7 +84,6 @@ public class Console {
             } while (!process.getChecker().check(newValue).getStatus());
             newValues[index++] = newValue;
         }
-        in.close();
         return newValues;
     }
 

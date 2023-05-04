@@ -41,53 +41,12 @@ public class BufferedDataBase {
     }
 
     /**
-     * Checks each command for the correct number of arguments entered by the user.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @param expectedNumberOfArguments Correct number of command arguments.
-     * @return Check status.
-     */
-    public static boolean checkNumberOfArguments(String[] arguments, int expectedNumberOfArguments,
-                                                 String commandName) {
-        try {
-            if (arguments.length != expectedNumberOfArguments) {
-                MessageHolder.putCurrentCommand(commandName, MessageType.USER_ERROR);
-                throw new WrongAmountOfArgumentsException("Wrong amount of arguments: ",
-                        arguments.length, expectedNumberOfArguments);
-            }
-            return true;
-        } catch (WrongAmountOfArgumentsException e) {
-            MessageHolder.putMessage(e.getMessage(), MessageType.USER_ERROR);
-        }
-        return false;
-    }
-
-    /**
-     * Checks the arguments of commands that use the key as an argument.
-     * @param arguments Arguments which entered on the same line as the command.
-     * @return Check status.
-     */
-    private boolean checkCommandWithKey(String[] arguments, String commandName) {
-        if (arguments.length == 0) {
-            MessageHolder.putCurrentCommand(commandName, MessageType.USER_ERROR);
-            MessageHolder.putMessage("Key value cannot be null", MessageType.USER_ERROR);
-            return false;
-        }
-        if (!checkNumberOfArguments(arguments, 1, commandName + " " + arguments[0]))
-            return false;
-        if (!identifierHandler.checkKey(arguments[0], commandName + " " + arguments[0]))
-            return false;
-        return true;
-    }
-
-    /**
      * Displays information about all commands.
      * @param commandArguments contains the name of the command, its arguments on a single line,
      *                        arguments that are characteristics of the collection class and execution mode.
      * @return Command exit status.
      */
     public boolean help(CommandArguments commandArguments) {
-        if (!checkNumberOfArguments(commandArguments.getArguments(), 0, HelpCommand.getName()))
-            return false;
         MessageHolder.putCurrentCommand(HelpCommand.getName(), MessageType.OUTPUT_INFO);
         MessageHolder.putMessage(FileHandler.readFile(FileType.REFERENCE), MessageType.OUTPUT_INFO);
         return true;
@@ -100,8 +59,6 @@ public class BufferedDataBase {
      * @return Command exit status.
      */
     public boolean info(CommandArguments commandArguments) {
-        if (!checkNumberOfArguments(commandArguments.getArguments(), 0, InfoCommand.getName()))
-            return false;
         String stringLastInitTime = (lastInitTime == null ?
                 "there have been no initializations in this session yet" : lastInitTime.format(dateFormatter));
         String stringLastSaveTime = (lastSaveTime == null ?
@@ -124,8 +81,6 @@ public class BufferedDataBase {
      * @return Command exit status.
      */
     public boolean show(CommandArguments commandArguments) {
-        if (!checkNumberOfArguments(commandArguments.getArguments(), 0, ShowCommand.getName()))
-            return false;
         MessageHolder.putCurrentCommand(ShowCommand.getName(), MessageType.OUTPUT_INFO);
         if (dataBase.isEmpty()) {
             MessageHolder.putMessage("Collection is empty", MessageType.OUTPUT_INFO);
@@ -181,46 +136,26 @@ public class BufferedDataBase {
      * @return Command exit status.
      */
     private boolean addElementBy(CommandArguments commandArguments, AddMode addMode) {
-    //    if (arguments.length == 0) {
-    //        MessageHolder.putCurrentCommand(commandName, MessageType.USER_ERROR);
-    //        MessageHolder.putMessage(String.format(
-    //                "%s value cannot be null", addMode.getValueName()), MessageType.USER_ERROR);
-    //        return false;
-    //    }
-    //    if (!checkNumberOfArguments(arguments, 1, commandName))
-    //        return false;
         String[] arguments = commandArguments.getArguments();
         String[] vehicleValues = commandArguments.getExtraArguments();
         String commandName = commandArguments.getCommandName();
         ExecuteMode executeMode = commandArguments.getExecuteMode();
         java.time.ZonedDateTime creationDate = ZonedDateTime.now();
-        System.out.println("PTUEJIOGPJEIJIEOJIOJ");
         long key = 0, id = 0;
         if (addMode == AddMode.INSERT_MODE) {
             key = Long.parseLong(arguments[0]);
             id = identifierHandler.generateId();
         } else {
             id = Long.parseLong(arguments[0]);
-            System.out.println("ID: " + id);
             key = identifierHandler.getKeyById(id);
         }
-        System.out.println("key and id: " + key + " " + id);
-//
-//        Vehicle vehicle;
-//        if (executeMode == ExecuteMode.COMMAND_MODE)
-//            vehicle = Console.insertMode(id, creationDate);
-//        else {
-//            if (vehicleValues.length != Vehicle.getCountOfChangeableFields()) {
-//                MessageHolder.putCurrentCommand(commandName + " " + arguments[0], MessageType.USER_ERROR);
-//                MessageHolder.putMessage(String.format(
-//                        "There are not enough lines in script for the '%s %s' command",
-//                        commandName, arguments[0]), MessageType.USER_ERROR);
-//                return false;
-//            }
-//            if (!ValueHandler.checkValues(vehicleValues, commandName + " " + arguments[0]))
-//                return false;
-//            vehicle = ValueHandler.getVehicle(id, creationDate, vehicleValues);
-//        }
+        if (executeMode == ExecuteMode.SCRIPT_MODE && vehicleValues.length != Vehicle.getCountOfChangeableFields()) {
+            MessageHolder.putCurrentCommand(commandName + " " + arguments[0], MessageType.USER_ERROR);
+            MessageHolder.putMessage(String.format(
+                    "There are not enough lines in script '%s' for the '%s %s' command",
+                    commandArguments.getScriptFile().getName(), commandName, arguments[0]), MessageType.USER_ERROR);
+            return false;
+        }
         Vehicle vehicle = ValueHandler.getVehicle(id, creationDate, vehicleValues);
         dataBase.put(key, vehicle);
         MessageHolder.putCurrentCommand(commandName + " " + arguments[0], MessageType.OUTPUT_INFO);
@@ -236,11 +171,6 @@ public class BufferedDataBase {
      */
     public boolean removeKey(CommandArguments commandArguments) {
         String[] arguments = commandArguments.getArguments();
-        if (!checkCommandWithKey(arguments, RemoveKeyCommand.getName()))
-            return false;
-        if (!identifierHandler.hasElementWithKey(arguments[0], false,
-                RemoveKeyCommand.getName() + " " + arguments[0]))
-            return false;
         long key = Long.parseLong(arguments[0]);
         dataBase.remove(key);
         MessageHolder.putCurrentCommand(RemoveKeyCommand.getName() + " " + arguments[0], MessageType.OUTPUT_INFO);
@@ -256,8 +186,6 @@ public class BufferedDataBase {
      * @return Command exit status.
      */
     public boolean clear(CommandArguments commandArguments) {
-        if (!checkNumberOfArguments(commandArguments.getArguments(), 0, ClearCommand.getName()))
-            return false;
         MessageHolder.putCurrentCommand(ClearCommand.getName(), MessageType.OUTPUT_INFO);
         if (dataBase.isEmpty()) {
             MessageHolder.putMessage("Collection is already empty", MessageType.OUTPUT_INFO);
@@ -275,8 +203,6 @@ public class BufferedDataBase {
      * @return Command exit status.
      */
     public boolean save(CommandArguments commandArguments) {
-        if (!checkNumberOfArguments(commandArguments.getArguments(), 0, SaveCommand.getName()))
-            return false;
         FileHandler.saveDataBase(dataBase);
         MessageHolder.putCurrentCommand(SaveCommand.getName(), MessageType.OUTPUT_INFO);
         MessageHolder.putMessage("Collection successfully saved", MessageType.OUTPUT_INFO);
@@ -294,8 +220,6 @@ public class BufferedDataBase {
         String[] arguments = commandArguments.getArguments();
         if (commandArguments.getExecuteMode() == ExecuteMode.COMMAND_MODE)
             scriptCounter.clear();
-        if (!checkNumberOfArguments(arguments, 1, ExecuteScriptCommand.getName()))
-            return false;
         File scriptFile = FileHandler.findFile(new File("scripts"), arguments[0]);
         if (scriptFile == null) {
             MessageHolder.putMessage(String.format(
@@ -330,8 +254,6 @@ public class BufferedDataBase {
      * @return Command exit status.
      */
     public boolean exit(CommandArguments commandArguments) {
-        if (!checkNumberOfArguments(commandArguments.getArguments(), 0, ExitCommand.getName()))
-            return false;
         MessageHolder.putCurrentCommand(ExitCommand.getName(), MessageType.OUTPUT_INFO);
         if (commandArguments.getExecuteMode() == ExecuteMode.COMMAND_MODE)
             MessageHolder.putMessage("Program successfully completed", MessageType.OUTPUT_INFO);
@@ -368,14 +290,6 @@ public class BufferedDataBase {
     private boolean removeAllByDistanceTravelled(CommandArguments commandArguments,
                                                  String commandName, RemoveMode removeMode) {
         String[] arguments = commandArguments.getArguments();
-        if (!checkNumberOfArguments(arguments, 1, commandName))
-            return false;
-        CheckingResult checkingResult = ValueHandler.DISTANCE_TRAVELLED_CHECKER.check(arguments[0]);
-        if (!checkingResult.getStatus()) {
-            MessageHolder.putCurrentCommand(commandName + " " + arguments[0], MessageType.USER_ERROR);
-            MessageHolder.putMessage(checkingResult.getMessage(), MessageType.USER_ERROR);
-            return false;
-        }
         long userDistanceTravelled = Long.parseLong(arguments[0]);
         Set<Long> filteredKeys = dataBase.keySet().stream()
                 .filter(key -> (removeMode == RemoveMode.REMOVE_GREATER ?
@@ -408,8 +322,6 @@ public class BufferedDataBase {
      */
     public boolean removeGreaterKey(CommandArguments commandArguments) {
         String[] arguments = commandArguments.getArguments();
-        if (!checkCommandWithKey(arguments, RemoveGreaterKeyCommand.getName()))
-            return false;
         long userKey = Long.parseLong(arguments[0]);
         int countOfRemovedKeys = 0;
         Set<Long> filteredKeys = dataBase.keySet().stream().filter(key -> key > userKey).collect(Collectors.toSet());
@@ -434,15 +346,6 @@ public class BufferedDataBase {
      */
     public boolean removeAllByEnginePower(CommandArguments commandArguments) {
         String[] arguments = commandArguments.getArguments();
-        if (!checkNumberOfArguments(arguments, 1, RemoveAllByEnginePowerCommand.getName()))
-            return false;
-        CheckingResult checkingResult = ValueHandler.ENGINE_POWER_CHECKER.check(arguments[0]);
-        if (!checkingResult.getStatus()) {
-            MessageHolder.putCurrentCommand(RemoveAllByEnginePowerCommand.getName() + " " +
-                    arguments[0], MessageType.USER_ERROR);
-            MessageHolder.putMessage(checkingResult.getMessage(), MessageType.USER_ERROR);
-            return false;
-        }
         int userEnginePower = Integer.parseInt(arguments[0]);
         int countOfRemoved = 0;
         Set<Long> filteredKeys = dataBase.keySet().stream()
@@ -471,15 +374,6 @@ public class BufferedDataBase {
      */
     public boolean countByFuelType(CommandArguments commandArguments) {
         String[] arguments = commandArguments.getArguments();
-        if (!checkNumberOfArguments(arguments, 1, CountByFuelTypeCommand.getName()))
-            return false;
-        CheckingResult checkingResult = ValueHandler.FUEL_TYPE_CHECKER.check(arguments[0]);
-        if (!checkingResult.getStatus()) {
-            MessageHolder.putCurrentCommand(CountByFuelTypeCommand.getName() + " " +
-                    arguments[0], MessageType.USER_ERROR);
-            MessageHolder.putMessage(checkingResult.getMessage(), MessageType.USER_ERROR);
-            return false;
-        }
         FuelType fuelType = ValueTransformer.SET_FUEL_TYPE.apply(
                 ValueHandler.TYPE_CORRECTION.correct(arguments[0]));
         long count = dataBase.keySet().stream()
@@ -499,18 +393,8 @@ public class BufferedDataBase {
      */
     public boolean filterLessThanFuelType(CommandArguments commandArguments) {
         String[] arguments = commandArguments.getArguments();
-        if (!checkNumberOfArguments(arguments, 1, FilterLessThanFuelTypeCommand.getName()))
-            return false;
-        CheckingResult checkingResult = ValueHandler.FUEL_TYPE_CHECKER.check(arguments[0]);
-        if (!checkingResult.getStatus()) {
-            MessageHolder.putCurrentCommand(FilterLessThanFuelTypeCommand.getName() + " " +
-                    arguments[0], MessageType.USER_ERROR);
-            MessageHolder.putMessage(checkingResult.getMessage(), MessageType.USER_ERROR);
-            return false;
-        }
         FuelType fuelType = ValueTransformer.SET_FUEL_TYPE.apply(
                 ValueHandler.TYPE_CORRECTION.correct(arguments[0]));
-
         AtomicBoolean hasSuchElements = new AtomicBoolean(false);
         MessageHolder.putCurrentCommand(FilterLessThanFuelTypeCommand.getName(), MessageType.OUTPUT_INFO);
         TreeMap<Long, Vehicle> treeMapData = new TreeMap<>(dataBase);

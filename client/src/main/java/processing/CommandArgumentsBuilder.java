@@ -84,7 +84,8 @@ public class CommandArgumentsBuilder {
         File currentScriptFile = commandArguments.getScriptFile();
         ArrayList<String> scriptLines = FileHandler.readScriptFile(commandArguments.getScriptFile());
         ArrayList<CommandArguments> scriptCommands = new ArrayList<>();
-        for (String scriptLine : scriptLines) {
+        for (int line = 0; line < scriptLines.size(); line++) {
+            String scriptLine = scriptLines.get(line);
             if (scriptLine.trim().equals(""))
                 continue;
             scriptCommands.addAll(commandProcessing(scriptLine, ExecuteMode.SCRIPT_MODE, currentScriptFile));
@@ -96,4 +97,16 @@ public class CommandArgumentsBuilder {
         }
         return scriptCommands;
     }
+
+     /**
+     * Adds extra lines from script that are used as arguments to change the collection element.
+     */
+    // private String[] setExtraArguments(int countOfExtraArguments, int currentLineIndex, int countOfScriptLines) {
+    //     String[] extraArguments =
+    //             new String[Math.min(countOfExtraArguments, countOfScriptLines - currentLineIndex - 1)];
+    //     for (int i = 0, j = currentLineIndex + 1;
+    //          j < currentLineIndex + countOfExtraArguments + 1 && j < countOfScriptLines; j++, i++)
+    //         extraArguments[i] = scriptLines.get(j).trim();
+    //     return extraArguments;
+    // }
 }
