@@ -30,13 +30,13 @@ public class Server {
     public Server(RequestHandler requestHandler) {
         this.requestHandler = requestHandler;
     }
-
+    
     private void setup() {
-        try {
-            selector = Selector.open();
-            serverSocket = ServerSocketChannel.open();
-//            serverSocket.setOption(StandardSocketOptions.SO_REUSEADDR, true);
-            serverSocket.bind(new InetSocketAddress(HOST, PORT));
+    try {
+        selector = Selector.open();
+        serverSocket = ServerSocketChannel.open();
+        //            serverSocket.setOption(StandardSocketOptions.SO_REUSEADDR, true);
+        serverSocket.bind(new InetSocketAddress(HOST, PORT));
             serverSocket.configureBlocking(false);
             serverSocket.register(selector, SelectionKey.OP_ACCEPT);
             buffer = ByteBuffer.allocate(4048);

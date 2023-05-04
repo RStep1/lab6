@@ -9,8 +9,10 @@ public class Main {
         //args = (host, port) - get and check
         boolean processingStatus = false;
         while (!processingStatus) { // processingStatus = true, if client input 'exit', else connection failed
-            if (!clientManager.setConnection("localhost", 15454))
+            if (!clientManager.setConnection("localhost", 15454)) {
+                System.out.println("reconnection...");
                 continue;
+            }
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -18,5 +20,6 @@ public class Main {
             }
             processingStatus = clientManager.processRequestToServer();
         }
+        scanner.close();
     }
 }

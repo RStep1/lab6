@@ -19,7 +19,7 @@ public class Client {
 
         client = SocketChannel.open(new InetSocketAddress(host, port));
         System.out.println("Local port is: "+client.getLocalAddress());
-        buffer = ByteBuffer.allocate(4048);
+        buffer = ByteBuffer.allocate(100000);
 //        System.out.println("client =" + client);
     }
 
@@ -46,14 +46,17 @@ public class Client {
             buffer = ByteBuffer.wrap(objectBytes);
             client.write(buffer);
             buffer.clear();
-            buffer = ByteBuffer.allocate(4048);
+            buffer = ByteBuffer.allocate(100000);
             client.read(buffer);
             System.out.println("buffer: " + buffer.toString());
             serverAnswer = SerializationUtils.deserialize(buffer.array());
             buffer.clear();
         } catch (ClassCastException e) {
+            System.out.println("1 " + e);
             return null;
         } catch (IOException e) {
+            //
+            System.out.println("2 " + e);
             return null;
         }
         return serverAnswer;

@@ -76,7 +76,7 @@ public class CommandValidator {
         }
         if (!checkNumberOfArguments(commandArguments, 1))
             return false;
-        IdentifierHandler identifierHandler = new IdentifierHandler(new Hashtable<>());//////////////
+        IdentifierHandler identifierHandler = new IdentifierHandler(new Hashtable<>());
         if (!identifierHandler.checkKey(arguments[0], commandName + " " + arguments[0]))
             return false;
         return true;
@@ -117,7 +117,7 @@ public class CommandValidator {
             scriptCounter.clear();
         if (!checkNumberOfArguments(commandArguments, 1))
             return false;
-        File scriptFile = FileHandler.findFile(new File("scripts"), arguments[0]);
+        File scriptFile = FileHandler.findFile(new File("../scripts"), arguments[0]);
         if (scriptFile == null) {
             MessageHolder.putMessage(String.format(
                     "Script '%s' not found in 'scripts' directory", arguments[0]), MessageType.USER_ERROR);

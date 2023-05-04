@@ -27,6 +27,7 @@ public class CommandArgumentsBuilder {
         try {
             nextLine = scanner.nextLine();
         } catch (NoSuchElementException e) {
+            e.printStackTrace();
             Client.stop();
             scanner.close();
             System.exit(0);

@@ -36,17 +36,15 @@ public class ClientManager {
     }
 
     public boolean processRequestToServer() {
-        Scanner scanner = new Scanner(System.in);
+        // Scanner scanner = new Scanner(System.in);
         Console.println("Available commands:");
-        Console.println(FileHandler.readFile(FileType.REFERENCE));
+//        Console.println(FileHandler.readFile(FileType.REFERENCE));
         ServerAnswer serverAnswer = null;
         do {
             try {
                 if (commandArgumentsQueue.isEmpty()) { //if all commands have been processed, then we enter new ones
                     CommandArgumentsBuilder commandArgumentsBuilder = new CommandArgumentsBuilder(scanner, AnswerType.EXECUTION_RESPONSE);
                     commandArgumentsQueue.addAll(commandArgumentsBuilder.userEnter());
-                    commandArgumentsQueue.forEach(x -> System.out.println(x.getCommandName() + " " + List.of(x.getArguments()) +
-                            " " + (x.getScriptFile() != null ? x.getScriptFile().getName() : "wtf")));
                     Console.printUserErrors();
                     MessageHolder.clearMessages(MessageType.USER_ERROR);
                 }
@@ -55,15 +53,6 @@ public class ClientManager {
                     continue;
                 }
                 commandArguments = commandArgumentsQueue.remove();
-                //need connection check
-//                if (!client.isServerAlive()) {
-//                    //тестовый обмен данными
-//                    System.out.println("connection lost");
-//                    break;
-//                }
-//                if (commandArguments == null) //if user just press Enter bottom
-//                    continue;
-//                System.out.println(commandArguments + "");
                 if (commandArguments.getCommandName().equals(ExitCommand.getName())) {
                     if (commandArguments.getExecuteMode() == ExecuteMode.SCRIPT_MODE) {
                         System.out.println("Command exit:");
@@ -78,12 +67,10 @@ public class ClientManager {
                 serverAnswer = client.dataExchange(commandArguments);
                 if (serverAnswer == null) {
                     teardown();
-                    System.out.println("соединение с сервером потеряно");
+                    System.out.println("соединение ссервером потеряно");
                     System.out.println("Is connected to server: "+ client.getSocketChannel().isConnected());
                     return false;
                 }
-
-//                System.out.println(serverAnswer + "");
                 if (serverAnswer.answerType() == AnswerType.DATA_REQUEST) {
                     //insert mode (new fields for Vehicle), change commandArguments
                     if (commandArguments.getExecuteMode() == ExecuteMode.COMMAND_MODE) {
@@ -98,12 +85,6 @@ public class ClientManager {
                         return false;
                     }
                 }
-                //print command result
-//                if (serverAnswer.commandExitStatus()) {
-//                    serverAnswer.outputInfo().forEach(System.out::println);
-//                } else {
-//                    serverAnswer.userErrors().forEach(System.out::println);
-//                }
                 serverAnswer.outputInfo().forEach(System.out::println);
                 serverAnswer.userErrors().forEach(System.out::println);
 
@@ -118,7 +99,7 @@ public class ClientManager {
 
     private void teardown() {
         Client.stop();
-        scanner.close();
+        // scanner.close();
     }
 
 }
