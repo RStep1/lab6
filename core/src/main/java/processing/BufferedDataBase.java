@@ -145,12 +145,14 @@ public class BufferedDataBase {
      * @return Command exit status.
      */
     public boolean insert(CommandArguments commandArguments) {
+        System.out.println("CHECK KEY");
         if (commandArguments.getExtraArguments() == null) {
             if (identifierHandler.hasElementWithKey(commandArguments.getArguments()[0], true,
                     InsertCommand.getName() + " " + commandArguments.getArguments()[0]))
                 return false;
             return true;
         }
+        System.out.println("COMMAND INSERT________");
         return addElementBy(commandArguments, AddMode.INSERT_MODE);
     }
 
@@ -161,6 +163,7 @@ public class BufferedDataBase {
      * @return Command exit status.
      */
     public boolean update(CommandArguments commandArguments) {
+        System.out.println("command update");
         if (commandArguments.getExtraArguments() == null) {
             if (!identifierHandler.hasElementWithId(Long.parseLong(commandArguments.getArguments()[0]))) {
                 MessageHolder.putMessage("No such element with this id", MessageType.USER_ERROR);
@@ -178,48 +181,30 @@ public class BufferedDataBase {
      * @return Command exit status.
      */
     private boolean addElementBy(CommandArguments commandArguments, AddMode addMode) {
-//        if (arguments.length == 0) {
-//            MessageHolder.putCurrentCommand(commandName, MessageType.USER_ERROR);
-//            MessageHolder.putMessage(String.format(
-//                    "%s value cannot be null", addMode.getValueName()), MessageType.USER_ERROR);
-//            return false;
-//        }
-//        if (!checkNumberOfArguments(arguments, 1, commandName))
-//            return false;
+    //    if (arguments.length == 0) {
+    //        MessageHolder.putCurrentCommand(commandName, MessageType.USER_ERROR);
+    //        MessageHolder.putMessage(String.format(
+    //                "%s value cannot be null", addMode.getValueName()), MessageType.USER_ERROR);
+    //        return false;
+    //    }
+    //    if (!checkNumberOfArguments(arguments, 1, commandName))
+    //        return false;
         String[] arguments = commandArguments.getArguments();
         String[] vehicleValues = commandArguments.getExtraArguments();
         String commandName = commandArguments.getCommandName();
         ExecuteMode executeMode = commandArguments.getExecuteMode();
         java.time.ZonedDateTime creationDate = ZonedDateTime.now();
-        long key = 0;
-        long id = 0;
+        System.out.println("PTUEJIOGPJEIJIEOJIOJ");
+        long key = 0, id = 0;
         if (addMode == AddMode.INSERT_MODE) {
             key = Long.parseLong(arguments[0]);
             id = identifierHandler.generateId();
         } else {
-            key = identifierHandler.getKeyById(id);
             id = Long.parseLong(arguments[0]);
+            System.out.println("ID: " + id);
+            key = identifierHandler.getKeyById(id);
         }
-        System.out.println(key + " " + id);
-        switch (addMode) {
-            case INSERT_MODE -> {
-//                if (!identifierHandler.checkKey(arguments[0], InsertCommand.getName() + " " + arguments[0]))
-//                    return false;
-//                if (identifierHandler.hasElementWithKey(arguments[0], true,
-//                        InsertCommand.getName() + " " + arguments[0]))
-//                    return false;
-//                key = Long.parseLong(arguments[0]);
-//                id = identifierHandler.generateId();
-            }
-            case UPDATE_MODE -> {
-//                if (!identifierHandler.checkId(arguments[0], UpdateCommand.getName() + " " + arguments[0]))
-//                    return false;
-//                id = Long.parseLong(arguments[0]);
-//                if (!identifierHandler.hasElementWithId(id))
-//                    return false;
-//                key = identifierHandler.getKeyById(id);
-            }
-        }
+        System.out.println("key and id: " + key + " " + id);
 //
 //        Vehicle vehicle;
 //        if (executeMode == ExecuteMode.COMMAND_MODE)
@@ -236,7 +221,6 @@ public class BufferedDataBase {
 //                return false;
 //            vehicle = ValueHandler.getVehicle(id, creationDate, vehicleValues);
 //        }
-
         Vehicle vehicle = ValueHandler.getVehicle(id, creationDate, vehicleValues);
         dataBase.put(key, vehicle);
         MessageHolder.putCurrentCommand(commandName + " " + arguments[0], MessageType.OUTPUT_INFO);

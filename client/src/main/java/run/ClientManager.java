@@ -74,20 +74,16 @@ public class ClientManager {
                     return false;
                 }
                 commandArgumentsQueue.remove();
-                if (serverAnswer.answerType() == AnswerType.DATA_REQUEST) {
+                if (serverAnswer.answerType() == AnswerType.DATA_REQUEST && serverAnswer.commandExitStatus()) {
                     //insert mode (new fields for Vehicle), change commandArguments
                     if (commandArguments.getExecuteMode() == ExecuteMode.COMMAND_MODE) {
                         String[] extraArguments = Console.insertMode();
-                        for (String x : extraArguments) {
-                            System.out.println(x);
-                        }
-                        System.exit(0);
+                        commandArguments.setExtraArguments(extraArguments);
                     }
-                    System.out.println(commandArguments.getExecuteMode());
-                    System.exit(0);
-
                     System.out.println("_____INSERT_MODE______");
+                    System.out.println(serverAnswer);
                     serverAnswer = client.dataExchange(commandArguments);
+                    System.out.println(serverAnswer);
                     if (serverAnswer == null) {
                         teardown();
                         System.out.println("соединение прервано, команда не была выполнена");

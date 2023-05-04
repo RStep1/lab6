@@ -8,11 +8,15 @@ public class Main {
         ClientManager clientManager = new ClientManager(scanner);
         //args = (host, port) - get and check
         boolean processingStatus = false;
+        boolean isTryReconnecting = false;
         while (!processingStatus) { // processingStatus = true, if client input 'exit', else connection failed
             if (!clientManager.setConnection("localhost", 15454)) {
-                System.out.println("reconnection...");
+                if (!isTryReconnecting)
+                    System.out.println("reconnection...");
+                isTryReconnecting = true;
                 continue;
             }
+            isTryReconnecting = false;
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
