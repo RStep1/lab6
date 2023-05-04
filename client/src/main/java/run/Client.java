@@ -18,7 +18,7 @@ public class Client {
     public Client(String host, int port) throws IOException {
 
         client = SocketChannel.open(new InetSocketAddress(host, port));
-        System.out.println("Local port is: "+client.getLocalAddress());
+        // System.out.println("Local port is: "+client.getLocalAddress());
         buffer = ByteBuffer.allocate(100000);
 //        System.out.println("client =" + client);
     }
@@ -28,10 +28,10 @@ public class Client {
             client.close();
 //            client.finishConnect();
         } catch (IOException e) {
-            System.out.println("Client is open: "+client.isConnected());
+            // System.out.println("Client is open: "+client.isConnected());
             e.printStackTrace();
         }
-        System.out.println("Client is open: "+client.isConnected());
+        // System.out.println("Client is open: "+client.isConnected());
         buffer = null;
     }
 
@@ -48,33 +48,16 @@ public class Client {
             buffer.clear();
             buffer = ByteBuffer.allocate(100000);
             client.read(buffer);
-            System.out.println("buffer: " + buffer.toString());
+            // System.out.println("buffer: " + buffer.toString());
             serverAnswer = SerializationUtils.deserialize(buffer.array());
             buffer.clear();
         } catch (ClassCastException e) {
-            System.out.println("1 " + e);
+            // System.out.println("1 " + e);
             return null;
         } catch (IOException e) {
-            //
-            System.out.println("2 " + e);
+            // System.out.println("2 " + e);
             return null;
         }
         return serverAnswer;
-    }
-
-    public boolean isServerAlive() {
-        try {
-            buffer = ByteBuffer.wrap(SerializationUtils.serialize(
-                    new CommandArguments("ACK", null, null, ClientRequestType.COMMAND_EXECUTION,
-                            ExecuteMode.COMMAND_MODE)));
-            client.write(buffer);
-            buffer.clear();
-            client.read(buffer);
-            buffer.clear();
-        } catch (IOException e) {
-            System.out.println("server not answer...");
-            return false;
-        }
-        return true;
     }
 }

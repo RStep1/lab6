@@ -60,11 +60,13 @@ public class Console {
      * @param creationDate Automatically generated parameter.
      * @return New formed collection element.
      */
-    public static Vehicle insertMode(long id, java.time.ZonedDateTime creationDate) {
+    public static String[] insertMode(/*long id, java.time.ZonedDateTime creationDate*/) {
         Scanner in = new Scanner(System.in);
         PrintStream printStream = new PrintStream(System.out);
-        String newName, newX, newY, newEnginePower, newDistanceTravelled, newType, newFuelType;
-        ArrayList<String> newValues = new ArrayList<>();
+        // String newName, newX, newY, newEnginePower, newDistanceTravelled, newType, newFuelType;
+        // ArrayList<String> newValues = new ArrayList<>();
+        String[] newValues = new String[7];
+        int index = 0;
         String newValue = "";
         ArrayList<Process> processes = ValueHandler.getValueProcesses();
         for (Process process : processes) {
@@ -82,17 +84,19 @@ public class Console {
                 if (!checkingResult.getStatus())
                     MessageHolder.putMessage(checkingResult.getMessage(), MessageType.USER_ERROR);
             } while (!process.getChecker().check(newValue).getStatus());
-            newValues.add(newValue);
+            // newValues.add(newValue);
+            newValues[index++] = newValue;
         }
-        newName = newValues.get(0);
-        newX = newValues.get(1);
-        newY = newValues.get(2);
-        newEnginePower = newValues.get(3);
-        newDistanceTravelled = newValues.get(4);
-        newType = newValues.get(5);
-        newFuelType = newValues.get(6);
-        return ValueTransformer.createVehicle(id, newName, newX, newY, creationDate,
-                newEnginePower, newDistanceTravelled, newType, newFuelType);
+        // newName = newValues.get(0);
+        // newX = newValues.get(1);
+        // newY = newValues.get(2);
+        // newEnginePower = newValues.get(3);
+        // newDistanceTravelled = newValues.get(4);
+        // newType = newValues.get(5);
+        // newFuelType = newValues.get(6);
+        // return ValueTransformer.createVehicle(id, newName, newX, newY, creationDate,
+        //         newEnginePower, newDistanceTravelled, newType, newFuelType);
+        return newValues;
     }
 
     public static String getHelpMessage() {

@@ -19,7 +19,7 @@ public class ClientManager {
     private Client client;
     private final Scanner scanner;
     private CommandArguments commandArguments;
-    private final Queue<CommandArguments> commandArgumentsQueue = new LinkedList<>();
+    // private final Queue<CommandArguments> commandArgumentsQueue = new LinkedList<>();
 
     public ClientManager(Scanner scanner) {
         this.scanner = scanner;
@@ -36,9 +36,9 @@ public class ClientManager {
     }
 
     public boolean processRequestToServer() {
-        // Scanner scanner = new Scanner(System.in);
         Console.println("Available commands:");
-//        Console.println(FileHandler.readFile(FileType.REFERENCE));
+        // Console.println(FileHandler.readFile(FileType.REFERENCE));
+        Queue<CommandArguments> commandArgumentsQueue = new LinkedList<>();
         ServerAnswer serverAnswer = null;
         do {
             try {
@@ -52,13 +52,15 @@ public class ClientManager {
                     commandArguments = null;
                     continue;
                 }
-                commandArguments = commandArgumentsQueue.remove();
+                // commandArguments = commandArgumentsQueue.remove();
+                commandArguments = commandArgumentsQueue.peek();
                 if (commandArguments.getCommandName().equals(ExitCommand.getName())) {
                     if (commandArguments.getExecuteMode() == ExecuteMode.SCRIPT_MODE) {
                         System.out.println("Command exit:");
                         System.out.println(String.format("Script '%s' successfully completed",
                                 commandArguments.getScriptFile().getName()));
                         commandArguments = null;
+                        commandArgumentsQueue.remove();
                         continue;
                     }
                     System.out.println("client exit");
@@ -71,11 +73,18 @@ public class ClientManager {
                     System.out.println("Is connected to server: "+ client.getSocketChannel().isConnected());
                     return false;
                 }
+                commandArgumentsQueue.remove();
                 if (serverAnswer.answerType() == AnswerType.DATA_REQUEST) {
                     //insert mode (new fields for Vehicle), change commandArguments
                     if (commandArguments.getExecuteMode() == ExecuteMode.COMMAND_MODE) {
-                        Vehicle vehicle = Console.insertMode(0, null);
+                        String[] extraArguments = Console.insertMode();
+                        for (String x : extraArguments) {
+                            System.out.println(x);
+                        }
+                        System.exit(0);
                     }
+                    System.out.println(commandArguments.getExecuteMode());
+                    System.exit(0);
 
                     System.out.println("_____INSERT_MODE______");
                     serverAnswer = client.dataExchange(commandArguments);
@@ -99,7 +108,6 @@ public class ClientManager {
 
     private void teardown() {
         Client.stop();
-        // scanner.close();
     }
 
 }

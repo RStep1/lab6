@@ -10,12 +10,8 @@ import utility.MessageHolder;
 import utility.ServerAnswer;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
-
 public class RequestHandler {
     private CommandInvoker invoker;
-    private static final Queue<CommandArguments> commandArgumentsQueue = new LinkedList<>();
 
     public RequestHandler(CommandInvoker invoker) {
         this.invoker = invoker;

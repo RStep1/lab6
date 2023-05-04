@@ -145,7 +145,7 @@ public class BufferedDataBase {
      * @return Command exit status.
      */
     public boolean insert(CommandArguments commandArguments) {
-        if (commandArguments.getExtraArguments().length == 0) {
+        if (commandArguments.getExtraArguments() == null) {
             if (identifierHandler.hasElementWithKey(commandArguments.getArguments()[0], true,
                     InsertCommand.getName() + " " + commandArguments.getArguments()[0]))
                 return false;
@@ -161,7 +161,7 @@ public class BufferedDataBase {
      * @return Command exit status.
      */
     public boolean update(CommandArguments commandArguments) {
-        if (commandArguments.getExtraArguments().length == 0) {
+        if (commandArguments.getExtraArguments() == null) {
             if (!identifierHandler.hasElementWithId(Long.parseLong(commandArguments.getArguments()[0]))) {
                 MessageHolder.putMessage("No such element with this id", MessageType.USER_ERROR);
                 return false;
