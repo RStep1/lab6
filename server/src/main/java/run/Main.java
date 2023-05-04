@@ -34,5 +34,7 @@ public class Main {
                 new FilterLessThanFuelTypeCommand(bufferedDataBase));
         Server server = new Server(new RequestHandler(invoker));
         bufferedDataBase.setCommandInvoker(invoker);
-        server.run();}
+        Console.println("Server is running...");
+        server.run();
+    }
 }

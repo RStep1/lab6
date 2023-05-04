@@ -90,8 +90,10 @@ public class ClientManager {
                         return false;
                     }
                 }
-                serverAnswer.outputInfo().forEach(System.out::println);
-                serverAnswer.userErrors().forEach(System.out::println);
+                // serverAnswer.outputInfo().forEach(System.out::println);
+                // serverAnswer.userErrors().forEach(System.out::println);
+                Console.printUserErrors(serverAnswer.outputInfo());
+                Console.printOutputInfo(serverAnswer.userErrors());
 
             } catch (NoSuchElementException e) {
                 teardown();
