@@ -110,7 +110,7 @@ public class CommandArgumentsBuilder {
                     String[] extraArguments = readExtraArguments(Vehicle.getCountOfChangeableFields(),
                                                                      line, countOfScriptLines, scriptLines);
                     lastCommandArguments.setExtraArguments(extraArguments);
-                    System.out.println(lastCommandArguments);
+                    // System.out.println(lastCommandArguments);
                     line += Vehicle.getCountOfChangeableFields();
                 }
             }
@@ -133,7 +133,7 @@ public class CommandArgumentsBuilder {
         for (int i = 0, j = currentLineIndex + 1; 
         j < currentLineIndex + countOfExtraArguments + 1 && j < countOfScriptLines; j++, i++)
             extraArguments[i] = scriptLines.get(j).trim();
-        System.out.println(Arrays.asList(extraArguments));
+        // System.out.println(Arrays.asList(extraArguments));
         return extraArguments;
     }
 }
