@@ -2,6 +2,9 @@ package processing;
 
 import commands.ExecuteScriptCommand;
 import commands.ExitCommand;
+import commands.InsertCommand;
+import commands.UpdateCommand;
+import data.Vehicle;
 import mods.AnswerType;
 import mods.ClientRequestType;
 import mods.ExecuteMode;
@@ -84,16 +87,34 @@ public class CommandArgumentsBuilder {
         File currentScriptFile = commandArguments.getScriptFile();
         ArrayList<String> scriptLines = FileHandler.readScriptFile(commandArguments.getScriptFile());
         ArrayList<CommandArguments> scriptCommands = new ArrayList<>();
-        for (int line = 0; line < scriptLines.size(); line++) {
+        int countOfScriptLines = scriptLines.size();
+        for (int line = 0; line < countOfScriptLines; line++) {
             String scriptLine = scriptLines.get(line);
             if (scriptLine.trim().equals(""))
                 continue;
             scriptCommands.addAll(commandProcessing(scriptLine, ExecuteMode.SCRIPT_MODE, currentScriptFile));
-            if (!scriptCommands.isEmpty() &&
-                    scriptCommands.get(scriptCommands.size() - 1).getCommandName().equals(ExitCommand.getName()) &&
-                    scriptCommands.get(scriptCommands.size() - 1).getScriptFile().getName().equals(currentScriptFile.getName())) {// exit from script, stop adding commands
-                break;
+            // ArrayList<CommandArguments> newScriptCommands = commandProcessing(scriptLine, ExecuteMode.SCRIPT_MODE, currentScriptFile);
+            // scriptCommands.addAll(newScriptCommands);
+            if (!scriptCommands.isEmpty()) {
+                CommandArguments lastCommandArguments = scriptCommands.get(scriptCommands.size() - 1);
+                if (lastCommandArguments.getCommandName().equals(ExitCommand.getName()) &&
+                    lastCommandArguments.getScriptFile().getName().equals(currentScriptFile.getName())) { // exit from script, stop adding commands (only if the last command from current scrip file)
+                    break;
+                }
+                if ((lastCommandArguments.getCommandName().equals(InsertCommand.getName()) || 
+                    lastCommandArguments.getCommandName().equals(UpdateCommand.getName())) && 
+                    lastCommandArguments.getScriptFile().getName().equals(currentScriptFile.getName())) {
+                    String[] extraArguments = readExtraArguments(Vehicle.getCountOfChangeableFields(),
+                                                                     line, countOfScriptLines, scriptLines);
+                    lastCommandArguments.setExtraArguments(extraArguments);
+                    line += Vehicle.getCountOfChangeableFields();
+                }
             }
+            // if (!scriptCommands.isEmpty() &&
+            //         scriptCommands.get(scriptCommands.size() - 1).getCommandName().equals(ExitCommand.getName()) &&
+            //         scriptCommands.get(scriptCommands.size() - 1).getScriptFile().getName().equals(currentScriptFile.getName())) {// exit from script, stop adding commands
+            //     break;
+            // }
         }
         return scriptCommands;
     }
@@ -101,12 +122,13 @@ public class CommandArgumentsBuilder {
      /**
      * Adds extra lines from script that are used as arguments to change the collection element.
      */
-    // private String[] setExtraArguments(int countOfExtraArguments, int currentLineIndex, int countOfScriptLines) {
-    //     String[] extraArguments =
-    //             new String[Math.min(countOfExtraArguments, countOfScriptLines - currentLineIndex - 1)];
-    //     for (int i = 0, j = currentLineIndex + 1;
-    //          j < currentLineIndex + countOfExtraArguments + 1 && j < countOfScriptLines; j++, i++)
-    //         extraArguments[i] = scriptLines.get(j).trim();
-    //     return extraArguments;
-    // }
+    private String[] readExtraArguments(int countOfExtraArguments, int currentLineIndex,
+                                        int countOfScriptLines, ArrayList<String> scriptLines) {
+        String[] extraArguments =
+                new String[Math.min(countOfExtraArguments, countOfScriptLines - currentLineIndex - 1)];
+        for (int i = 0, j = currentLineIndex + 1; 
+        j < currentLineIndex + countOfExtraArguments + 1 && j < countOfScriptLines; j++, i++)
+            extraArguments[i] = scriptLines.get(j).trim();
+        return extraArguments;
+    }
 }
