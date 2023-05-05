@@ -100,13 +100,11 @@ public class BufferedDataBase {
      * @return Command exit status.
      */
     public boolean insert(CommandArguments commandArguments) {
-        // System.out.println("CHECK KEY");
         if (identifierHandler.hasElementWithKey(commandArguments.getArguments()[0], true,
                     InsertCommand.getName() + " " + commandArguments.getArguments()[0]))
                 return false;
         if (commandArguments.getExtraArguments() == null)
             return true;
-        // System.out.println("COMMAND INSERT________");
         return addElementBy(commandArguments, AddMode.INSERT_MODE);
     }
 
@@ -151,6 +149,10 @@ public class BufferedDataBase {
             MessageHolder.putMessage(String.format(
                     "There are not enough lines in script '%s' for the '%s %s' command",
                     commandArguments.getScriptFile().getName(), commandName, arguments[0]), MessageType.USER_ERROR);
+            return false;
+        }
+        if (executeMode == ExecuteMode.SCRIPT_MODE && 
+            !ValueHandler.checkValues(vehicleValues, commandName + " " + arguments[0])) {
             return false;
         }
         Vehicle vehicle = ValueHandler.getVehicle(id, creationDate, vehicleValues);

@@ -52,7 +52,7 @@ public class ClientManager {
                     commandArguments = null;
                     continue;
                 }
-                System.out.println(commandArgumentsQueue);
+                // System.out.println(commandArgumentsQueue);
                 // commandArguments = commandArgumentsQueue.remove();
                 commandArguments = commandArgumentsQueue.peek();
                 if (commandArguments.getCommandName().equals(ExitCommand.getName())) {
@@ -82,10 +82,10 @@ public class ClientManager {
                         String[] extraArguments = Console.insertMode();
                         commandArguments.setExtraArguments(extraArguments);
                     }
-                    System.out.println("_____INSERT_MODE______");
-                    System.out.println(serverAnswer);
+                    // System.out.println("_____INSERT_MODE______");
+                    // System.out.println(serverAnswer);
                     serverAnswer = client.dataExchange(commandArguments);
-                    System.out.println(serverAnswer);
+                    // System.out.println(serverAnswer);
                     if (serverAnswer == null) {
                         teardown();
                         System.out.println("соединение прервано, команда не была выполнена");
