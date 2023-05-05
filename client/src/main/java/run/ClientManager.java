@@ -92,8 +92,8 @@ public class ClientManager {
                 }
                 // serverAnswer.outputInfo().forEach(System.out::println);
                 // serverAnswer.userErrors().forEach(System.out::println);
-                Console.printUserErrors(serverAnswer.outputInfo());
-                Console.printOutputInfo(serverAnswer.userErrors());
+                Console.printOutputInfo(serverAnswer.outputInfo());
+                Console.printUserErrors(serverAnswer.userErrors());
 
             } catch (NoSuchElementException e) {
                 teardown();

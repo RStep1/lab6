@@ -118,6 +118,6 @@ public class Console {
     public static void printUserErrors(ArrayList<String> userErrors) {
         StringBuilder messages = new StringBuilder();
         userErrors.forEach(line -> messages.append(line).append("\n"));
-        print(ANSI_GREEN + messages + ANSI_RESET);
+        print(ANSI_RED + messages + ANSI_RESET);
     }
 }
