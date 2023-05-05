@@ -100,14 +100,13 @@ public class BufferedDataBase {
      * @return Command exit status.
      */
     public boolean insert(CommandArguments commandArguments) {
-        System.out.println("CHECK KEY");
-        if (commandArguments.getExtraArguments() == null) {
-            if (identifierHandler.hasElementWithKey(commandArguments.getArguments()[0], true,
+        // System.out.println("CHECK KEY");
+        if (identifierHandler.hasElementWithKey(commandArguments.getArguments()[0], true,
                     InsertCommand.getName() + " " + commandArguments.getArguments()[0]))
                 return false;
+        if (commandArguments.getExtraArguments() == null)
             return true;
-        }
-        System.out.println("COMMAND INSERT________");
+        // System.out.println("COMMAND INSERT________");
         return addElementBy(commandArguments, AddMode.INSERT_MODE);
     }
 
@@ -118,14 +117,12 @@ public class BufferedDataBase {
      * @return Command exit status.
      */
     public boolean update(CommandArguments commandArguments) {
-        System.out.println("command update");
-        if (commandArguments.getExtraArguments() == null) {
-            if (!identifierHandler.hasElementWithId(Long.parseLong(commandArguments.getArguments()[0]))) {
-                MessageHolder.putMessage("No such element with this id", MessageType.USER_ERROR);
-                return false;
-            }
-            return true;
+        if (!identifierHandler.hasElementWithId(Long.parseLong(commandArguments.getArguments()[0]))) {
+            MessageHolder.putMessage("No such element with this id", MessageType.USER_ERROR);
+            return false;
         }
+        if (commandArguments.getExtraArguments() == null)
+            return true;
         return addElementBy(commandArguments, AddMode.UPDATE_MODE);
     }
 
@@ -171,6 +168,9 @@ public class BufferedDataBase {
      */
     public boolean removeKey(CommandArguments commandArguments) {
         String[] arguments = commandArguments.getArguments();
+        if (!identifierHandler.hasElementWithKey(arguments[0], false,
+                RemoveKeyCommand.getName() + " " + arguments[0]))
+            return false;
         long key = Long.parseLong(arguments[0]);
         dataBase.remove(key);
         MessageHolder.putCurrentCommand(RemoveKeyCommand.getName() + " " + arguments[0], MessageType.OUTPUT_INFO);

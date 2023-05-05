@@ -1,0 +1,30 @@
+insert
+insert 777
+1
+1
+wert
+1
+1
+1
+1
+insert t
+
+
+
+
+
+
+
+insert 4 4
+
+
+
+
+
+
+
+insert -2
+insert 00056
+insert 
+insert 82465379823489568384568783456
+insert 245

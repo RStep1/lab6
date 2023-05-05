@@ -52,6 +52,7 @@ public class ClientManager {
                     commandArguments = null;
                     continue;
                 }
+                System.out.println(commandArgumentsQueue);
                 // commandArguments = commandArgumentsQueue.remove();
                 commandArguments = commandArgumentsQueue.peek();
                 if (commandArguments.getCommandName().equals(ExitCommand.getName())) {
@@ -66,6 +67,7 @@ public class ClientManager {
                     System.out.println("client exit");
                     break;
                 }
+                // System.out.println(commandArguments + "");
                 serverAnswer = client.dataExchange(commandArguments);
                 if (serverAnswer == null) {
                     teardown();

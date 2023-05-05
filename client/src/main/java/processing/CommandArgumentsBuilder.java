@@ -45,7 +45,7 @@ public class CommandArgumentsBuilder {
         String nextCommand = userLineSeparator.getCommand();
         String[] arguments = userLineSeparator.getArguments();
         String[] extraArguments = null;
-        System.out.println(nextLine);
+        // System.out.println(nextLine);
         CommandArguments newCommandArguments = new CommandArguments(nextCommand, arguments, extraArguments,
                 ClientRequestType.COMMAND_EXECUTION, executeMode);
         newCommandArguments.setScriptFile(currentScriptFile);
@@ -53,8 +53,10 @@ public class CommandArgumentsBuilder {
             return scriptProcessing(newCommandArguments);
         ArrayList<CommandArguments> commandArgumentsArrayList = new ArrayList<>();
         CommandValidator commandValidator = new CommandValidator(answerType);
-        if (commandValidator.validate(newCommandArguments)) // add command only if it's correct
+        if (commandValidator.validate(newCommandArguments)) {// add command only if it's correct
+            // System.out.println("COMMAND: " + newCommandArguments.getCommandName() + " " + Arrays.asList(newCommandArguments.getArguments()));
             commandArgumentsArrayList.add(newCommandArguments);
+        }
         return commandArgumentsArrayList;
     }
 
@@ -103,10 +105,12 @@ public class CommandArgumentsBuilder {
                 }
                 if ((lastCommandArguments.getCommandName().equals(InsertCommand.getName()) || 
                     lastCommandArguments.getCommandName().equals(UpdateCommand.getName())) && 
-                    lastCommandArguments.getScriptFile().getName().equals(currentScriptFile.getName())) {
+                    lastCommandArguments.getScriptFile().getName().equals(currentScriptFile.getName()) &&
+                    lastCommandArguments.getExtraArguments() == null) {
                     String[] extraArguments = readExtraArguments(Vehicle.getCountOfChangeableFields(),
                                                                      line, countOfScriptLines, scriptLines);
                     lastCommandArguments.setExtraArguments(extraArguments);
+                    System.out.println(lastCommandArguments);
                     line += Vehicle.getCountOfChangeableFields();
                 }
             }
@@ -129,6 +133,7 @@ public class CommandArgumentsBuilder {
         for (int i = 0, j = currentLineIndex + 1; 
         j < currentLineIndex + countOfExtraArguments + 1 && j < countOfScriptLines; j++, i++)
             extraArguments[i] = scriptLines.get(j).trim();
+        System.out.println(Arrays.asList(extraArguments));
         return extraArguments;
     }
 }
