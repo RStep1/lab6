@@ -2,7 +2,6 @@ package processing;
 
 import data.FuelType;
 import data.Vehicle;
-import exceptions.WrongAmountOfArgumentsException;
 
 import java.io.File;
 import java.time.LocalDateTime;

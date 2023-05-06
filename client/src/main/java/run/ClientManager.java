@@ -1,14 +1,10 @@
 package run;
 
-import commands.ExecuteScriptCommand;
 import commands.ExitCommand;
-import data.Vehicle;
 import mods.*;
 import processing.CommandArgumentsBuilder;
-import processing.CommandValidator;
 import processing.Console;
 import utility.CommandArguments;
-import utility.FileHandler;
 import utility.MessageHolder;
 import utility.ServerAnswer;
 
@@ -19,7 +15,7 @@ public class ClientManager {
     private Client client;
     private final Scanner scanner;
     private CommandArguments commandArguments;
-    // private final Queue<CommandArguments> commandArgumentsQueue = new LinkedList<>();
+    private final Queue<CommandArguments> commandArgumentsQueue = new LinkedList<>();
 
     public ClientManager(Scanner scanner) {
         this.scanner = scanner;
@@ -29,7 +25,6 @@ public class ClientManager {
         try {
             this.client = new Client(host, port);
         } catch (IOException e) {
-//            System.out.println("SERVER NOT ANSWER");
             return false;
         }
         return true;
@@ -37,8 +32,6 @@ public class ClientManager {
 
     public boolean processRequestToServer() {
         Console.println("Available commands:");
-        // Console.println(FileHandler.readFile(FileType.REFERENCE));
-        Queue<CommandArguments> commandArgumentsQueue = new LinkedList<>();
         ServerAnswer serverAnswer = null;
         do {
             try {
@@ -52,8 +45,6 @@ public class ClientManager {
                     commandArguments = null;
                     continue;
                 }
-                // System.out.println(commandArgumentsQueue);
-                // commandArguments = commandArgumentsQueue.remove();
                 commandArguments = commandArgumentsQueue.peek();
                 if (commandArguments.getCommandName().equals(ExitCommand.getName())) {
                     if (commandArguments.getExecuteMode() == ExecuteMode.SCRIPT_MODE) {
@@ -67,7 +58,6 @@ public class ClientManager {
                     System.out.println("client exit");
                     break;
                 }
-                // System.out.println(commandArguments + "");
                 serverAnswer = client.dataExchange(commandArguments);
                 if (serverAnswer == null) {
                     Client.stop();
@@ -75,28 +65,21 @@ public class ClientManager {
                     System.out.println("Is connected to server: "+ client.getSocketChannel().isConnected());
                     return false;
                 }
-                commandArgumentsQueue.remove();
                 if (serverAnswer.answerType() == AnswerType.DATA_REQUEST && serverAnswer.commandExitStatus()) {
-                    //insert mode (new fields for Vehicle), change commandArguments
                     if (commandArguments.getExecuteMode() == ExecuteMode.COMMAND_MODE) {
                         String[] extraArguments = Console.insertMode();
                         commandArguments.setExtraArguments(extraArguments);
                     }
-                    // System.out.println("_____INSERT_MODE______");
-                    // System.out.println(serverAnswer);
                     serverAnswer = client.dataExchange(commandArguments);
-                    // System.out.println(serverAnswer);
                     if (serverAnswer == null) {
                         Client.stop();
                         System.out.println("соединение прервано, команда не была выполнена");
                         return false;
                     }
                 }
-                // serverAnswer.outputInfo().forEach(System.out::println);
-                // serverAnswer.userErrors().forEach(System.out::println);
+                commandArgumentsQueue.remove();
                 Console.printOutputInfo(serverAnswer.outputInfo());
                 Console.printUserErrors(serverAnswer.userErrors());
-
             } catch (NoSuchElementException e) {
                 Client.stop();
                 return false;
