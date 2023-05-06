@@ -1,4 +1,4 @@
-package run;
+package user;
 
 import commands.ExitCommand;
 import mods.*;

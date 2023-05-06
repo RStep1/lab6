@@ -214,43 +214,6 @@ public class BufferedDataBase {
     }
 
     /**
-     * Executes user script.
-     * @param commandArguments contains the name of the command, its arguments on a single line,
-     *                        arguments that are characteristics of the collection class and execution mode.
-     * @return Command exit status.
-     */
-    public boolean executeScript(CommandArguments commandArguments) {
-        String[] arguments = commandArguments.getArguments();
-        if (commandArguments.getExecuteMode() == ExecuteMode.COMMAND_MODE)
-            scriptCounter.clear();
-        File scriptFile = FileHandler.findFile(new File("scripts"), arguments[0]);
-        if (scriptFile == null) {
-            MessageHolder.putMessage(String.format(
-                    "Script '%s' not found in 'scripts' directory", arguments[0]), MessageType.USER_ERROR);
-            return false;
-        }
-        if (scriptCounter.contains(scriptFile.getAbsolutePath())) {
-            MessageHolder.putMessage(String.format("Command '%s %s':",
-                    ExecuteScriptCommand.getName(), scriptFile.getName()), MessageType.USER_ERROR);
-            MessageHolder.putMessage(String.format(
-                    "Recursion on '%s' script noticed", scriptFile.getName()), MessageType.USER_ERROR);
-            return false;
-        }
-        scriptCounter.add(scriptFile.getAbsolutePath());
-        MessageHolder.putCurrentCommand(
-                ExecuteScriptCommand.getName() + " " + scriptFile.getName(), MessageType.OUTPUT_INFO);
-        ArrayList<String> scriptLines = FileHandler.readScriptFile(scriptFile);
-        if (scriptLines.isEmpty()) {
-            MessageHolder.putMessage(String.format(
-                    "Script '%s' is empty", scriptFile.getName()), MessageType.OUTPUT_INFO);
-            return true;
-        }
-        CommandParser commandParser = new CommandParser(commandInvoker, scriptLines);
-        return commandParser.scriptProcessing(scriptFile.getName());
-    }
-
-
-    /**
      * Terminates a program or exits an executing script.
      * @param commandArguments contains the name of the command, its arguments on a single line,
      *                        arguments that are characteristics of the collection class and execution mode.

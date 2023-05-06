@@ -1,6 +1,5 @@
 package processing;
 
-import data.Vehicle;
 import mods.FileType;
 import mods.MessageType;
 import utility.Process;
@@ -25,34 +24,6 @@ public class Console {
     public Console(CommandInvoker invoker) {
         this.invoker = invoker;
     }
-
-    /**
-     * Reads user lines one by one and starts processing.
-     */
-    public void interactiveMode() {
-        MessageHolder.putMessage("Available commands:", MessageType.OUTPUT_INFO);
-        MessageHolder.putMessage(FileHandler.readFile(FileType.REFERENCE), MessageType.OUTPUT_INFO);
-        printOutputInfo();
-        MessageHolder.clearMessages(MessageType.OUTPUT_INFO);
-        MessageHolder.clearMessages(MessageType.USER_ERROR);
-        CommandParser parser = new CommandParser(invoker);
-        Scanner in = new Scanner(System.in);
-        while (true) {
-            PrintStream printStream = new PrintStream(System.out);
-            printStream.print("Type command and press Enter: ");
-            String nextLine = "";
-            try {
-                nextLine = in.nextLine();
-            } catch (NoSuchElementException e) {
-                System.exit(0);
-            }
-            boolean exitStatus = parser.commandProcessing(nextLine);
-            if (!exitStatus)
-                break;
-        }
-        in.close();
-    }
-
 
     /**
      * Reads the parameters of the collection element.

@@ -23,7 +23,7 @@ public class ExecuteScriptCommand implements Command {
 
     @Override
     public boolean execute(CommandArguments commandArguments) {
-        return bufferedDataBase.executeScript(commandArguments);
+        return true;
     }
 
     public static String getName() {

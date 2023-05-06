@@ -2,7 +2,6 @@ package commands;
 
 import processing.BufferedDataBase;
 import utility.CommandArguments;
-import utility.ServerAnswer;
 
 /**
  * Acts as a wrapper for the 'clear' command.

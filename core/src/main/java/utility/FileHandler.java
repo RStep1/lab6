@@ -15,10 +15,7 @@ import java.util.Hashtable;
  */
 public class FileHandler {
     private static final String ENV_VARIABLE = "SAVE_PATH";
-    private static final String JSON_FILE_PATH = "files/database.json";
     private static final String REFERENCE_FILE_PATH = "files/reference.txt";
-    private static final String JSON_FILE_ABSOLUTE_PATH =
-            new File(JSON_FILE_PATH).getAbsolutePath();
     private static final String REFERENCE_FILE_ABSOLUTE_PATH =
             new File(REFERENCE_FILE_PATH).getAbsolutePath();
 

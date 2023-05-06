@@ -8,7 +8,7 @@ import data.Vehicle;
 import mods.AnswerType;
 import mods.ClientRequestType;
 import mods.ExecuteMode;
-import run.Client;
+import user.Client;
 import utility.CommandArguments;
 import utility.FileHandler;
 
@@ -30,7 +30,6 @@ public class CommandArgumentsBuilder {
         try {
             nextLine = scanner.nextLine();
         } catch (NoSuchElementException e) {
-            // e.printStackTrace();
             Client.stop();
             scanner.close();
             System.exit(0);
@@ -45,16 +44,15 @@ public class CommandArgumentsBuilder {
         String nextCommand = userLineSeparator.getCommand();
         String[] arguments = userLineSeparator.getArguments();
         String[] extraArguments = null;
-        // System.out.println(nextLine);
-        CommandArguments newCommandArguments = new CommandArguments(nextCommand, arguments, extraArguments,
-                ClientRequestType.COMMAND_EXECUTION, executeMode);
+        CommandArguments newCommandArguments = 
+                        new CommandArguments(nextCommand, arguments, extraArguments,
+                                            ClientRequestType.COMMAND_EXECUTION, executeMode);
         newCommandArguments.setScriptFile(currentScriptFile);
         if (nextCommand.equals(ExecuteScriptCommand.getName())) // if it's execute_script command, start script processing
             return scriptProcessing(newCommandArguments);
         ArrayList<CommandArguments> commandArgumentsArrayList = new ArrayList<>();
         CommandValidator commandValidator = new CommandValidator(answerType);
         if (commandValidator.validate(newCommandArguments)) {// add command only if it's correct
-            // System.out.println("COMMAND: " + newCommandArguments.getCommandName() + " " + Arrays.asList(newCommandArguments.getArguments()));
             commandArgumentsArrayList.add(newCommandArguments);
         }
         return commandArgumentsArrayList;
@@ -108,7 +106,6 @@ public class CommandArgumentsBuilder {
                     String[] extraArguments = readExtraArguments(Vehicle.getCountOfChangeableFields(),
                                                                      line, countOfScriptLines, scriptLines);
                     lastCommandArguments.setExtraArguments(extraArguments);
-                    // System.out.println(lastCommandArguments);
                     line += Vehicle.getCountOfChangeableFields();
                 }
             }

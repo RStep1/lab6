@@ -1,7 +1,6 @@
 package commands;
 
 import utility.CommandArguments;
-import utility.ServerAnswer;
 
 /**
  * Interface for all commands.

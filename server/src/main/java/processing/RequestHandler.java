@@ -1,16 +1,16 @@
-package run;
+package processing;
 
 import commands.InsertCommand;
 import commands.UpdateCommand;
 import mods.AnswerType;
 import mods.ExecuteMode;
 import mods.MessageType;
-import processing.CommandInvoker;
 import utility.CommandArguments;
 import utility.MessageHolder;
 import utility.ServerAnswer;
 
 import java.util.ArrayList;
+
 public class RequestHandler {
     private CommandInvoker invoker;
 
@@ -21,12 +21,12 @@ public class RequestHandler {
     public ServerAnswer processRequest(CommandArguments commandArguments) {
         MessageHolder.clearMessages(MessageType.OUTPUT_INFO);
         MessageHolder.clearMessages(MessageType.USER_ERROR);
-        // System.out.println(commandArguments + "");
+
         boolean exitStatus = invoker.execute(commandArguments);
-        // System.out.println(commandArguments.getExtraArguments());
-        // System.out.println(MessageHolder.getMessages(MessageType.OUTPUT_INFO));
+
         ArrayList<String> outputInfo = MessageHolder.getOutputInfo();
         ArrayList<String> userErrors = MessageHolder.getUserErrors();
+
         AnswerType answerType = AnswerType.EXECUTION_RESPONSE;
 
         //если это команды update или insert и при этом нет дополнительных аргументов и это не команда из скрипта,
