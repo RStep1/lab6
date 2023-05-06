@@ -95,8 +95,6 @@ public class CommandArgumentsBuilder {
             if (scriptLine.trim().equals(""))
                 continue;
             scriptCommands.addAll(commandProcessing(scriptLine, ExecuteMode.SCRIPT_MODE, currentScriptFile));
-            // ArrayList<CommandArguments> newScriptCommands = commandProcessing(scriptLine, ExecuteMode.SCRIPT_MODE, currentScriptFile);
-            // scriptCommands.addAll(newScriptCommands);
             if (!scriptCommands.isEmpty()) {
                 CommandArguments lastCommandArguments = scriptCommands.get(scriptCommands.size() - 1);
                 if (lastCommandArguments.getCommandName().equals(ExitCommand.getName()) &&
@@ -114,11 +112,6 @@ public class CommandArgumentsBuilder {
                     line += Vehicle.getCountOfChangeableFields();
                 }
             }
-            // if (!scriptCommands.isEmpty() &&
-            //         scriptCommands.get(scriptCommands.size() - 1).getCommandName().equals(ExitCommand.getName()) &&
-            //         scriptCommands.get(scriptCommands.size() - 1).getScriptFile().getName().equals(currentScriptFile.getName())) {// exit from script, stop adding commands
-            //     break;
-            // }
         }
         return scriptCommands;
     }
@@ -133,7 +126,6 @@ public class CommandArgumentsBuilder {
         for (int i = 0, j = currentLineIndex + 1; 
         j < currentLineIndex + countOfExtraArguments + 1 && j < countOfScriptLines; j++, i++)
             extraArguments[i] = scriptLines.get(j).trim();
-        // System.out.println(Arrays.asList(extraArguments));
         return extraArguments;
     }
 }

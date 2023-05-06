@@ -4,6 +4,7 @@ import mods.AnswerType;
 import mods.MessageType;
 import org.apache.commons.lang3.SerializationUtils;
 import processing.CommandInvoker;
+import processing.NBChannelController;
 import processing.Serializator;
 import utility.CommandArguments;
 import utility.MessageHolder;
@@ -14,32 +15,26 @@ import java.net.InetSocketAddress;
 import java.net.SocketException;
 import java.nio.ByteBuffer;
 import java.nio.channels.*;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 
 public class Server {
     private static final String HOST = "localhost";
     private static final int PORT = 15454;
-    private final ArrayList<SocketChannel> socketChannels = new ArrayList<>();
     private Selector selector;
-    private ServerSocketChannel serverSocket;
-    private ByteBuffer buffer;
-    private final RequestHandler requestHandler;
+    private ServerSocketChannel serverSocket;    private final RequestHandler requestHandler;
 
     public Server(RequestHandler requestHandler) {
         this.requestHandler = requestHandler;
     }
     
     private void setup() {
-    try {
-        selector = Selector.open();
-        serverSocket = ServerSocketChannel.open();
-        //            serverSocket.setOption(StandardSocketOptions.SO_REUSEADDR, true);
-        serverSocket.bind(new InetSocketAddress(HOST, PORT));
+        try {
+            selector = Selector.open();
+            serverSocket = ServerSocketChannel.open();
+            serverSocket.bind(new InetSocketAddress(HOST, PORT));
             serverSocket.configureBlocking(false);
             serverSocket.register(selector, SelectionKey.OP_ACCEPT);
-            buffer = ByteBuffer.allocate(4048);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -74,7 +69,7 @@ public class Server {
                         SocketChannel client = (SocketChannel) key.channel();
                         System.out.println("client = " + client);
                         System.out.println("Client is connected by: "+client.isConnected());
-                        answer(buffer, key);
+                        answer(key);
                     }
                     iter.remove();
                 }
@@ -94,33 +89,25 @@ public class Server {
         }
     }
 
-    private void answer(ByteBuffer buffer, SelectionKey key) {
+    private void answer(SelectionKey key) {
         try {
             SocketChannel client = (SocketChannel) key.channel();
-            System.out.println("client = " + client);
-            int r = -1;
+            CommandArguments commandArguments;
             try {
-                r = client.read(buffer);
+                commandArguments = (CommandArguments) NBChannelController.read(client);
             } catch (SocketException e) {
-                System.out.println("socket exception");
+                System.out.println("Socket exception");
+                e.printStackTrace();
                 client.close();
                 return;
-            }
-            System.out.println(r);
-            if (r == -1) {
+            } catch (IOException e) {
                 System.out.println(String.format(
                         "Not accepting client %s messages anymore", client.getRemoteAddress()));
                 client.close();
                 return;
             }
-            System.out.println("buffer: " + buffer);
-            CommandArguments commandArguments = SerializationUtils.deserialize(buffer.array());
-            buffer.clear();
             ServerAnswer serverAnswer = requestHandler.processRequest(commandArguments);
-            buffer = Serializator.serialize(serverAnswer);
-            System.out.println("SENDING BUFFER: " + buffer);
-            client.write(buffer);
-            buffer.clear();
+            NBChannelController.write(client, serverAnswer);
         } catch (IOException e) {
             e.printStackTrace();
         }
