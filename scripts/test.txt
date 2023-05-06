@@ -2,7 +2,7 @@ insert
 insert 777
 1
 1
-wert
+1
 1
 1
 1

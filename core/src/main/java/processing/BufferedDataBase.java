@@ -206,8 +206,10 @@ public class BufferedDataBase {
      */
     public boolean save(CommandArguments commandArguments) {
         FileHandler.saveDataBase(dataBase);
-        MessageHolder.putCurrentCommand(SaveCommand.getName(), MessageType.OUTPUT_INFO);
-        MessageHolder.putMessage("Collection successfully saved", MessageType.OUTPUT_INFO);
+        // MessageHolder.putCurrentCommand(SaveCommand.getName(), MessageType.OUTPUT_INFO);
+        // MessageHolder.putMessage("Collection successfully saved", MessageType.OUTPUT_INFO);
+        System.out.println("Command " + SaveCommand.getName());
+        System.out.println("Collection successfully saved");
         lastSaveTime = LocalDateTime.now();
         return true;
     }

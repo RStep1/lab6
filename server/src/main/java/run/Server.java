@@ -3,6 +3,8 @@ package run;
 import mods.AnswerType;
 import mods.MessageType;
 import org.apache.commons.lang3.SerializationUtils;
+
+import commands.SaveCommand;
 import processing.CommandInvoker;
 import processing.NBChannelController;
 import processing.Serializator;
@@ -23,6 +25,9 @@ public class Server {
     private static final int PORT = 15454;
     private Selector selector;
     private ServerSocketChannel serverSocket;    private final RequestHandler requestHandler;
+    private static final CommandArguments SAVE_COMMAND = 
+                new CommandArguments(SaveCommand.getName(), null, null,
+                        null, null);
 
     public Server(RequestHandler requestHandler) {
         this.requestHandler = requestHandler;
@@ -97,12 +102,14 @@ public class Server {
                 commandArguments = (CommandArguments) NBChannelController.read(client);
             } catch (SocketException e) {
                 System.out.println("Socket exception");
-                e.printStackTrace();
+                // e.printStackTrace();
+                requestHandler.processRequest(SAVE_COMMAND);
                 client.close();
                 return;
             } catch (IOException e) {
                 System.out.println(String.format(
                         "Not accepting client %s messages anymore", client.getRemoteAddress()));
+                requestHandler.processRequest(SAVE_COMMAND); // save collection after client exits
                 client.close();
                 return;
             }
