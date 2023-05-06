@@ -70,7 +70,7 @@ public class ClientManager {
                 // System.out.println(commandArguments + "");
                 serverAnswer = client.dataExchange(commandArguments);
                 if (serverAnswer == null) {
-                    teardown();
+                    Client.stop();
                     System.out.println("соединение ссервером потеряно");
                     System.out.println("Is connected to server: "+ client.getSocketChannel().isConnected());
                     return false;
@@ -87,7 +87,7 @@ public class ClientManager {
                     serverAnswer = client.dataExchange(commandArguments);
                     // System.out.println(serverAnswer);
                     if (serverAnswer == null) {
-                        teardown();
+                        Client.stop();
                         System.out.println("соединение прервано, команда не была выполнена");
                         return false;
                     }
@@ -98,16 +98,12 @@ public class ClientManager {
                 Console.printUserErrors(serverAnswer.userErrors());
 
             } catch (NoSuchElementException e) {
-                teardown();
+                Client.stop();
                 return false;
             }
         } while (commandArguments == null || !commandArguments.getCommandName().equals(ExitCommand.getName()));
-        teardown();
+        
+        Client.stop();
         return true;
     }
-
-    private void teardown() {
-        Client.stop();
-    }
-
 }

@@ -10,29 +10,29 @@ import java.net.InetSocketAddress;
 import java.nio.channels.SocketChannel;
 
 public class Client {
-    private static SocketChannel client;
+    private static SocketChannel clientSocketChannel;
 
     public Client(String host, int port) throws IOException {
-        client = SocketChannel.open(new InetSocketAddress(host, port));
+        clientSocketChannel = SocketChannel.open(new InetSocketAddress(host, port));
     }
 
     public static void stop() {
         try {
-            client.close();
+            clientSocketChannel.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public SocketChannel getSocketChannel() {
-        return client;
+        return clientSocketChannel;
     }
 
     public ServerAnswer dataExchange(CommandArguments request) {
         ServerAnswer serverAnswer;
         try {
-            NBChannelController.write(client, request);
-            serverAnswer = (ServerAnswer) NBChannelController.read(client);
+            NBChannelController.write(clientSocketChannel, request);
+            serverAnswer = (ServerAnswer) NBChannelController.read(clientSocketChannel);
         } catch (ClassCastException | IOException e) {
             return null;
         }
