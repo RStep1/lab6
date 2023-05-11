@@ -7,6 +7,7 @@ import processing.Console;
 import utility.CommandArguments;
 import utility.MessageHolder;
 import utility.ServerAnswer;
+import utility.FileHandler;
 
 import java.io.IOException;
 import java.util.*;
@@ -32,6 +33,7 @@ public class ClientManager {
 
     public boolean processRequestToServer() {
         Console.println("Available commands:");
+        Console.println(FileHandler.readFile(FileType.REFERENCE));
         ServerAnswer serverAnswer = null;
         do {
             try {

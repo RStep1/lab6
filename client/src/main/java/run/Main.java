@@ -12,7 +12,7 @@ public class Main {
         boolean processingStatus = false;
         boolean isTryReconnecting = false;
         while (!processingStatus) { // processingStatus = true, if client input 'exit', else connection failed
-            if (!clientManager.setConnection("localhost", 15454)) {
+            if (!clientManager.setConnection("localhost", 18022)) {
                 if (!isTryReconnecting)
                     System.out.println("reconnection...");
                 isTryReconnecting = true;

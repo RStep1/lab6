@@ -1,14 +1,19 @@
 package run;
 
+import mods.FileType;
 import mods.MessageType;
 import processing.BufferedDataBase;
 import processing.Console;
 import processing.RequestHandler;
 import processing.CommandInvoker;
+
+import java.util.Scanner;
+
 import commands.*;
 import host.Server;
 import utility.FileHandler;
 import utility.MessageHolder;
+import utility.ScriptGenerator;
 
 
 /**
@@ -17,6 +22,11 @@ import utility.MessageHolder;
  */
 public class Main {
     public static void main(String[] args) {
+        // FileHandler.clearFile(FileType.TEST_SCRIPT);
+        // ScriptGenerator scriptGenerator = new ScriptGenerator(50000);
+        // scriptGenerator.generateInserts();
+
+
         if (!FileHandler.checkEnvVariable()) {
             Console.printUserErrors();
             MessageHolder.clearMessages(MessageType.USER_ERROR);
@@ -34,9 +44,31 @@ public class Main {
                 new RemoveAllByEnginePowerCommand(bufferedDataBase),
                 new CountByFuelTypeCommand(bufferedDataBase),
                 new FilterLessThanFuelTypeCommand(bufferedDataBase));
-        Server server = new Server(new RequestHandler(invoker));
+        RequestHandler requestHandler = new RequestHandler(invoker);
+        Server server = new Server(requestHandler);
         bufferedDataBase.setCommandInvoker(invoker);
         Console.println("Server is running...");
-        server.run();
+        
+        
+        Thread mainProggrammThread = new Thread(new Runnable() {
+            public void run() {
+                server.run();
+            }
+        });
+        mainProggrammThread.start();
+
+
+        Scanner scanner = new Scanner(System.in);
+         while (true) {
+            String nextLine = scanner.nextLine().trim();
+            if (nextLine.equals(SaveCommand.getName())) {
+                requestHandler.processRequest(Server.getSaveCommand());
+                Console.println("Collection was successfully saved");
+            }
+            if (!mainProggrammThread.isAlive()) {
+                break;
+            }
+        }
+        scanner.close();
     }
 }

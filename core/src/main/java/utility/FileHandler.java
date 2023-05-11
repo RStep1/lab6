@@ -15,9 +15,11 @@ import java.util.Hashtable;
  */
 public class FileHandler {
     private static final String ENV_VARIABLE = "SAVE_PATH";
-    private static final String REFERENCE_FILE_PATH = "files/reference.txt";
+    private static final String REFERENCE_FILE_PATH = "../server/files/reference.txt";
     private static final String REFERENCE_FILE_ABSOLUTE_PATH =
             new File(REFERENCE_FILE_PATH).getAbsolutePath();
+    private static final String TEST_SCRIPT_FILE_ABSOLUTE_PATH = 
+            new File("../scripts/test.txt").getAbsolutePath();
 
     public FileHandler() {}
 
@@ -52,6 +54,7 @@ public class FileHandler {
         switch (fileType) {
             case REFERENCE -> filePath = REFERENCE_FILE_ABSOLUTE_PATH;
             case JSON -> filePath = System.getenv().get(ENV_VARIABLE);
+            case TEST_SCRIPT -> filePath = TEST_SCRIPT_FILE_ABSOLUTE_PATH;
             default -> System.err.printf("%s: this file type has not been processed%n", fileType);
         }
         return filePath;

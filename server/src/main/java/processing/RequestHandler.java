@@ -31,12 +31,22 @@ public class RequestHandler {
 
         //если это команды update или insert и при этом нет дополнительных аргументов и это не команда из скрипта,
         // то выставляем запрос на получение дополниетльных аргументов
-        if ((commandArguments.getCommandName().equals(UpdateCommand.getName()) ||
-            commandArguments.getCommandName().equals(InsertCommand.getName())) &&
-            commandArguments.getExtraArguments() == null &&
-             commandArguments.getExecuteMode() == ExecuteMode.COMMAND_MODE) {
+        if (isChangingCommand(commandArguments) && isExtraArgsNull(commandArguments) && isCommandMode(commandArguments)) {
                 answerType = AnswerType.DATA_REQUEST;
         }
         return new ServerAnswer(outputInfo, userErrors, exitStatus, answerType); 
+    }
+
+    public static boolean isChangingCommand(CommandArguments commandArguments) {
+        return commandArguments.getCommandName().equals(UpdateCommand.getName()) ||
+        commandArguments.getCommandName().equals(InsertCommand.getName());
+    }
+
+    private boolean isCommandMode(CommandArguments commandArguments) {
+        return commandArguments.getExecuteMode() == ExecuteMode.COMMAND_MODE;
+    }
+
+    private boolean isExtraArgsNull(CommandArguments commandArguments) {
+        return commandArguments.getExtraArguments() == null;
     }
 }

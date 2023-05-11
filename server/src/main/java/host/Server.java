@@ -9,15 +9,17 @@ import utility.ServerAnswer;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketException;
+import java.net.StandardSocketOptions;
 import java.nio.channels.*;
 import java.util.Iterator;
 import java.util.Set;
 
 public class Server {
     private static final String HOST = "localhost";
-    private static final int PORT = 15454;
+    private static final int PORT = 18022;
     private Selector selector;
-    private ServerSocketChannel serverSocket;    private final RequestHandler requestHandler;
+    private ServerSocketChannel serverSocket;
+    private final RequestHandler requestHandler;
     private static final CommandArguments SAVE_COMMAND = 
                 new CommandArguments(SaveCommand.getName(), null, null,
                         null, null);
@@ -30,6 +32,7 @@ public class Server {
         try {
             selector = Selector.open();
             serverSocket = ServerSocketChannel.open();
+            serverSocket.setOption(StandardSocketOptions.SO_REUSEADDR, true);
             serverSocket.bind(new InetSocketAddress(HOST, PORT));
             serverSocket.configureBlocking(false);
             serverSocket.register(selector, SelectionKey.OP_ACCEPT);
@@ -65,8 +68,8 @@ public class Server {
                     }
                     if (key.isReadable()) {
                         SocketChannel client = (SocketChannel) key.channel();
-                        System.out.println("client = " + client);
-                        System.out.println("Client is connected by: "+client.isConnected());
+                        // System.out.println("client = " + client);
+                        // System.out.println("Client is connected by: "+client.isConnected());
                         answer(key);
                     }
                     iter.remove();
@@ -94,22 +97,31 @@ public class Server {
             try {
                 commandArguments = (CommandArguments) NBChannelController.read(client);
             } catch (SocketException e) {
+                e.printStackTrace();
                 System.out.println("Socket exception");
                 // e.printStackTrace();
                 requestHandler.processRequest(SAVE_COMMAND);
+                System.out.println("close1");
                 client.close();
                 return;
             } catch (IOException e) {
+                e.printStackTrace();
                 System.out.println(String.format(
                         "Not accepting client %s messages anymore", client.getRemoteAddress()));
                 requestHandler.processRequest(SAVE_COMMAND); // save collection after client exits
+                // System.out.println("close2");
                 client.close();
                 return;
             }
             ServerAnswer serverAnswer = requestHandler.processRequest(commandArguments);
             NBChannelController.write(client, serverAnswer);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static CommandArguments getSaveCommand() {
+        return SAVE_COMMAND;
     }
 }

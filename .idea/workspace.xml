@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="85453189-5be8-4fe3-ad24-1edc46d74a0c" name="Changes" comment="Fix nested script exit issue">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/run/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/run/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/run/ClientManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/run/ClientManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/run/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/run/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/user/ClientManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/user/ClientManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/processing/Console.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/processing/Console.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,9 +47,10 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "jdk.selected.JAVA_MODULE": "corretto-17",
-    "last_opened_file_path": "C:/Users/Степан/Desktop/prog/lab6",
+    "last_opened_file_path": "C:/Users/Степан/Desktop/BD/Lab1",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "build.tools"
+    "settings.editor.selected.configurable": "build.tools",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -151,6 +150,7 @@
       <workItem from="1683114555600" duration="13493000" />
       <workItem from="1683132654074" duration="330000" />
       <workItem from="1683191279730" duration="1100000" />
+      <workItem from="1683644273621" duration="63000" />
     </task>
     <task id="LOCAL-00001" summary="Copy lab5 project">
       <created>1681564328860</created>

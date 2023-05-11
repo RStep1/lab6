@@ -1,6 +1,5 @@
 package processing;
 
-import mods.FileType;
 import mods.MessageType;
 import utility.Process;
 import utility.*;

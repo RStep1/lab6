@@ -100,7 +100,7 @@ public class CommandArgumentsBuilder {
                     break;
                 }
                 if ((lastCommandArguments.getCommandName().equals(InsertCommand.getName()) || 
-                    lastCommandArguments.getCommandName().equals(UpdateCommand.getName())) && 
+                    lastCommandArguments.getCommandName().equals(UpdateCommand.getName())) &&
                     lastCommandArguments.getScriptFile().getName().equals(currentScriptFile.getName()) &&
                     lastCommandArguments.getExtraArguments() == null) {
                     String[] extraArguments = readExtraArguments(Vehicle.getCountOfChangeableFields(),

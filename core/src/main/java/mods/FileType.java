@@ -6,5 +6,6 @@ package mods;
  */
 public enum FileType {
     JSON,
-    REFERENCE;
+    REFERENCE,
+    TEST_SCRIPT;
 }
