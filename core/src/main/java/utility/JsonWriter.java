@@ -1,16 +1,16 @@
 package utility;
 
-import java.util.Hashtable;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.google.gson.Gson;
 import data.Vehicle;
 
 /**
- * Converts collection from hashtable to json.
+ * Converts collection from ConcurrentHashMap to json.
  */
 public class JsonWriter {
-    private final Hashtable<Long, Vehicle> dataBase;
-    public JsonWriter(Hashtable<Long, Vehicle> dataBase) {
+    private final ConcurrentHashMap<Long, Vehicle> dataBase;
+    public JsonWriter(ConcurrentHashMap<Long, Vehicle> dataBase) {
         this.dataBase = dataBase;
     }
 

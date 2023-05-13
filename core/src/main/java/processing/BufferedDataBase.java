@@ -9,6 +9,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 import commands.*;
@@ -20,7 +21,7 @@ import utility.*;
  * All commands implemented here.
  */
 public class BufferedDataBase {
-    private final Hashtable<Long, Vehicle> dataBase;
+    private final ConcurrentHashMap<Long, Vehicle> dataBase;
     private final Set<String> scriptCounter = new HashSet<>();
     private CommandInvoker commandInvoker;
     private LocalDateTime lastInitTime;

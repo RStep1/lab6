@@ -3,10 +3,10 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import data.Vehicle;
 
-import java.util.Hashtable;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Converts database from json to hashtable collection.
+ * Converts database from json to ConcurrentHashMap collection.
  */
 public class JsonReader {
     private final String json;
@@ -14,8 +14,8 @@ public class JsonReader {
         this.json = json;
     }
 
-    public Hashtable<Long, Vehicle> readDataBase() {
+    public ConcurrentHashMap<Long, Vehicle> readDataBase() {
         Gson gson = new Gson();
-        return gson.fromJson(json, new TypeToken<Hashtable<Long, Vehicle>>(){}.getType());
+        return gson.fromJson(json, new TypeToken<ConcurrentHashMap<Long, Vehicle>>(){}.getType());
     }
 }

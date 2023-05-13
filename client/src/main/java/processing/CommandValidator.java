@@ -9,7 +9,7 @@ import utility.*;
 
 import java.io.File;
 import java.util.HashSet;
-import java.util.Hashtable;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.Set;
 
 public class CommandValidator {
@@ -76,7 +76,7 @@ public class CommandValidator {
         }
         if (!checkNumberOfArguments(commandArguments, 1))
             return false;
-        IdentifierHandler identifierHandler = new IdentifierHandler(new Hashtable<>());
+        IdentifierHandler identifierHandler = new IdentifierHandler(new ConcurrentHashMap<>());
         if (!identifierHandler.checkKey(arguments[0], commandName + " " + arguments[0]))
             return false;
         return true;
@@ -105,7 +105,7 @@ public class CommandValidator {
         }
         if (!checkNumberOfArguments(commandArguments, 1))
             return false;
-        IdentifierHandler identifierHandler = new IdentifierHandler(new Hashtable<>());//////////////
+        IdentifierHandler identifierHandler = new IdentifierHandler(new ConcurrentHashMap<>());//////////////
         if (!identifierHandler.checkId(arguments[0], UpdateCommand.getName() + " " + arguments[0]))
             return false;
         return true;

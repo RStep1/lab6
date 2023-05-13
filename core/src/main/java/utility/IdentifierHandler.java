@@ -5,18 +5,18 @@ import exceptions.NoSuchIdException;
 import mods.MessageType;
 
 import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
 
 /**
  * Performs identifiers validation or generation.
  */
 public class IdentifierHandler {
-    Hashtable<Long, Vehicle> dataBase;
+    ConcurrentHashMap<Long, Vehicle> dataBase;
     private static final int ID_LENGTH = 10;
     private static final int MAX_KEY_LENGTH = 10;
 
-    public IdentifierHandler(Hashtable<Long, Vehicle> dataBase) {
+    public IdentifierHandler(ConcurrentHashMap<Long, Vehicle> dataBase) {
         this.dataBase = dataBase;
     }
 
@@ -82,11 +82,6 @@ public class IdentifierHandler {
                     "Invalid id length: %s, expected %s", id.length(), ID_LENGTH), MessageType.USER_ERROR);
             return false;
         }
-//        if (!hasElementWithId(Long.parseLong(id))) {
-//            MessageHolder.putCurrentCommand(commandName, MessageType.USER_ERROR);
-//            MessageHolder.putMessage("No such element with this id", MessageType.USER_ERROR);
-//            return false;
-//        }
         return true;
     }
 

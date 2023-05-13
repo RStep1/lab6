@@ -7,7 +7,7 @@ import mods.MessageType;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 /**
@@ -127,24 +127,24 @@ public class FileHandler {
     }
 
     /**
-     * Reads Json file and converts it to Hashtable.
-     * @return Returns null, if file was empty, otherwise returns Hashtable with data.
+     * Reads Json file and converts it to ConcurrentHashMap.
+     * @return Returns null, if file was empty, otherwise returns ConcurrentHashMap with data.
      */
-    public static Hashtable<Long, Vehicle> loadDataBase() {
+    public static ConcurrentHashMap<Long, Vehicle> loadDataBase() {
         String json = readFile(FileType.JSON);
         JsonReader jsonReader = new JsonReader(json);
-        Hashtable<Long, Vehicle> vehicleHashtable = jsonReader.readDataBase();
-        if (vehicleHashtable == null) {
-            return new Hashtable<>();
+        ConcurrentHashMap<Long, Vehicle> vehicleConcurrentHashMap = jsonReader.readDataBase();
+        if (vehicleConcurrentHashMap == null) {
+            return new ConcurrentHashMap<>();
         }
-        return vehicleHashtable;
+        return vehicleConcurrentHashMap;
     }
 
     /**
-     * Converts Hashtable data to Json format and writes it to Json file.
+     * Converts ConcurrentHashMap data to Json format and writes it to Json file.
      * @param dataBase User modified database.
      */
-    public static void saveDataBase(Hashtable<Long, Vehicle> dataBase) {
+    public static void saveDataBase(ConcurrentHashMap<Long, Vehicle> dataBase) {
         JsonWriter jsonWriter = new JsonWriter(dataBase);
         String json = jsonWriter.writeDataBase();
         clearFile(FileType.JSON);

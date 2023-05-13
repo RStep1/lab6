@@ -1,6 +1,7 @@
 package host;
 
 import commands.SaveCommand;
+import processing.BufferedDataBase;
 import processing.NBChannelController;
 import processing.RequestHandler;
 import utility.CommandArguments;
@@ -12,6 +13,7 @@ import java.net.SocketException;
 import java.net.StandardSocketOptions;
 import java.nio.channels.*;
 import java.util.Iterator;
+import java.util.Scanner;
 import java.util.Set;
 
 public class Server {
@@ -23,6 +25,7 @@ public class Server {
     private static final CommandArguments SAVE_COMMAND = 
                 new CommandArguments(SaveCommand.getName(), null, null,
                         null, null);
+    private CommandArguments commandArguments;
 
     public Server(RequestHandler requestHandler) {
         this.requestHandler = requestHandler;
@@ -67,10 +70,13 @@ public class Server {
                         register(selector, serverSocket);
                     }
                     if (key.isReadable()) {
-                        SocketChannel client = (SocketChannel) key.channel();
+                        // SocketChannel client = (SocketChannel) key.channel();
                         // System.out.println("client = " + client);
                         // System.out.println("Client is connected by: "+client.isConnected());
-                        answer(key);
+                        answer(selector, key);
+                    }
+                    if (key.isWritable()) {
+                        write(key);
                     }
                     iter.remove();
                 }
@@ -90,12 +96,14 @@ public class Server {
         }
     }
 
-    private void answer(SelectionKey key) {
+    private void answer(Selector selector, SelectionKey key) {
         try {
             SocketChannel client = (SocketChannel) key.channel();
-            CommandArguments commandArguments;
+            // CommandArguments commandArguments;
             try {
                 commandArguments = (CommandArguments) NBChannelController.read(client);
+                client.configureBlocking(false);
+                client.register(selector, SelectionKey.OP_WRITE);
             } catch (SocketException e) {
                 e.printStackTrace();
                 System.out.println("Socket exception");
@@ -113,9 +121,23 @@ public class Server {
                 client.close();
                 return;
             }
-            ServerAnswer serverAnswer = requestHandler.processRequest(commandArguments);
-            NBChannelController.write(client, serverAnswer);
 
+
+            // ServerAnswer serverAnswer = requestHandler.processRequest(commandArguments);
+            // NBChannelController.write(client, serverAnswer);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void write(SelectionKey key) {
+        ServerAnswer serverAnswer = requestHandler.processRequest(commandArguments);
+        SocketChannel client = (SocketChannel) key.channel();
+        try {
+            NBChannelController.write(client, serverAnswer);
+            client.configureBlocking(false);
+            client.register(selector, SelectionKey.OP_READ);
         } catch (IOException e) {
             e.printStackTrace();
         }

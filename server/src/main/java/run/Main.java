@@ -1,6 +1,5 @@
 package run;
 
-import mods.FileType;
 import mods.MessageType;
 import processing.BufferedDataBase;
 import processing.Console;
@@ -15,9 +14,9 @@ import utility.FileHandler;
 import utility.MessageHolder;
 import utility.ScriptGenerator;
 
-
 /**
- * The entry point to the program, declares and initializes all the necessary classes.
+ * The entry point to the program, declares and initializes all the necessary
+ * classes.
  * Starts interactive mode for the user.
  */
 public class Main {
@@ -25,7 +24,7 @@ public class Main {
         // FileHandler.clearFile(FileType.TEST_SCRIPT);
         // ScriptGenerator scriptGenerator = new ScriptGenerator(50000);
         // scriptGenerator.generateInserts();
-
+    
 
         if (!FileHandler.checkEnvVariable()) {
             Console.printUserErrors();
@@ -48,22 +47,15 @@ public class Main {
         Server server = new Server(requestHandler);
         bufferedDataBase.setCommandInvoker(invoker);
         Console.println("Server is running...");
-        
-        
-        Thread mainProggrammThread = new Thread(new Runnable() {
-            public void run() {
-                server.run();
-            }
-        });
-        mainProggrammThread.start();
 
+        Thread mainProggrammThread = new Thread(server::run);
+        mainProggrammThread.start();
 
         Scanner scanner = new Scanner(System.in);
          while (true) {
             String nextLine = scanner.nextLine().trim();
             if (nextLine.equals(SaveCommand.getName())) {
                 requestHandler.processRequest(Server.getSaveCommand());
-                Console.println("Collection was successfully saved");
             }
             if (!mainProggrammThread.isAlive()) {
                 break;
