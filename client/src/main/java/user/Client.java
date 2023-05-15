@@ -31,8 +31,8 @@ public class Client {
     public ServerAnswer dataExchange(CommandArguments request) {
         ServerAnswer serverAnswer;
         try {
-            NBChannelController.write(clientSocketChannel, request);
-            serverAnswer = (ServerAnswer) NBChannelController.read(clientSocketChannel);
+            NBChannelController.clientWrite(clientSocketChannel, request);
+            serverAnswer = (ServerAnswer) NBChannelController.clientRead(clientSocketChannel);
         } catch (ClassCastException | IOException e) {
             return null;
         }

@@ -63,8 +63,7 @@ public class ClientManager {
                 serverAnswer = client.dataExchange(commandArguments);
                 if (serverAnswer == null) {
                     Client.stop();
-                    System.out.println("соединение ссервером потеряно");
-                    System.out.println("Is connected to server: "+ client.getSocketChannel().isConnected());
+                    Console.println("Connection lost");
                     return false;
                 }
                 if (serverAnswer.answerType() == AnswerType.DATA_REQUEST && serverAnswer.commandExitStatus()) {
@@ -75,7 +74,7 @@ public class ClientManager {
                     serverAnswer = client.dataExchange(commandArguments);
                     if (serverAnswer == null) {
                         Client.stop();
-                        System.out.println("соединение прервано, команда не была выполнена");
+                        Console.println("Connection lost");
                         return false;
                     }
                 }

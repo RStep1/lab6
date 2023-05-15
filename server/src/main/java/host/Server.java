@@ -1,7 +1,6 @@
 package host;
 
 import commands.SaveCommand;
-import processing.BufferedDataBase;
 import processing.NBChannelController;
 import processing.RequestHandler;
 import utility.CommandArguments;
@@ -9,11 +8,9 @@ import utility.ServerAnswer;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.net.SocketException;
 import java.net.StandardSocketOptions;
 import java.nio.channels.*;
 import java.util.Iterator;
-import java.util.Scanner;
 import java.util.Set;
 
 public class Server {
@@ -56,7 +53,6 @@ public class Server {
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-//                e.printStackTrace();
             }
         }));
         while (true) {
@@ -70,12 +66,9 @@ public class Server {
                         register(selector, serverSocket);
                     }
                     if (key.isReadable()) {
-                        // SocketChannel client = (SocketChannel) key.channel();
-                        // System.out.println("client = " + client);
-                        // System.out.println("Client is connected by: "+client.isConnected());
-                        answer(selector, key);
+                        read(selector, key);
                     }
-                    if (key.isWritable()) {
+                    if (key.isValid() && key.isWritable()) {
                         write(key);
                     }
                     iter.remove();
@@ -96,36 +89,20 @@ public class Server {
         }
     }
 
-    private void answer(Selector selector, SelectionKey key) {
+    private void read(Selector selector, SelectionKey key) {
         try {
             SocketChannel client = (SocketChannel) key.channel();
-            // CommandArguments commandArguments;
             try {
                 commandArguments = (CommandArguments) NBChannelController.read(client);
                 client.configureBlocking(false);
                 client.register(selector, SelectionKey.OP_WRITE);
-            } catch (SocketException e) {
-                e.printStackTrace();
-                System.out.println("Socket exception");
-                // e.printStackTrace();
-                requestHandler.processRequest(SAVE_COMMAND);
-                System.out.println("close1");
-                client.close();
-                return;
             } catch (IOException e) {
-                e.printStackTrace();
                 System.out.println(String.format(
                         "Not accepting client %s messages anymore", client.getRemoteAddress()));
-                requestHandler.processRequest(SAVE_COMMAND); // save collection after client exits
-                // System.out.println("close2");
+                requestHandler.processRequest(SAVE_COMMAND);
                 client.close();
                 return;
             }
-
-
-            // ServerAnswer serverAnswer = requestHandler.processRequest(commandArguments);
-            // NBChannelController.write(client, serverAnswer);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
