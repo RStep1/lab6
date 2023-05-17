@@ -8,11 +8,13 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         ClientManager clientManager = new ClientManager(scanner);
-        //args = (host, port) - get and check
+        String[] hostAndPort = args[0].split("\\s+");
+        String host = hostAndPort[0];
+        int port = Integer.parseInt(args[1]);
         boolean processingStatus = false;
         boolean isTryReconnecting = false;
         while (!processingStatus) { // processingStatus = true, if client input 'exit', else connection failed
-            if (!clientManager.setConnection("localhost", 18022)) {
+            if (!clientManager.setConnection(host, port)) {
                 if (!isTryReconnecting)
                     System.out.println("reconnection...");
                 isTryReconnecting = true;

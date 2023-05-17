@@ -14,8 +14,8 @@ import java.util.Iterator;
 import java.util.Set;
 
 public class Server {
-    private static final String HOST = "localhost";
-    private static final int PORT = 18022;
+    private final String host;
+    private final int port;
     private Selector selector;
     private ServerSocketChannel serverSocket;
     private final RequestHandler requestHandler;
@@ -24,8 +24,10 @@ public class Server {
                         null, null);
     private CommandArguments commandArguments;
 
-    public Server(RequestHandler requestHandler) {
+    public Server(RequestHandler requestHandler, String host, int port) {
         this.requestHandler = requestHandler;
+        this.host = host;
+        this.port = port;
     }
     
     private void setup() {
@@ -33,7 +35,7 @@ public class Server {
             selector = Selector.open();
             serverSocket = ServerSocketChannel.open();
             serverSocket.setOption(StandardSocketOptions.SO_REUSEADDR, true);
-            serverSocket.bind(new InetSocketAddress(HOST, PORT));
+            serverSocket.bind(new InetSocketAddress(host, port));
             serverSocket.configureBlocking(false);
             serverSocket.register(selector, SelectionKey.OP_ACCEPT);
         } catch (IOException e) {

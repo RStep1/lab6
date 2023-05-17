@@ -24,7 +24,10 @@
             // FileHandler.clearFile(FileType.TEST_SCRIPT);
             // ScriptGenerator scriptGenerator = new ScriptGenerator(50000);
             // scriptGenerator.generateInserts();
-        
+            
+            String[] hostAndPort = args[0].split("\\s+");
+            String host = hostAndPort[0];
+            int port = Integer.parseInt(args[1]);
 
             if (!FileHandler.checkEnvVariable()) {
                 Console.printUserErrors();
@@ -44,7 +47,7 @@
                     new CountByFuelTypeCommand(bufferedDataBase),
                     new FilterLessThanFuelTypeCommand(bufferedDataBase));
             RequestHandler requestHandler = new RequestHandler(invoker);
-            Server server = new Server(requestHandler);
+            Server server = new Server(requestHandler, host, port);
             bufferedDataBase.setCommandInvoker(invoker);
             Console.println("Server is running...");
 
