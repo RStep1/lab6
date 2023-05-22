@@ -45,18 +45,6 @@ public class Server {
 
     public void run() {
         setup();
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            try {
-                Thread.sleep(200);
-                System.out.println("Shutting down ...");
-                try {
-                    selector.close();
-                } catch (IOException e) {
-                }
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        }));
         while (true) {
             try {
                 selector.select();
